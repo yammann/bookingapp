@@ -12,10 +12,10 @@ class AppButton extends StatelessWidget {
     return GestureDetector(
       onTap:onTap,
       child: Container(
-        width: 300,
-        height: 40,
+        width: 360, 
+        height: 50,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), color: kOnBoardingP),
+            borderRadius: BorderRadius.circular(50), color: kOnBoardingP),
         child: Center(
           child: Text(title.tr),
         ),

@@ -1,11 +1,11 @@
+import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/localisation/local_controller.dart';
-import 'package:e_store/core/services/services.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Languege extends GetView<LocalController> {
-  const Languege({super.key});
+class LanguegeView extends GetView<LocalController> {
+  const LanguegeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,8 @@ class Languege extends GetView<LocalController> {
           AppButton(
             title: "ar".tr,
             onTap: () {
-             controller.changeLang("ar");
+              controller.changeLang("ar");
+              Get.toNamed(AppRoute.onBoarding);
             },
           ),
           const SizedBox(
@@ -32,6 +33,7 @@ class Languege extends GetView<LocalController> {
             title: "en".tr,
             onTap: () {
               controller.changeLang("en");
+              Get.toNamed(AppRoute.onBoarding);
             },
           ),
         ],

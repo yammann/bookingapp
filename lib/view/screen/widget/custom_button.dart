@@ -1,5 +1,6 @@
 import 'package:e_store/controller/onboarding_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/core/constants/route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +13,9 @@ class CustomButton extends StatelessWidget {
       builder: (controller) => GestureDetector(
          onTap: () {
           controller.next();
+          if(controller.isLastePage){
+            Get.toNamed(AppRoute.login);
+          }
         },
         child: Container(
           width: 300,

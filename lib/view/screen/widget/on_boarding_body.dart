@@ -10,7 +10,7 @@ class OnBoardingBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(left:10,right: 10,bottom: 10,top: 40),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30), color: Colors.white),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
