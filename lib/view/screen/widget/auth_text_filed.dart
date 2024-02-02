@@ -7,7 +7,7 @@ class AuthTextFiled extends StatelessWidget {
   });
   final String label;
   final String hint;
-  final Icon icon;
+  final Widget icon;
   final bool isObscure;
   final TextEditingController? myController;
   final String? Function(String?) valid;

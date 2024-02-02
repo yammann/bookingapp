@@ -29,8 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translations: MyTranslation(),
       theme: localController.themeData,
-      routes: routes,
-      initialRoute: AppRoute.language,
+      getPages: routes,
     );
   }
 }

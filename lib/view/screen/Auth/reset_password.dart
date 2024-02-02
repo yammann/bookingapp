@@ -12,37 +12,55 @@ class ResetPasswordView extends StatelessWidget {
       Get.put(ResetPasControlerImp());
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Form(
-          key:resetPasControlerImp.formkey ,
+          key: resetPasControlerImp.formkey,
           child: Column(
             children: [
               const AuthAppBar(
                 title: 'Reset Password          ',
               ),
               const Spacer(flex: 2),
-              AuthTextFiled(
-                valid: (val) {
-                  return validation(val, 5, 50, Type.passowrd);
+              GetBuilder<ResetPasControlerImp>(
+                builder: (ResetPasControlerImp controller) {
+                  return AuthTextFiled(
+                    valid: (val) {
+                      return validation(val, 5, 50, Type.passowrd);
+                    },
+                    isObscure: controller.obscure,
+                    label: "New Password",
+                    hint: "Enter your New passowrd",
+                    icon: IconButton(
+                        onPressed: () {
+                          controller.obsure();
+                        },
+                        icon: controller.obscure
+                            ? const Icon(Icons.visibility_outlined)
+                            : const Icon(Icons.visibility_off_outlined)),
+                  );
                 },
-                 isObscure: true,
-                label: "New Password",
-                hint: "Enter your New Password",
-                icon: const Icon(
-                  Icons.lock_outline_rounded,
-                ),
               ),
               const Spacer(flex: 1),
-              AuthTextFiled(
-                valid: (val) {
-                  return validation(val, 5, 50, Type.passowrd);
+              GetBuilder<ResetPasControlerImp>(
+                builder: (ResetPasControlerImp controller) {
+                  return AuthTextFiled(
+                    valid: (val) {
+                      return validation(val, 5, 50, Type.passowrd);
+                    },
+                    isObscure: controller.obscure,
+                    label: "Re New Password",
+                    hint: "Re Enter your New Password",
+                    icon: IconButton(
+                        onPressed: () {
+                          controller.obsure();
+                        },
+                        icon: controller.obscure
+                            ? const Icon(Icons.visibility_outlined)
+                            : const Icon(Icons.visibility_off_outlined)),
+                  );
                 },
-                isObscure: true,
-                label: "Re New Password",
-                hint: "Re Enter your New Password",
-                icon: const Icon(Icons.lock_outline_rounded),
               ),
               const Spacer(flex: 2),
               AppButton(

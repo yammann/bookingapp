@@ -7,12 +7,13 @@ abstract class SignUpController extends GetxController {
   navToLogin();
   navBack();
   navToVerify();
+  obsure();
 }
 
 class SignUpControllerImp extends SignUpController {
 
   GlobalKey<FormState>formKey=GlobalKey();
-  
+  bool obscure=true;
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController userNameController;
@@ -63,5 +64,11 @@ class SignUpControllerImp extends SignUpController {
   @override
   navToLogin() {
     Get.offNamed(AppRoute.login);
+  }
+  
+   @override
+  obsure() {
+    obscure=!obscure;
+    update();
   }
 }

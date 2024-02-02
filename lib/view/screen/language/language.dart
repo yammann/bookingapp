@@ -23,7 +23,7 @@ class LanguegeView extends GetView<LocalController> {
             title: "ar".tr,
             onTap: () {
               controller.changeLang("ar");
-              Get.toNamed(AppRoute.onBoarding);
+              Get.offNamed(AppRoute.onBoarding);
             },
           ),
           const SizedBox(
@@ -33,7 +33,7 @@ class LanguegeView extends GetView<LocalController> {
             title: "en".tr,
             onTap: () {
               controller.changeLang("en");
-              Get.toNamed(AppRoute.onBoarding);
+              Get.offNamed(AppRoute.onBoarding);
             },
           ),
         ],

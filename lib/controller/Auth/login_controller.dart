@@ -7,9 +7,12 @@ abstract class LoginController extends GetxController {
   navToSignUp();
   navToForgetPassword();
   navBack();
+  obsure();
 }
 
 class LoginControllerImp extends LoginController {
+
+  bool obscure=true;
   GlobalKey<FormState> formKey = GlobalKey();
   late TextEditingController emailController;
   late TextEditingController passwordController;
@@ -51,5 +54,11 @@ class LoginControllerImp extends LoginController {
   @override
   navBack() {
     Get.back();
+  }
+  
+  @override
+  obsure() {
+    obscure=!obscure;
+    update();
   }
 }

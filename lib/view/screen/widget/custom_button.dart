@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
          onTap: () {
           controller.next();
           if(controller.isLastePage){
-            Get.toNamed(AppRoute.login);
+            Get.offNamed(AppRoute.login);
           }
         },
         child: Container(
