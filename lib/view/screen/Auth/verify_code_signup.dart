@@ -1,10 +1,7 @@
 import 'package:e_store/controller/Auth/verify_controller.dart';
-import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/screen/widget/auth_appbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 class VerifyCodeSignUpView extends StatelessWidget {
   VerifyCodeSignUpView({super.key});
