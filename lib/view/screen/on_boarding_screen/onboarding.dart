@@ -10,7 +10,7 @@ class OnBoardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(OnBoardingControllerImp());
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: kOnBoardingBG,
       body: OnBoardingBody()
     );

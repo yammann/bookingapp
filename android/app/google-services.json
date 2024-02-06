@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "516978080624",
+    "project_id": "e-store-bddb3",
+    "storage_bucket": "e-store-bddb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516978080624:android:f6a48316852ee8195f6db5",
+        "android_client_info": {
+          "package_name": "com.example.e_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkDk1HEzgBYzVBgklQ4D925uIGZ3hxpkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

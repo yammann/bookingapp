@@ -47,6 +47,7 @@ class LoginView extends StatelessWidget {
                 ),
                 const Spacer(flex: 1),
                 AuthTextFiled(
+                  myController: loginControllerImp.emailController,
                   valid: (val) {
                     return validation(val, 5, 50, Type.email);
                   },
@@ -63,6 +64,7 @@ class LoginView extends StatelessWidget {
                 GetBuilder<LoginControllerImp>(
                   builder: (LoginControllerImp controller) {
                     return AuthTextFiled(
+                      myController: loginControllerImp.passwordController,
                       valid: (val) {
                         return validation(val, 5, 50, Type.passowrd);
                       },
@@ -79,7 +81,9 @@ class LoginView extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Center(
                   child: TextButton(
                     onPressed: () {

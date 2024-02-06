@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpView extends StatelessWidget {
-  const SignUpView({super.key});
+   const SignUpView({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +86,7 @@ class SignUpView extends StatelessWidget {
                             height: 20,
                           ),
                           AuthTextFiled(
+                            myController: controller.emailController,
                             valid: (val) {
                               return validation(val, 5, 50, Type.email);
                             },
@@ -113,6 +115,7 @@ class SignUpView extends StatelessWidget {
                           GetBuilder<SignUpControllerImp>(
                   builder: (SignUpControllerImp controller) {
                     return AuthTextFiled(
+                      myController:controller.passwordController,
                       valid: (val) {
                         return validation(val, 5, 50, Type.passowrd);
                       },

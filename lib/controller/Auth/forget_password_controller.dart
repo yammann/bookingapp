@@ -24,11 +24,11 @@ class ForgetPasswordControllerImp extends ForgetPasswordController{
   check() {
    var formState=formkey.currentState;
    if(formState!.validate()){
-    print("valid");
+    
     Get.toNamed(AppRoute.verifyCodeResPas);
    }
    else{
-    print("not valid");
+   
    }
    
   }

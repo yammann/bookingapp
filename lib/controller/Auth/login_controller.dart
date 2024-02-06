@@ -1,4 +1,5 @@
 import 'package:e_store/core/constants/route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,13 +19,22 @@ class LoginControllerImp extends LoginController {
   late TextEditingController passwordController;
 
   @override
-  login() {
+  login() async{
     var formState = formKey.currentState;
     if (formState!.validate()) {
-      print("valid");
-    } else {
-      print("not valid");
+      try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+        
+      User user = userCredential.user!;
+      Get.offNamed(AppRoute.home);
+      print("User logged in: ${user.uid}");
+    } catch (e) {
+      print("Login failed: $e");
     }
+    } 
   }
 
   @override

@@ -22,11 +22,8 @@ class ResetPasControlerImp extends ResetPasControler {
   save() {
     var formState = formkey.currentState;
     if (formState!.validate()) {
-      print("valid");
       Get.offNamed(AppRoute.successRePas);
-    } else {
-      print("not valid");
-    }
+    } 
   }
 
   @override

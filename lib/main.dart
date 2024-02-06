@@ -1,5 +1,4 @@
 import 'package:e_store/binding.dart';
-import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/localisation/local_controller.dart';
 import 'package:e_store/core/localisation/translation.dart';
 import 'package:e_store/core/services/services.dart';
@@ -7,9 +6,14 @@ import 'package:e_store/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,);
   await initServices();
   runApp(MyApp());
 }

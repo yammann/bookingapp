@@ -12,6 +12,7 @@ abstract class AppRoute {
   static const String successSignUp="/successSignUp";
   static const String successRePas="/successRePas";
   static const String verifyCodeSignUp="/verifyCodeSignUp";
+  static const String home="/home";
 
   // static const String language="/language";
 }
