@@ -1,5 +1,6 @@
+import 'package:e_store/core/class/auth.dart';
 import 'package:e_store/core/constants/route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:e_store/data/model/usermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,11 +15,12 @@ abstract class SignUpController extends GetxController {
 class SignUpControllerImp extends SignUpController {
   GlobalKey<FormState> formKey = GlobalKey();
   bool obscure = true;
-  bool isVerifyed=false;
+  bool isVerifyed = false;
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController userNameController;
   late TextEditingController phoneNumberController;
+  Auth auth = Get.find();
   @override
   navBack() {
     Get.back();
@@ -28,20 +30,11 @@ class SignUpControllerImp extends SignUpController {
   signUp() async {
     var formState = formKey.currentState;
     if (formState!.validate()) {
-      try {
-        final UserCredential credential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: emailController.text, password: passwordController.text);
-        credential.user!.sendEmailVerification();
-        User user = credential.user!;
-        isVerifyed=user.emailVerified;
-        print("User signed up: ${user.uid}");
-        print(user.emailVerified);
-
-        Get.offNamed(AppRoute.login);
-      } on Exception catch (e) {
-        print("Signup failed: $e");
-      }
+      auth.signUp(UserModel(
+          userName: userNameController.text,
+          email: emailController.text,
+          phone: phoneNumberController.text,
+          password: passwordController.text));
     }
   }
 

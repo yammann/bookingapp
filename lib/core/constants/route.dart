@@ -13,6 +13,11 @@ abstract class AppRoute {
   static const String successRePas="/successRePas";
   static const String verifyCodeSignUp="/verifyCodeSignUp";
   static const String home="/home";
+  static const String addappoint="/addappoint";
+  static const String myappoint="/myappoint";
+  static const String profile="/proile";
+  static const String homeImp="/homeImp";
+  static const String cleander="/cleander";
 
   // static const String language="/language";
 }

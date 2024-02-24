@@ -72,6 +72,7 @@ class SignUpView extends StatelessWidget {
                       child: Column(
                         children: [
                           AuthTextFiled(
+                            myController:controller.userNameController,
                             valid: (val) {
                               return validation(val, 5, 50, Type.userName);
                             },
@@ -99,6 +100,7 @@ class SignUpView extends StatelessWidget {
                             height: 20,
                           ),
                           AuthTextFiled(
+                            myController:controller.phoneNumberController,
                             valid: (val) {
                               return validation(val, 5, 15, Type.phoneNumber);
                             },

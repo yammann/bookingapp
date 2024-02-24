@@ -1,5 +1,6 @@
 import 'package:e_store/core/class/status.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class HandlingView extends StatelessWidget {
   const HandlingView({super.key, required this.status, required this.widget});
@@ -7,14 +8,35 @@ class HandlingView extends StatelessWidget {
   final Widget widget;
   @override
   Widget build(BuildContext context) {
-    return status == Status.offLineFailure
-            ? const Scaffold(body: Center(child: Text("off Line failure"),),)
-            : status == Status.serverFailure
-                ? const Scaffold(body: Center(child: Text("server failure"),),)
-                : status == Status.failure
-                    ? const Scaffold(body: Center(child: Text("No Data"),),)
-                    : status == Status.success
-                        ? widget
-                        : const Scaffold(body: Center( child: Text("has error"),),);
+    if (status == Status.loading) {
+      return Scaffold(
+        body: Center(
+          child:
+              Lottie.asset("assets/lottie/loading.json", height: 50, width: 50),
+        ),
+      );
+    } else if (status == Status.offLineFailure) {
+      return const Scaffold(
+        body: Center(
+          child: Text("off Line failure"),
+        ),
+      );
+    } else if (status == Status.serverFailure) {
+      return Scaffold(
+        body: Center(
+          child: Lottie.asset("assets/lottie/404error.json",
+              height: 50, width: 50),
+        ),
+      );
+    } else if (status == Status.failure) {
+      return Scaffold(
+        body: Center(
+          child:
+              Lottie.asset("assets/lottie/nodata.json", height: 50, width: 50),
+        ),
+      );
+    } else {
+      return widget;
+    }
   }
 }
