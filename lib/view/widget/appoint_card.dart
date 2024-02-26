@@ -28,7 +28,7 @@ class AppointCard extends StatelessWidget {
                   title: "Time", value: "10:30 -> 11:30"),
               SizedBox(height: 10),
               UserDetailesRow(
-                  title: "Detail", value: "Haire - Chin - Face creame" ),
+                  title: "Detail", value: "Haire - Chin - Face creme" ),
               SizedBox(height: 10),
                UserDetailesRow(
                   title: "State", value: "Active" ),

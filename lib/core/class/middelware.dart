@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MyMiddelware extends GetMiddleware {
-  
+  MyServices myServices = Get.find();
 
-  MyServices myServices=Get.find();
-
-   @override
+  @override
   int? priority = 1;
 
   @override
   RouteSettings? redirect(String? route) {
-    if(myServices.sharedPreferences.get("onBoarding")==true){
-      return const RouteSettings(name: AppRoute.login);
+    if (myServices.sharedPreferences.get("onBoarding") == true) {
+      if (myServices.sharedPreferences.get("login") == true) {
+        return const RouteSettings(name: AppRoute.home);
+      } else {
+        return const RouteSettings(name: AppRoute.login);
+      }
     }
     return null;
   }
-
 }

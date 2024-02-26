@@ -32,7 +32,7 @@ class CalendarPage extends StatelessWidget {
                   focusedDay: controller.isSelectedDay,
                   onDaySelected: (selectedDay, focusedDay) {
                     controller.selectDay(selectedDay);
-                    controller.getApointment(selectedDay.toString());
+                    controller.getApointment(selectedDay.toString().substring(0,10));
                   },
                 ),
                 const SizedBox(

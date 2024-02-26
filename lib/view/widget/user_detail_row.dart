@@ -22,9 +22,11 @@ class UserDetailesRow extends StatelessWidget {
                 "$title : ",
                 style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
               ),
-              Text(
-                value,
-                style: const TextStyle(fontSize: 18),
+              Expanded(
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 18),
+                ),
               ),
             ],
           ),

@@ -15,7 +15,7 @@ class AppButton extends StatelessWidget {
         width: 360, 
         height: 50,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50), color: kOnBoardingP),
+            borderRadius: BorderRadius.circular(15), color: kOnBoardingP),
         child: Center(
           child: Text(title.tr),
         ),

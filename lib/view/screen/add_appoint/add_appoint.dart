@@ -24,6 +24,11 @@ class AddAppointView extends StatelessWidget {
                 itemCount: controller.todoItems.length,
                 itemBuilder: (context, index) {
                   return TodoItemCard(
+                    onTap: () {
+                      controller.toggleCheckbox(index);
+                      controller
+                          .selectedTodo(controller.todoItems[index].label);
+                    },
                     label: controller.todoItems[index].label,
                     isSelected: controller.todoItems[index].isSelected,
                     onChanged: (value) {
@@ -37,9 +42,17 @@ class AddAppointView extends StatelessWidget {
             },
           ),
         ),
-         AppButton(title: "Next",onTap: (){
-          Get.toNamed(AppRoute.cleander);
-        }),
+        SizedBox(
+          height: 10,
+        ),
+        AppButton(
+            title: "Next",
+            onTap: () {
+              Get.toNamed(AppRoute.cleander);
+            }),
+        SizedBox(
+          height: 10,
+        ),
       ],
     );
   }

@@ -15,7 +15,8 @@ class CalenderControllerImp extends CalenderController {
   List<ApointmentModel> datalist = [];
   int selectedTime=0;
   Future<void> getDataList(String documentId) async {
-    datalist.clear();
+      List<ApointmentModel> listForImplement = [];
+
     CollectionReference timeCollection = FirebaseFirestore.instance
         .collection("apointment")
         .doc(documentId)
@@ -31,12 +32,12 @@ class CalenderControllerImp extends CalenderController {
           timeDocumentSnapshot.data() as Map<String, dynamic>);
 
       // Add the appointment data to datalist
-      datalist
-          .add(appointment); // If you want to store JSON data, adjust as needed
+      listForImplement.add(appointment); // If you want to store JSON data, adjust as needed
     }
+    datalist=listForImplement;
+    print(datalist);
     update();
     // Print or use the data in datalist as needed
-    print('datalist: $datalist');
   }
 
   @override
@@ -47,6 +48,7 @@ class CalenderControllerImp extends CalenderController {
 
   @override
   Future<void> getApointment(String documentId) async {
+    print("--------------------------------------------------------------------------$documentId");
     // Reference to the document
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("apointment").doc(documentId);
@@ -55,18 +57,14 @@ class CalenderControllerImp extends CalenderController {
     DocumentSnapshot documentSnapshot = await documentReference.get();
 
     // Check if the document exists and if it has any data
-    if (documentSnapshot.exists && documentSnapshot.data() != null) {
+    if (documentSnapshot.exists) {
       getDataList(documentId);
-      print('Document is not empty');
       // You can access the data using documentSnapshot.data()
     } else {
-      print('Document is empty');
       for (ApointmentModel appointment in apointmentList) {
         var data = appointment.toJson();
-        print(data["time"]);
-        documentReference.set({"data": documentId});
+        await documentReference.set({"data": documentId});
         await documentReference.collection("time").doc(data["time"]).set(data);
-        print('Document created successfully');
         getDataList(documentId); 
       }
     }
@@ -82,6 +80,6 @@ class CalenderControllerImp extends CalenderController {
   void onInit() {
     super.onInit();
 
-    getApointment(isSelectedDay.toString());
+    getApointment(isSelectedDay.toString().substring(0,10));
   }
 }

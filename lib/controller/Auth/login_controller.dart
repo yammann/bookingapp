@@ -1,5 +1,6 @@
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/function/check_internet.dart';
+import 'package:e_store/core/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class LoginControllerImp extends LoginController {
   GlobalKey<FormState> formKey = GlobalKey();
   late TextEditingController emailController;
   late TextEditingController passwordController;
-
+  MyServices myServices = Get.find();
   @override
   login() async {
     var formState = formKey.currentState;
@@ -31,6 +32,7 @@ class LoginControllerImp extends LoginController {
           );
 
           User user = userCredential.user!;
+          myServices.sharedPreferences.setBool("login", true);
           Get.offNamed(AppRoute.home);
           print("User logged in: ${user.uid}");
         } catch (e) {

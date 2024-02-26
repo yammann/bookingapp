@@ -18,6 +18,8 @@ abstract class AppRoute {
   static const String profile="/proile";
   static const String homeImp="/homeImp";
   static const String cleander="/cleander";
+  static const String confirme="/confirme";
+  static const String comment="/comment";
 
   // static const String language="/language";
 }

@@ -10,8 +10,10 @@ import 'package:e_store/view/screen/Auth/verify_code_res_pas.dart';
 import 'package:e_store/view/screen/Auth/verify_code_signup.dart';
 import 'package:e_store/view/screen/add_appoint/add_appoint.dart';
 import 'package:e_store/view/screen/add_appoint/cleander.dart';
+import 'package:e_store/view/screen/add_appoint/confirme.dart';
+import 'package:e_store/view/screen/comment_view.dart';
 import 'package:e_store/view/screen/home.dart';
-import 'package:e_store/view/screen/home_imp.dart';
+import 'package:e_store/view/screen/about_view.dart';
 import 'package:e_store/view/screen/language/language.dart';
 import 'package:e_store/view/screen/my_appoint.dart';
 import 'package:e_store/view/screen/on_boarding_screen/onboarding.dart';
@@ -20,8 +22,8 @@ import 'package:get/get.dart';
 
 
 List<GetPage<dynamic>>?routes=[
-  // GetPage(name:  "/", page: ()=>const LanguegeView(),middlewares:[ MyMiddelware()]),
-  GetPage(name:  "/", page: ()=>  Home()),
+  GetPage(name:  "/", page: ()=>const LanguegeView(),middlewares:[ MyMiddelware()]),
+  // GetPage(name:  "/", page: ()=>  Home()),
   GetPage(name:  AppRoute.onBoarding, page: ()=>const OnBoardingView()),
   GetPage(name:  AppRoute.login, page: ()=> LoginView()),
   GetPage(name:  AppRoute.signUp, page: ()=> const SignUpView()),
@@ -35,8 +37,10 @@ List<GetPage<dynamic>>?routes=[
   GetPage(name:  AppRoute.addappoint, page: ()=> const AddAppointView()),
   GetPage(name:  AppRoute.myappoint, page: ()=> const MyAppointView()),
   GetPage(name:  AppRoute.profile, page: ()=> const UserProfileView()),
-  GetPage(name:  AppRoute.homeImp, page: ()=> const HomeImp()),
-  GetPage(name:  AppRoute.cleander, page: ()=>  CalendarPage()),
+  GetPage(name:  AppRoute.homeImp, page: ()=> const AboutView()),
+  GetPage(name:  AppRoute.cleander, page: ()=>  const CalendarPage()),
+  GetPage(name:  AppRoute.confirme, page: ()=>  const Confirme()),
+  GetPage(name:  AppRoute.comment, page: ()=>   CommentPage()),
   
 ];
 
