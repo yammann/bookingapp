@@ -1,7 +1,7 @@
 
-import 'package:e_store/view/screen/widget/custom_button.dart';
-import 'package:e_store/view/screen/widget/custom_slider.dart';
-import 'package:e_store/view/screen/widget/indicator.dart';
+import 'package:e_store/view/widget/custom_button.dart';
+import 'package:e_store/view/screen/on_boarding_screen/widget/custom_slider.dart';
+import 'package:e_store/view/screen/on_boarding_screen/widget/indicator.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingBody extends StatelessWidget {
@@ -13,11 +13,11 @@ class OnBoardingBody extends StatelessWidget {
       margin: const EdgeInsets.only(left:10,right: 10,bottom: 10,top: 40),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30), color: Colors.white),
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       child: const Column(
         children: [
           Expanded(
-            flex: 3,
+            flex: 5,
             child: CustomSlider()
           ),
           Expanded(

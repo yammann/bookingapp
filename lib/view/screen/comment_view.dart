@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/view/screen/widget/auth_text_filed.dart';
+import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

@@ -36,6 +36,16 @@ class LanguegeView extends GetView<LocalController> {
               Get.offNamed(AppRoute.onBoarding);
             },
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          AppButton(
+            title: "gr".tr,
+            onTap: () {
+              controller.changeLang("gr");
+              Get.offNamed(AppRoute.onBoarding);
+            },
+          ),
         ],
       ),
     );

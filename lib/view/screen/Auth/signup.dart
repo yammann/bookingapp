@@ -1,25 +1,25 @@
 import 'package:e_store/controller/Auth/signup_controller.dart';
 import 'package:e_store/core/function/exit_alert.dart';
 import 'package:e_store/core/function/validat.dart';
-import 'package:e_store/view/screen/widget/auth_appbar.dart';
-import 'package:e_store/view/screen/widget/auth_text_filed.dart';
+import 'package:e_store/view/screen/Auth/widget/auth_appbar.dart';
+import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpView extends StatelessWidget {
-   const SignUpView({super.key});
-
+  const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(SignUpControllerImp);
     return Scaffold(
       body: GetBuilder<SignUpControllerImp>(
         builder: (controller) {
           return PopScope(
             canPop: false,
-            onPopInvoked: (v){
-              if(v){
+            onPopInvoked: (v) {
+              if (v) {
                 return;
               }
               exitAlert();
@@ -28,12 +28,12 @@ class SignUpView extends StatelessWidget {
               key: controller.formKey,
               child: CustomScrollView(
                 slivers: [
-                  const SliverAppBar(
+                   SliverAppBar(
                     automaticallyImplyLeading: false,
                     pinned: true,
                     expandedHeight: 100.0,
                     flexibleSpace: AuthAppBar(
-                      title: 'Sign Up          ',
+                      title: "SignTitle".tr,
                     ),
                   ),
                   SliverToBoxAdapter(
@@ -45,14 +45,7 @@ class SignUpView extends StatelessWidget {
                             height: 20,
                           ),
                           Text(
-                            "Welcome Back",
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Sigin in with your emailand passwordor continue with social media",
+                             "SignText".tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge!
@@ -72,13 +65,13 @@ class SignUpView extends StatelessWidget {
                       child: Column(
                         children: [
                           AuthTextFiled(
-                            myController:controller.userNameController,
+                            myController: controller.userNameController,
                             valid: (val) {
                               return validation(val, 5, 50, Type.userName);
                             },
                             keyboardType: TextInputType.name,
-                            label: "User Name",
-                            hint: "Enter your User Name",
+                            label: "userNameLabel".tr,
+                            hint: "userNameHint".tr,
                             icon: const Icon(
                               Icons.person_3_outlined,
                             ),
@@ -92,21 +85,22 @@ class SignUpView extends StatelessWidget {
                               return validation(val, 5, 50, Type.email);
                             },
                             keyboardType: TextInputType.emailAddress,
-                            label: "Email",
-                            hint: "Enter your email",
+                            label:"EmailLabel".tr,
+                            hint: "EmailHint".tr,
                             icon: const Icon(Icons.email_outlined),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           AuthTextFiled(
-                            myController:controller.phoneNumberController,
+                            myController: controller.phoneNumberController,
                             valid: (val) {
                               return validation(val, 5, 15, Type.phoneNumber);
                             },
+                            inputFormatters: [controller.phoneNumberFormatter],
                             keyboardType: TextInputType.phone,
-                            label: "Phone Number",
-                            hint: "Enter your Phone Number",
+                            label: "phoneLabel".tr,
+                            hint: "phoneHint".tr,
                             icon: const Icon(
                               Icons.phone_enabled_outlined,
                             ),
@@ -114,35 +108,31 @@ class SignUpView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          GetBuilder<SignUpControllerImp>(
-                  builder: (SignUpControllerImp controller) {
-                    return AuthTextFiled(
-                      myController:controller.passwordController,
-                      valid: (val) {
-                        return validation(val, 5, 50, Type.passowrd);
-                      },
-                      isObscure: controller.obscure,
-                      label: "Password",
-                      hint: "Enter your passowrd",
-                      icon: IconButton(
-                          onPressed: () {
-                            controller.obsure();
-                          },
-                          icon: controller.obscure
-                              ? const Icon(Icons.visibility_outlined)
-                              : const Icon(Icons.visibility_off_outlined)),
-                    );
-                  },
-                ),
+                          AuthTextFiled(
+                            myController: controller.passwordController,
+                            valid: (val) {
+                              return validation(val, 5, 50, Type.passowrd);
+                            },
+                            isObscure: controller.obscure,
+                            label: "PasswordLabel".tr,
+                            hint: "PasswordHint".tr,
+                            icon: IconButton(
+                                onPressed: () {
+                                  controller.obsure();
+                                },
+                                icon: controller.obscure
+                                    ? const Icon(Icons.visibility_outlined)
+                                    : const Icon(
+                                        Icons.visibility_off_outlined)),
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
                           AppButton(
                             onTap: () {
                               controller.signUp();
-                              // signUpControllerImp.navToVerify();
                             },
-                            title: 'Sign Up',
+                            title: "SignTitle".tr,
                           ),
                           const SizedBox(
                             height: 20,
@@ -158,14 +148,14 @@ class SignUpView extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text("Go to login "),
+                               Text( "signBottomText".tr),
                               TextButton(
                                 onPressed: () {
                                   controller.navToLogin();
                                 },
-                                child: const Text(
-                                  "Login",
-                                  style: TextStyle(
+                                child:  Text(
+                                  "LoginTitle".tr,
+                                  style: const TextStyle(
                                       decoration: TextDecoration.underline),
                                 ),
                               ),

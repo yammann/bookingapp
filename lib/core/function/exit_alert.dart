@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 
 exitAlert(){
   Get.defaultDialog(
-    title: "Worning",
-    content: const Text("Do you need exit the app"),
+    title: "EAtitle".tr,
+    content:  Text("EAtext".tr),
     confirm: ElevatedButton(onPressed: (){
       exit(0);
-    }, child: const Text("Ok")),
+    }, child:  Text("BTNok".tr)),
     cancel: ElevatedButton(onPressed: (){
       Get.back();
-    }, child: const Text("Cancel")),
+    }, child:  Text("BTNcancel".tr)),
   );
 }

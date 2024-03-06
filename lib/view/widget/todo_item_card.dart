@@ -2,17 +2,18 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class TodoItemCard extends StatelessWidget {
-  const TodoItemCard(
-      {super.key,
-      required this.label,
-      required this.isSelected,
-      this.onChanged,
-      this.onTap});
+  const TodoItemCard({
+    super.key,
+    required this.label,
+    this.onTap,
+    this.onTapIcon,
+    this.icon,
+  });
 
   final String label;
-  final bool isSelected;
-  final Function(bool?)? onChanged;
+  final Function()? onTapIcon;
   final Function()? onTap;
+  final Icon? icon;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,13 +30,7 @@ class TodoItemCard extends StatelessWidget {
               label,
               style: const TextStyle(fontSize: 16),
             ),
-            Checkbox(
-                activeColor: kOnBoardingP,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                value: isSelected,
-                onChanged: onChanged)
+            InkWell(onTap: onTapIcon, child: icon)
           ],
         ),
       ),

@@ -31,9 +31,9 @@ class CalendarPage extends StatelessWidget {
                 MyCalender(
                   focusedDay: controller.isSelectedDay,
                   onDaySelected: (selectedDay, focusedDay) {
-                    controller.selectDay(selectedDay);
-                    controller.getApointment(selectedDay.toString().substring(0,10));
+                    controller.onSelectedDay(selectedDay, focusedDay);
                   },
+                  endDay: DateTime.now().add(const Duration(days: 6)),
                 ),
                 const SizedBox(
                   height: 10,
@@ -43,7 +43,9 @@ class CalendarPage extends StatelessWidget {
                   color: kOnBoardingP,
                 ),
                 ApointTime(
-                  dataList: controller.datalist,)
+                  dataList: controller.datalist,
+                  holiday: controller.holiday,
+                )
               ],
             );
           },

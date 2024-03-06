@@ -1,18 +1,19 @@
 import 'package:e_store/controller/Auth/login_controller.dart';
 import 'package:e_store/core/function/exit_alert.dart';
 import 'package:e_store/core/function/validat.dart';
-import 'package:e_store/view/screen/widget/auth_appbar.dart';
-import 'package:e_store/view/screen/widget/auth_text_filed.dart';
-import 'package:e_store/view/screen/widget/social_media.dart';
+import 'package:e_store/view/screen/Auth/widget/auth_appbar.dart';
+import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
+import 'package:e_store/view/widget/social_media.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginView extends StatelessWidget {
-  LoginView({super.key});
-  final LoginControllerImp loginControllerImp = Get.put(LoginControllerImp());
+  const LoginView({super.key});
+
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginControllerImp());
     return Scaffold(
       body: PopScope(
         canPop: false,
@@ -24,53 +25,51 @@ class LoginView extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(15),
-          child: Form(
-            key: loginControllerImp.formKey,
-            child: Column(
-              children: [
-                const AuthAppBar(
-                  title: 'Login          ',
-                ),
-                const Spacer(flex: 1),
-                Text(
-                  "Welcome Back",
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-                const Spacer(flex: 1),
-                Text(
-                  "Sigin in with your emailand passwordor continue with social media",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(height: 2),
-                  textAlign: TextAlign.center,
-                ),
-                const Spacer(flex: 1),
-                AuthTextFiled(
-                  myController: loginControllerImp.emailController,
-                  valid: (val) {
-                    return validation(val, 5, 50, Type.email);
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  label: "Email",
-                  hint: "Enter your email",
-                  icon: const Icon(
-                    Icons.email_outlined,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                GetBuilder<LoginControllerImp>(
-                  builder: (LoginControllerImp controller) {
-                    return AuthTextFiled(
-                      myController: loginControllerImp.passwordController,
+          child: GetBuilder<LoginControllerImp>(
+            builder: (LoginControllerImp controller) {
+              return Form(
+                key: controller.formKey,
+                child: Column(
+                  children: [
+                    AuthAppBar(
+                      title: "LoginTitle".tr,
+                    ),
+                    const Spacer(flex: 1),
+                    Text(
+                      "Login1Text".tr,
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                    const Spacer(flex: 1),
+                    Text(
+                      "Login2Text".tr,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(height: 2),
+                      textAlign: TextAlign.center,
+                    ),
+                    const Spacer(flex: 1),
+                    AuthTextFiled(
+                      myController: controller.emailController,
+                      valid: (val) {
+                        return validation(val, 5, 50, Type.email);
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      label: "EmailLabel".tr,
+                      hint: "EmailHint".tr,
+                      icon: const Icon(
+                        Icons.email_outlined,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    AuthTextFiled(
+                      myController: controller.passwordController,
                       valid: (val) {
                         return validation(val, 5, 50, Type.passowrd);
                       },
                       isObscure: controller.obscure,
-                      label: "Password",
-                      hint: "Enter your passowrd",
+                      label: "PasswordLabel".tr,
+                      hint: "PasswordHint".tr,
                       icon: IconButton(
                           onPressed: () {
                             controller.obsure();
@@ -78,56 +77,68 @@ class LoginView extends StatelessWidget {
                           icon: controller.obscure
                               ? const Icon(Icons.visibility_outlined)
                               : const Icon(Icons.visibility_off_outlined)),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      loginControllerImp.navToForgetPassword();
-                    },
-                    child: const Text(
-                      "Forget password",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
                     ),
-                  ),
-                ),
-                const Spacer(flex: 1),
-                AppButton(
-                  onTap: () {
-                    loginControllerImp.login();
-                  },
-                  title: 'Login',
-                ),
-                const Spacer(flex: 1),
-                const SocialMedia(),
-                const Spacer(flex: 1),
-                Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text("Dont have any account? "),
-                      TextButton(
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: TextButton(
                         onPressed: () {
-                          loginControllerImp.navToSignUp();
+                          controller.navToForgetPassword();
                         },
-                        child: const Text(
-                          "Sign up",
-                          style:
-                              TextStyle(decoration: TextDecoration.underline),
+                        child: Text(
+                          "forget".tr,
+                          style: const TextStyle(
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const Spacer(flex: 1),
+                    AppButton(
+                      onTap: () {
+                        controller.login();
+                      },
+                      title: "btnText".tr,
+                    ),
+                    const Spacer(flex: 1),
+                    SocialMedia(
+                      onTap: () async {
+                        // UserCredential? userCredential =
+                        await controller.loginWithGoogle();
+
+                        // if (userCredential != null) {
+                        //  Get.offNamed(AppRoute.home);
+                        // } else {
+                        //    print(
+                        //       'has error');
+                        // }
+                      },
+                    ),
+                    const Spacer(flex: 1),
+                    Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("bottomText".tr),
+                          TextButton(
+                            onPressed: () {
+                              controller.navToSignUp();
+                            },
+                            child: Text(
+                              "signBtnText".tr,
+                              style: const TextStyle(
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(flex: 1),
+                  ],
                 ),
-                const Spacer(flex: 1),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),

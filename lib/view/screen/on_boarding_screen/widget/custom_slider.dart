@@ -22,15 +22,13 @@ class CustomSlider extends GetView<OnBoardingControllerImp> {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const Spacer(flex: 1),
-          SizedBox(
-            width: 200,
-            child: AspectRatio(
-                aspectRatio: 1,
-                child: Image.asset(
-                  "${onBoardingList[index].url}",
-                  fit: BoxFit.fill,
-                )),
-          ),
+         Expanded(
+          flex: 3,
+           child: Image.asset(
+                    "${onBoardingList[index].url}",
+                    fit: BoxFit.fill,
+                  ),
+         ),
           const Spacer(flex: 1),
           Text(
             "${onBoardingList[index].contains}".tr,

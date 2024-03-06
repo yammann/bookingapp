@@ -3,6 +3,7 @@ import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 abstract class SignUpController extends GetxController {
   signUp();
@@ -13,6 +14,10 @@ abstract class SignUpController extends GetxController {
 }
 
 class SignUpControllerImp extends SignUpController {
+  final MaskTextInputFormatter phoneNumberFormatter = MaskTextInputFormatter(
+    mask: '###-###-####',  // Customize the mask as needed
+    filter: {"#": RegExp(r'[0-9]')},
+  );
   GlobalKey<FormState> formKey = GlobalKey();
   bool obscure = true;
   bool isVerifyed = false;
@@ -34,7 +39,8 @@ class SignUpControllerImp extends SignUpController {
           userName: userNameController.text,
           email: emailController.text,
           phone: phoneNumberController.text,
-          password: passwordController.text));
+          password: passwordController.text, 
+          ));
     }
   }
 

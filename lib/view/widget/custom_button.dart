@@ -24,8 +24,8 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(8), color: kOnBoardingP),
           child: Center(
             child: controller.isLastePage
-                ? const Text("Got it")
-                : const Text("Continue"),
+                ?  Text("btnText2".tr)
+                :  Text("btnText1".tr),
           ),
         ),
       ),

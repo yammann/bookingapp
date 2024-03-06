@@ -9,19 +9,15 @@ class HomeImpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return 
-     
-      Container(
-        decoration: BoxDecoration(
-            color:kOnBoardingBG, borderRadius: BorderRadius.circular(20)),
-        child: ListView.builder(
-          itemCount: 5,
-          itemBuilder:(context, index) {
-            return PostDesign();
-          }, 
-        ),
-      );
-    
+    return Container(
+      decoration: BoxDecoration(
+          color: kOnBoardingBG, borderRadius: BorderRadius.circular(20)),
+      child: ListView.builder(
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return const PostDesign();
+        },
+      ),
+    );
   }
 }

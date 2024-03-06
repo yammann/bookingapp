@@ -40,8 +40,7 @@ dependencies:
   # qr_flutter: ^4.0.0
   # scan: ^1.6.0
   # grouped_list: ^5.1.2
-  url_launcher: ^6.1.2
-  # dropdown_search: ^5.0.6
+  url_launcher: ^6.2.5  # dropdown_search: ^5.0.6
   # badges: ^3.1.2
   # sqflite: ^2.0.2
   shared_preferences: ^2.0.15
@@ -71,6 +70,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_otp_text_field: ^1.1.1
+  google_sign_in: ^6.2.1
+  mask_text_input_formatter: ^2.9.0
+  firebase_storage: ^11.6.8
   
 
 dev_dependencies:

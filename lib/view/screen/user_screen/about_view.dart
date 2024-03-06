@@ -1,5 +1,5 @@
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/view/screen/widget/social_media.dart';
+import 'package:e_store/view/widget/social_media.dart';
 import 'package:flutter/material.dart';
 
 class AboutView extends StatelessWidget {

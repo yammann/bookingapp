@@ -21,5 +21,13 @@ abstract class AppRoute {
   static const String confirme="/confirme";
   static const String comment="/comment";
 
-  // static const String language="/language";
+  // Owner Pages
+    static const String ownerHome="/ownerHome";
+  static const String ownerProfile="/ownerProfile";
+  static const String bookedAppoint="/bookedAppoint";
+  static const String ownerAddService="/ownerAddService";
+  static const String ownerAddAppoint="/ownerAddAppoint";
+  static const String ownerCalendarPage="/OwnerCalendarPage";
+  static const String ownerConfirme="/OwnerConfirme";
+  static const String addPost="/addPost";
 }

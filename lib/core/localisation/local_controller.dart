@@ -8,12 +8,16 @@ class LocalController extends GetxController {
 
   MyServices myServices = Get.find();
 
-  ThemeData themeData=englishThemeData;
+  ThemeData themeData = englishThemeData;
 
   changeLang(String langCode) {
-    Locale locale = Locale(langCode); 
+    Locale locale = Locale(langCode);
     myServices.sharedPreferences.setString("lang", langCode);
-    themeData=langCode=="ar"?arabicThemeData:englishThemeData;
+    themeData = langCode == "ar"
+        ? arabicThemeData
+        : langCode == "en"
+            ? englishThemeData
+            : germanThemeData;
     Get.changeTheme(themeData);
     Get.updateLocale(locale);
   }
@@ -21,17 +25,18 @@ class LocalController extends GetxController {
   @override
   void onInit() {
     String? sharPrefLang = myServices.sharedPreferences.getString("lang");
-    if(sharPrefLang=="ar"){
-       language=const Locale("ar");
-       themeData=arabicThemeData;
-    }
-    else if(sharPrefLang=="en"){
-      language=const Locale("en");
-      themeData=englishThemeData;
-    }
-    else{
-      language=Locale(Get.deviceLocale!.languageCode);
-      themeData=englishThemeData;
+    if (sharPrefLang == "ar") {
+      language = const Locale("ar");
+      themeData = arabicThemeData;
+    } else if (sharPrefLang == "en") {
+      language = const Locale("en");
+      themeData = englishThemeData;
+    } else if (sharPrefLang == "gr") {
+      language = const Locale("gr");
+      themeData = englishThemeData;
+    } else {
+      language = Locale(Get.deviceLocale!.languageCode);
+      themeData = englishThemeData;
     }
     super.onInit();
   }

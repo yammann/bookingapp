@@ -1,5 +1,5 @@
 import 'package:e_store/controller/Auth/signup_controller.dart';
-import 'package:e_store/view/screen/widget/auth_appbar.dart';
+import 'package:e_store/view/screen/Auth/widget/auth_appbar.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

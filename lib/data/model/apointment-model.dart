@@ -29,7 +29,7 @@ class ApointmentModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'userId': userId,
       'userName': userName,

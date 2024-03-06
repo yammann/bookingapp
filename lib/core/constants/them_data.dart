@@ -22,3 +22,14 @@ ThemeData arabicThemeData = ThemeData(
     ),
   ),
 );
+
+ThemeData germanThemeData = ThemeData(
+  fontFamily: "Cairo",
+  textTheme: const TextTheme(
+    displayLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    bodyLarge: TextStyle(
+      height: 3,
+      color: kOnBoardingFC,
+    ),
+  ),
+);

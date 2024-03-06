@@ -20,7 +20,7 @@ class Indecator extends StatelessWidget {
             margin: const EdgeInsets.only(right: 5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5), color: controller.currentPage==index?kOnBoardingP: kOnBoardingBG),
-            duration: const Duration(milliseconds: 900),
+            duration: const Duration(milliseconds: 500),
           ),
         ),
       ),

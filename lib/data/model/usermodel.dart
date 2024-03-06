@@ -2,21 +2,22 @@ import 'package:uuid/uuid.dart';
 
 var uuid = const Uuid();
 
-
 class UserModel {
   UserModel({
-    required this.userName,
+    this.userName,
     required this.email,
-    required this.phone,
+    this.phone,
     required this.password,
+    this.imgProfile="assets/images/person.jpeg", 
   });
-  final String userId=uuid.v1();
-  final String userName;
+  final String userId = uuid.v1();
+  final String? userName;
   final String email;
-  final String phone;
+  final String? phone;
   final String password;
+  final String? imgProfile;
 
-   factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       userName: json['userName'],
       email: json['email'],
@@ -25,7 +26,7 @@ class UserModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'userId': userId,
       'userName': userName,
@@ -35,6 +36,3 @@ class UserModel {
     };
   }
 }
-
-
-

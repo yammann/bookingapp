@@ -1,14 +1,15 @@
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/data/model/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class PostDesign extends StatelessWidget {
-  final int countComment = 0;
-
   const PostDesign({super.key});
 
+final int countComment = 0;
+// final PostModel postModel;
   // getCountComment() async {
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class PostDesign extends StatelessWidget {
                       child: const CircleAvatar(
                         radius: 35,
                         backgroundImage:
-                            AssetImage("assets/images/person.jpeg"),
+                            AssetImage("assets/images/logo.png"),
                       ),
                     ),
                     const SizedBox(
@@ -47,7 +48,7 @@ class PostDesign extends StatelessWidget {
               width: double.infinity,
               height: screenwidth > 600 ? screenheight / 1.5 : screenheight / 2.2,
               child: Image.asset(
-                "assets/images/logo.jpeg",
+                "assets/images/logo-color.png",
                 fit: BoxFit.fill,
               )),
           Row(
@@ -60,13 +61,7 @@ class PostDesign extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => CommentPage(
-                    //         data: widget.postData,
-                    //       ),
-                    //     ));
+                   
                   },
                   icon: const Icon(Icons.chat)),
             
@@ -93,13 +88,7 @@ class PostDesign extends StatelessWidget {
                             MaterialStatePropertyAll(EdgeInsets.all(0))),
                     onPressed: () {
                       Get.toNamed(AppRoute.comment);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => CommentPage(
-                      //         data: widget.postData,
-                      //       ),
-                      //     ));
+                     
                     },
                     child: Text(
                       "view all $countComment comment",
@@ -110,9 +99,12 @@ class PostDesign extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(
-            thickness: 2,
-            color: kOnBoardingP,
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: const Divider(
+              thickness: 1,
+              color: kOnBoardingP,
+            ),
           )
         ],
       ),

@@ -4,75 +4,55 @@ import 'package:e_store/data/model/apointment-model.dart';
 import 'package:get/get.dart';
 
 abstract class CalenderController extends GetxController {
-  selectDay(DateTime day);
+  onSelectedDay(DateTime selectedDay, DateTime focusedDay);
   getApointment(String documentId);
   changeSelectedTime(int index);
 }
 
-
 class CalenderControllerImp extends CalenderController {
+  bool holiday = true;
   DateTime isSelectedDay = DateTime.now();
   List<ApointmentModel> datalist = [];
-  int selectedTime=0;
+  int selectedTime = 0;
+
   Future<void> getDataList(String documentId) async {
-      List<ApointmentModel> listForImplement = [];
+    List<ApointmentModel> listForImplement = [];
 
     CollectionReference timeCollection = FirebaseFirestore.instance
         .collection("apointment")
         .doc(documentId)
         .collection("time");
-
-    // Get the documents in the "time" collection
     QuerySnapshot timeQuerySnapshot = await timeCollection.get();
-
-    // Iterate through the documents and add data to datalist
     for (var timeDocumentSnapshot in timeQuerySnapshot.docs) {
-      // Convert data to ApointmentModel using a factory constructor or a method in your model
       ApointmentModel appointment = ApointmentModel.fromJson(
           timeDocumentSnapshot.data() as Map<String, dynamic>);
-
-      // Add the appointment data to datalist
-      listForImplement.add(appointment); // If you want to store JSON data, adjust as needed
+      listForImplement.add(appointment);
     }
-    datalist=listForImplement;
+    datalist = listForImplement;
     print(datalist);
-    update();
-    // Print or use the data in datalist as needed
-  }
-
-  @override
-  selectDay(day) {
-    isSelectedDay = day;
     update();
   }
 
   @override
   Future<void> getApointment(String documentId) async {
-    print("--------------------------------------------------------------------------$documentId");
-    // Reference to the document
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("apointment").doc(documentId);
-
-    // Get the document snapshot
     DocumentSnapshot documentSnapshot = await documentReference.get();
-
-    // Check if the document exists and if it has any data
     if (documentSnapshot.exists) {
       getDataList(documentId);
-      // You can access the data using documentSnapshot.data()
     } else {
       for (ApointmentModel appointment in apointmentList) {
-        var data = appointment.toJson();
+        var data = appointment.toMap();
         await documentReference.set({"data": documentId});
         await documentReference.collection("time").doc(data["time"]).set(data);
-        getDataList(documentId); 
+        getDataList(documentId);
       }
     }
   }
-  
+
   @override
   changeSelectedTime(int index) {
-    selectedTime=index;
+    selectedTime = index;
     update();
   }
 
@@ -80,6 +60,24 @@ class CalenderControllerImp extends CalenderController {
   void onInit() {
     super.onInit();
 
-    getApointment(isSelectedDay.toString().substring(0,10));
+    if (DateTime.now().weekday == DateTime.wednesday ||
+        DateTime.now().weekday == DateTime.sunday) {
+    } else {
+      getApointment(isSelectedDay.toString().substring(0, 10));
+    }
+  }
+
+  @override
+  onSelectedDay(DateTime selectedDay, DateTime focusedDay) {
+    if (selectedDay.weekday == DateTime.wednesday ||
+        selectedDay.weekday == DateTime.sunday) {
+      holiday = true;
+      update();
+    } else {
+      holiday = false;
+      isSelectedDay = selectedDay;
+      getApointment(selectedDay.toString().substring(0, 10));
+      update();
+    }
   }
 }

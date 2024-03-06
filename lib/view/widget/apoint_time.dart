@@ -6,14 +6,16 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 class ApointTime extends StatelessWidget {
-  ApointTime({super.key, required this.dataList});
+  ApointTime({super.key, required this.dataList, required this.holiday});
   final List<dynamic> dataList;
+  final bool holiday;
   final CalenderControllerImp calenderControllerImp =
       Get.put(CalenderControllerImp());
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: dataList.length < 13
+      child:holiday? const Center(child: Text("Holiday"),)
+      : dataList.length<13
           ? Lottie.asset("assets/lottie/loading.json")
           : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -24,7 +26,12 @@ class ApointTime extends StatelessWidget {
                   onTap: () {
                     calenderControllerImp.changeSelectedTime(index);
                     if (dataList[index].state) {
-                      Get.toNamed(AppRoute.confirme);
+                      print(Get.previousRoute);
+                      if (Get.previousRoute == "/OwnerCalendarPage" || Get.previousRoute == "/ownerHome") {
+                        Get.toNamed(AppRoute.ownerConfirme);
+                      } else {
+                        Get.toNamed(AppRoute.confirme);
+                      }
                     } else {}
                   },
                   child: Container(

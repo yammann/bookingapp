@@ -1,9 +1,15 @@
+import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/services/services.dart';
+import 'package:e_store/view/widget/app_button.dart';
 import 'package:e_store/view/widget/user_detail_row.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:get/get.dart';
 
 class UserProfileView extends StatelessWidget {
-  const UserProfileView({super.key});
+   UserProfileView({super.key});
+  final MyServices myServices = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,7 @@ class UserProfileView extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
                 color: kOnBoardingBG, borderRadius: BorderRadius.circular(15)),
-            child: const Column(
+            child:  Column(
               children: [
                 Text(
                   "Yaman Jawad",
@@ -73,7 +79,15 @@ class UserProfileView extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
+                AppButton(
+                  title: "Log out",
+                  onTap: ()async {
+                    await FirebaseAuth.instance.signOut();
+          myServices.sharedPreferences.setBool("login", false);
+                    Get.offAllNamed(AppRoute.login);
+                  },
+                  ),
               ],
             ),
           ),
