@@ -5,21 +5,21 @@ import 'package:e_store/view/widget/todo_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OwnerNormalServiceView extends StatelessWidget {
-   OwnerNormalServiceView({super.key});
-  final NormalTodoListControllerImp normalTodoListControllerImp=Get.find();
+class NormalServiceView extends StatelessWidget {
+  NormalServiceView({super.key});
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
         children: [
-           const Text(
+          const Text(
             "Normal services ",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           Expanded(
             child: GetBuilder<NormalTodoListControllerImp>(
+              init: NormalTodoListControllerImp(),
               builder: (controller) {
                 return ListView.builder(
                   itemCount: controller.todoItems.length,
@@ -27,10 +27,9 @@ class OwnerNormalServiceView extends StatelessWidget {
                     return TodoItemCard(
                       onTap: () {
                         controller.toggleCheckbox(index);
-                        controller
-                            .selectedTodo(controller.todoItems[index].label);
+                        controller.selectedTodo(controller.todoItems[index]);
                       },
-                      label: controller.todoItems[index].label,
+                      todoItem: controller.todoItems[index],
                       icon: Icon(
                         controller.todoItems[index].isSelected
                             ? Icons.check_circle
@@ -48,11 +47,16 @@ class OwnerNormalServiceView extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-           AppButton(
-                title: "Next",
-                onTap: () {
-                  Get.toNamed(AppRoute.ownerCalendarPage);
-                }),
+          GetBuilder<NormalTodoListControllerImp>(
+            init: NormalTodoListControllerImp(),
+            builder: (controller) {
+              return AppButton(
+                  title: "Next",
+                  onTap: () {
+                    controller.navToCalender();
+                  });
+            },
+          ),
         ],
       ),
     );

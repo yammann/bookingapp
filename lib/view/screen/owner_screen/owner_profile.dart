@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_store/controller/post_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/services/services.dart';
@@ -9,7 +11,6 @@ import 'package:get/get.dart';
 class OwnerProfileView extends StatelessWidget {
   OwnerProfileView({super.key});
   final MyServices myServices = Get.find();
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -69,7 +70,7 @@ class OwnerProfileView extends StatelessWidget {
               ),
               title: "Edit Profile",
             ),
-             ProfileButton(
+            ProfileButton(
               icon: const Icon(
                 Icons.add_photo_alternate_outlined,
                 color: Colors.black,
@@ -90,11 +91,10 @@ class OwnerProfileView extends StatelessWidget {
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
                 myServices.sharedPreferences.setBool("login", false);
-                Get.offAllNamed(AppRoute.login);
+                Get.offAllNamed(AppRoute.rest);
                 // await FirebaseAuth.instance.signOut();
               },
             ),
-           
           ],
         ),
         const Divider(
@@ -102,19 +102,30 @@ class OwnerProfileView extends StatelessWidget {
           thickness: 0.5,
         ),
         Expanded(
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 14,
-              crossAxisSpacing: 10,
-            ),
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                child: Image.asset(
-                  "assets/images/logo-color.png",
-                  fit: BoxFit.cover,
+          child: GetBuilder<PostControllerImp>(
+            init: PostControllerImp(),
+            builder: (controller) {
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 14,
+                  crossAxisSpacing: 10,
                 ),
+                itemCount: controller.posts.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: CachedNetworkImage(
+                      imageUrl: controller.posts[index].postImg,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                              child: CircularProgressIndicator(
+                                  value: downloadProgress.progress)),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      fit: BoxFit.fill,
+                    ),
+                  );
+                },
               );
             },
           ),

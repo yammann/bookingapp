@@ -8,73 +8,79 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OwnerSpecialAddServiceView extends StatelessWidget {
-  const OwnerSpecialAddServiceView({super.key});
+  OwnerSpecialAddServiceView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SpecialTodoListControllerImp());
-    
     return GetBuilder<SpecialTodoListControllerImp>(
+      init: SpecialTodoListControllerImp(),
       builder: (controller) {
         return Expanded(
           child: Column(
-                  children: [
-                    const SizedBox(height: 15,),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: controller.todoItems.length,
-                        itemBuilder: (context, index) {
-                          return TodoItemCard(
-                            label: controller.todoItems[index].label,
-                            icon: Icon(
-                              Icons.delete_forever,
-                              color: Colors.red[400],
-                              size: 30,
-                            ),
-                            onTapIcon: () {
-                              Get.defaultDialog(
-                                title: "Confirme",
-                                middleText:
-                                    "Are you sure you need to delete this service",
-                                backgroundColor: kOnBoardingBG,
-                                onCancel: () {},
-                                textCancel: "Cancel",
-                                textConfirm: "Confirme",
-                                onConfirm: () {
-                                  controller.deleteItem(controller.todoItems[index].label);
-                      
-                                  Get.back();
-                                },
-                              );
-                            },
-                          );
-                        },
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.todoItems.length,
+                  itemBuilder: (context, index) {
+                    return TodoItemCard(
+                      todoItem: controller.todoItems[index],
+                      icon: Icon(
+                        Icons.delete_forever,
+                        color: Colors.red[400],
+                        size: 30,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    AppButton(
-                        title: "Add Service",
-                        onTap: () {
-                          Get.defaultDialog(
-                            contentPadding: const EdgeInsets.all(20),
-                            backgroundColor: kOnBoardingBG,
-                              title: "Add Service",
-                              middleText: "Write label for your service",
-                              content: AuthTextFiled(label: "Add Service", hint: "write your service",myController: controller.labelController,),
-                              onCancel: (){},
-                              textCancel: "Cancel",
-                              onConfirm: (){
-                                controller.addItem(TodoItem(label: controller.labelController.text));
-                                Get.back();
-                              },
-                              textConfirm: "Add",
-                              );
-                        }),
-                   
-                  ],
+                      onTapIcon: () {
+                        Get.defaultDialog(
+                          title: "Confirme",
+                          middleText:
+                              "Are you sure you need to delete this service",
+                          backgroundColor: kOnBoardingBG,
+                          onCancel: () {},
+                          textCancel: "Cancel",
+                          textConfirm: "Confirme",
+                          onConfirm: () {
+                            controller
+                                .deleteItem(controller.todoItems[index].label);
+
+                            Get.back();
+                          },
+                        );
+                      },
+                    );
+                  },
                 ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              AppButton(
+                  title: "Add Service",
+                  onTap: () {
+                    Get.defaultDialog(
+                      contentPadding: const EdgeInsets.all(20),
+                      backgroundColor: kOnBoardingBG,
+                      title: "Add Service",
+                      middleText: "Write label for your service",
+                      content: AuthTextFiled(
+                        label: "Add Service",
+                        hint: "write your service",
+                        myController: controller.labelController,
+                      ),
+                      onCancel: () {},
+                      textCancel: "Cancel",
+                      onConfirm: () {
+                        controller.addItem(TodoItem(
+                            label: controller.labelController.text, time: 00));
+                        Get.back();
+                      },
+                      textConfirm: "Add",
+                    );
+                  }),
+            ],
+          ),
         );
       },
     );

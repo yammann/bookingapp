@@ -24,7 +24,8 @@ class MyTranslation extends Translations {
           //login page
           "LoginTitle": "تسجيل الدخول",
           "Login1Text": "مرحباً",
-          "Login2Text": "قم بتسجيل الدخول باستخدام بريدك الإلكتروني وكلمة المرور",
+          "Login2Text":
+              "قم بتسجيل الدخول باستخدام بريدك الإلكتروني وكلمة المرور",
           "EmailLabel": "بريد إلكتروني",
           "EmailHint": "أدخل بريدك الإلكتروني",
           "PasswordLabel": "كلمة المرور",
@@ -34,40 +35,39 @@ class MyTranslation extends Translations {
           "bottomText": "ليس لديك أي حساب؟",
           "signBtnText": "اشتراك",
           //reset Password
-          "RPtitle":'إعادة تعيين كلمة المرور',
-          "RPtext":"الرجاء إدخال عنوان بريدك الإلكتروني لإعادة تعيين كلمة المرور الخاصة بك ",
-          "RPbtn":"إعادة تعيين كلمة المرور",
-          "SBtitle":"تَحَقّق",
-          "SBtext":"سيتم إرسال رسالة إلى البريد الإلكتروني الخاص بك. يرجى التحقق من بريدك الإلكتروني لتغيير كلمة المرور الخاصة بك",
+          "RPtitle": 'إعادة تعيين كلمة المرور',
+          "RPtext":
+              "الرجاء إدخال عنوان بريدك الإلكتروني لإعادة تعيين كلمة المرور الخاصة بك ",
+          "RPbtn": "إعادة تعيين كلمة المرور",
+          "SBtitle": "تَحَقّق",
+          "SBtext":
+              "سيتم إرسال رسالة إلى البريد الإلكتروني الخاص بك. يرجى التحقق من بريدك الإلكتروني لتغيير كلمة المرور الخاصة بك",
           //exite alert
-          "EAtitle":"تحذير",
-          "EAtext":"هل تريد الخروج من هذا التطبيق",
-          "BTNok":"نعم",
-          "BTNcancel":"إلغاء",
-            //sign up page
-          "SignTitle":'اشتراك',
-          "SignText":"ستكون هذه المعلومات مفيدة لإدارة مواعيدك",
+          "EAtitle": "تحذير",
+          "EAtext": "هل تريد الخروج من هذا التطبيق",
+          "BTNok": "نعم",
+          "BTNcancel": "إلغاء",
+          //sign up page
+          "SignTitle": 'اشتراك',
+          "SignText": "ستكون هذه المعلومات مفيدة لإدارة مواعيدك",
           "userNameLabel": "اسم المستخدم",
           "userNameHint": "أدخل اسم المستخدم الخاص بك",
           "phoneLabel": "رقم هاتفك",
           "phoneHint": "أدخل رقم هاتفك",
-          "signBottomText":"اذهب لتسجيل الدخول",
+          "signBottomText": "اذهب لتسجيل الدخول",
           //warrning
-          "Warning":"تحذير",
+          "Warning": "تحذير",
           "haveAccountWarrning":"عنوان البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب آخر",
-          "dontHaveAccountWarrning":"ليس لديك حساب على هذا البريد الإلكتروني",
+          "passwordOremail": "البريد الإلكتروني أو كلمة المرور غير صحيح",
+          "dontHaveAccountWarrning": "ليس لديك حساب على هذا البريد الإلكتروني",
           //Verification snackbar
-          "Verification":"تَحَقّق",
-          "VerificationMSG":"تحقق من بريدك الإلكتروني لتأكيد الحساب",
-            //success page
-          "Success":" نجاح العملية",
-          "SuccessMSG":"تمت عملية تسجيل الحساب بنجاح يمكنك الان الانتقال الى صفحة تسجيل الدخول",
-          
+          "Verification": "تَحَقّق",
+          "VerificationMSG": "تحقق من بريدك الإلكتروني لتأكيد الحساب",
+          //success page
+          "Success": " نجاح العملية",
+          "SuccessMSG":
+              "تمت عملية تسجيل الحساب بنجاح يمكنك الان الانتقال الى صفحة تسجيل الدخول",
         },
-
-
-
-
         "en": {
           //chooes lang page
           "chooes lang": "Chooes Language",
@@ -99,40 +99,40 @@ class MyTranslation extends Translations {
           "bottomText": "Dont have any account? ",
           "signBtnText": "Sign up",
           //reset Password
-          "RPtitle":'Reset Passowrd',
-          "RPtext":"Please Enter your email Address to reset your password ",
-          "RPbtn":"Reset Passowrd",
-          "SBtitle":"Verification",
-          "SBtext":"A message will be sent to your email. Please check your email for change your password",
+          "RPtitle": 'Reset Passowrd',
+          "RPtext": "Please Enter your email Address to reset your password ",
+          "RPbtn": "Reset Passowrd",
+          "SBtitle": "Verification",
+          "SBtext":
+              "A message will be sent to your email. Please check your email for change your password",
           //exite alert
-          "EAtitle":"Warning",
-          "EAtext":"Do you want to exit this application?",
-          "BTNok":"Ok",
-          "BTNcancel":"Cancel",
+          "EAtitle": "Warning",
+          "EAtext": "Do you want to exit this application?",
+          "BTNok": "Ok",
+          "BTNcancel": "Cancel",
           //sign up page
-          "SignTitle":'Sign Up',
-          "SignText":"This information will be useful for managing your appointments",
+          "SignTitle": 'Sign Up',
+          "SignText":
+              "This information will be useful for managing your appointments",
           "userNameLabel": "User Name",
           "userNameHint": "Enter your User Name",
           "phoneLabel": "Phone Number",
           "phoneHint": "Enter your Phone Number",
-          "signBottomText":"Go to login",
+          "signBottomText": "Go to login",
           //warrning
-          "Warning":"Warning",
-          "haveAccountWarrning":"The email address is already in use by another account",
-          "dontHaveAccountWarrning":"Don't have account on this email",
+          "Warning": "Warning",
+          "haveAccountWarrning":
+              "The email address is already in use by another account",
+          "passwordOremail": "Incorrect email or password",
+          "dontHaveAccountWarrning": "Don't have account on this email",
           //Verification snackbar
-          "Verification":"Verification",
-          "VerificationMSG":"Check your email to confirm the account",
-            //success page
-          "Success":"Process success",
-          "SuccessMSG":"The account registration process has been completed successfully. You can now go to the login page",
-
+          "Verification": "Verification",
+          "VerificationMSG": "Check your email to confirm the account",
+          //success page
+          "Success": "Process success",
+          "SuccessMSG":
+              "The account registration process has been completed successfully. You can now go to the login page",
         },
-
-
-
-
         "gr": {
           //chooes lang page
           "chooes lang": "Sprache wählen",
@@ -154,7 +154,8 @@ class MyTranslation extends Translations {
           //login page
           "LoginTitle": "Anmeldung",
           "Login1Text": "Willkommen",
-          "Login2Text": "Melden Sie sich mit Ihrer E-Mail-Adresse und Ihrem Passwort an",
+          "Login2Text":
+              "Melden Sie sich mit Ihrer E-Mail-Adresse und Ihrem Passwort an",
           "EmailLabel": "Email",
           "EmailHint": "Geben sie ihre E-Mail Adresse ein",
           "PasswordLabel": "Passwort",
@@ -164,35 +165,41 @@ class MyTranslation extends Translations {
           "bottomText": "Sie haben noch kein Konto?",
           "signBtnText": "Melden Sie sich an",
           //reset Password
-          "RPtitle":'Passwort zurücksetzen',
-          "RPtext":"Bitte geben Sie Ihre E-Mail-Adresse ein, um Ihr Passwort zurückzusetzen",
-          "RPbtn":"Passwort zurücksetzen",
-          "SBtitle":"Überprüfung",
-          "SBtext":"Eine Nachricht wird an Ihre E-Mail-Adresse gesendet. Bitte überprüfen Sie Ihre E-Mails, um Ihr Passwort zu ändern",
+          "RPtitle": 'Passwort zurücksetzen',
+          "RPtext":
+              "Bitte geben Sie Ihre E-Mail-Adresse ein, um Ihr Passwort zurückzusetzen",
+          "RPbtn": "Passwort zurücksetzen",
+          "SBtitle": "Überprüfung",
+          "SBtext":
+              "Eine Nachricht wird an Ihre E-Mail-Adresse gesendet. Bitte überprüfen Sie Ihre E-Mails, um Ihr Passwort zu ändern",
           //exite alert
-          "EAtitle":"Warnung",
-          "EAtext":"Möchten Sie diese Anwendung beenden?",
-          "BTNok":"Ok",
-          "BTNcancel":"Stornieren",
-            //sign up page
-          "SignTitle":'Melden Sie sich an',
-          "SignText":"Diese Informationen werden Ihnen bei der Verwaltung Ihrer Termine nützlich sein",
+          "EAtitle": "Warnung",
+          "EAtext": "Möchten Sie diese Anwendung beenden?",
+          "BTNok": "Ok",
+          "BTNcancel": "Stornieren",
+          //sign up page
+          "SignTitle": 'Melden Sie sich an',
+          "SignText":
+              "Diese Informationen werden Ihnen bei der Verwaltung Ihrer Termine nützlich sein",
           "userNameLabel": "Nutzername",
           "userNameHint": "Geben Sie Ihren Benutzernamen ein",
           "phoneLabel": "Telefonnummer",
           "phoneHint": "Gib deine Telefonnummer ein",
-          "signBottomText":"Gehen Sie zum Anmelden",
+          "signBottomText": "Gehen Sie zum Anmelden",
           //warrning
-          "Warning":"Warnung",
-          "haveAccountWarrning":"Die E-Mail-Adresse wird bereits von einem anderen Konto verwendet",
-          "dontHaveAccountWarrning":"Sie haben kein Konto für diese E-Mail",
-          
+          "Warning": "Warnung",
+          "haveAccountWarrning":
+              "Die E-Mail-Adresse wird bereits von einem anderen Konto verwendet",
+          "dontHaveAccountWarrning": "Sie haben kein Konto für diese E-Mail",
+          "passwordOremail":"falsche Email oder Passwort",
           //Verification snackbar
-          "Verification":"Überprüfung",
-          "VerificationMSG":"Überprüfen Sie Ihre E-Mails, um das Konto zu bestätigen",
+          "Verification": "Überprüfung",
+          "VerificationMSG":
+              "Überprüfen Sie Ihre E-Mails, um das Konto zu bestätigen",
           //success page
-          "Success":"Prozesserfolg",
-          "SuccessMSG":"Der Kontoregistrierungsprozess wurde erfolgreich abgeschlossen. Sie können nun zur Anmeldeseite gehen"
+          "Success": "Prozesserfolg",
+          "SuccessMSG":
+              "Der Kontoregistrierungsprozess wurde erfolgreich abgeschlossen. Sie können nun zur Anmeldeseite gehen"
         },
       };
 }

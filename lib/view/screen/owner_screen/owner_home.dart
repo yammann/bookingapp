@@ -5,17 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OwnerHome extends StatelessWidget {
-  const OwnerHome({super.key});
-
-  
+OwnerHome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(FetchUserDataControllerImp());
-    
     return GetBuilder<FetchUserDataControllerImp>(
+      init: FetchUserDataControllerImp(),
       builder: (FetchUserDataControllerImp controller) {
-        return HandlingView(status: controller.status, widget: const OwnerHomeBody());
+        return HandlingView(status: controller.status, widget: OwnerHomeBody());
       },
     );
   }

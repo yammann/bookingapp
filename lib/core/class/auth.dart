@@ -11,18 +11,20 @@ MyServices myServices = Get.find();
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class Auth {
-  Future<void> signUp(UserModel userModel) async {
+  Future<void> signUp(String password,String phone,String email,String userName) async {
     try {
       final UserCredential credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: userModel.email, password: userModel.password);
+              email: email, password: password);
 
       credential.user!.sendEmailVerification();
+
+UserModel userModel=UserModel(userId: credential.user!.uid, email: email, password: password,phone: phone,userName: userName);
 
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       firestore
           .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(credential.user!.uid)
           .set(userModel.toMap())
           .then((value) {
         print('Data added successfully!');
@@ -31,26 +33,31 @@ class Auth {
       });
       Get.snackbar("Verification".tr, "VerificationMSG".tr);
       Get.toNamed(AppRoute.verifyCodeSignUp);
-    } on Exception catch (e) {
+    } catch (e) {
+    if (e is FirebaseAuthException && e.code == 'email-already-in-use') {
       Get.snackbar(
           "Warning".tr, "haveAccountWarrning".tr,
           backgroundColor: Colors.redAccent);
-      print("Signup failed: $e");
+    } else {
+      Get.snackbar(
+          "Warning".tr, 'Error: $e',
+          backgroundColor: Colors.redAccent);
     }
   }
+  }
 
-  Future<void> login(UserModel userModel) async {
+  Future<void> login(String email,String password) async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: userModel.email,
-        password: userModel.password,
+        email: email,
+        password:password,
       );
 
       User user = userCredential.user!;
       print("-----------------------------${user.email}");
       myServices.sharedPreferences.setBool("login", true);
-      if (user.email == "amjad@gmail.com") {
+      if (user.email == "buzzard.black19977@gmail.com") {
         Get.offNamed(AppRoute.ownerHome);
         print("owner");
         myServices.sharedPreferences.setBool("owner", true);
@@ -65,7 +72,7 @@ class Auth {
 
       print("User logged in: ${user.uid}");
     } catch (e) {
-      print("Login failed: $e");
+      Get.snackbar("Warning".tr, "passwordOremail".tr);
     }
   }
 

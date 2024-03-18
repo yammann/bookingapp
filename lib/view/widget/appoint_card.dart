@@ -1,38 +1,40 @@
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/view/widget/user_detail_row.dart';
 import 'package:flutter/material.dart';
 
 class AppointCard extends StatelessWidget {
   const AppointCard({
-    super.key,
+    super.key, required this.appointmentModel, this.onTapCancel,
   });
-
+final AppointmentModel appointmentModel;
+final Function()? onTapCancel;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: kOnBoardingBG,
+        color:appointmentModel.isBlocked?kWorrningSnackbar: kOnBoardingBG,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
         children: [
-          const Column(
+           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               UserDetailesRow(
-                  title: "Date", value: "20.10.2024"),
-              SizedBox(height: 10),
+                  title: "Date", value: appointmentModel.date!),
+              const SizedBox(height: 10),
               UserDetailesRow(
-                  title: "Time", value: "10:30 -> 11:30"),
-              SizedBox(height: 10),
+                  title: "Time", value: "${appointmentModel.time.substring(0,6)} (${appointmentModel.duration} minute)"),
+              const SizedBox(height: 10),
               UserDetailesRow(
-                  title: "Detail", value: "Haire - Chin - Face creme" ),
-              SizedBox(height: 10),
+                  title: "Detail", value: appointmentModel.detail! ),
+              const SizedBox(height: 10),
                UserDetailesRow(
-                  title: "State", value: "Active" ),
-              SizedBox(height: 10),
+                  title: "State", value: !appointmentModel.state&&!appointmentModel.isBlocked?"Activeti":"is blocked" ),
+              const SizedBox(height: 10),
             ],
           ),
           MaterialButton(
@@ -42,7 +44,7 @@ class AppointCard extends StatelessWidget {
             ),
             elevation: 0,
             color: const Color.fromARGB(255, 255, 111, 109),
-            onPressed: () {},
+            onPressed: onTapCancel,
             child: const Text("Cancel"),
           ),
         ],

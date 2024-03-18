@@ -7,47 +7,50 @@ class AboutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const CircleAvatar(
-          radius: 100,
-          backgroundImage: AssetImage("assets/images/person.jpeg"),
-        ),
-        const Spacer(
-          flex: 1,
-        ),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-              color: kOnBoardingBG, borderRadius: BorderRadius.circular(15)),
-          child: const Column(
-            children: [
-              Text(
-                "Amjad Hair Salon",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Text(
-                "Amjad Hair Salon Amjad Hair SalonAmjad Hair Salon Amjad Hair Salon Amjad Hair Salon Amjad Hair Salon Amjad Hair Salon  ",
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Text("Telephon NO: +9432434243"),
-              SizedBox(
-                height: 40,
-              ),
-              SocialMedia()
-            ],
+    return Container(
+      padding: EdgeInsets.all(15),
+      child: Column(
+        children: [
+          const CircleAvatar(
+            radius: 100,
+            backgroundImage: AssetImage("assets/images/person.jpeg"),
           ),
-        ),
-        const Spacer(
-          flex: 4,
-        ),
-      ],
+          const Spacer(
+            flex: 1,
+          ),
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: kOnBoardingBG, borderRadius: BorderRadius.circular(15)),
+            child: const Column(
+              children: [
+                Text(
+                  "Amjad Hair Salon",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Text(
+                  "Amjad Hair Salon Amjad Hair SalonAmjad Hair Salon Amjad Hair Salon Amjad Hair Salon Amjad Hair Salon Amjad Hair Salon  ",
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Text("Telephon NO: +9432434243"),
+                SizedBox(
+                  height: 40,
+                ),
+                SocialMedia()
+              ],
+            ),
+          ),
+          const Spacer(
+            flex: 4,
+          ),
+        ],
+      ),
     );
   }
 }

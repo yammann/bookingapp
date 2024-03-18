@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class   OwnerNormalAddServiceView extends StatelessWidget {
-  const   OwnerNormalAddServiceView
-({super.key});
+  OwnerNormalAddServiceView({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
-    Get.put(NormalTodoListControllerImp());
-    
     return GetBuilder<NormalTodoListControllerImp>(
+      init: NormalTodoListControllerImp(),
       builder: (controller) {
         return Expanded(
           child: Column(
@@ -26,7 +26,7 @@ class   OwnerNormalAddServiceView extends StatelessWidget {
                         itemCount: controller.todoItems.length,
                         itemBuilder: (context, index) {
                           return TodoItemCard(
-                            label: controller.todoItems[index].label,
+                            todoItem: controller.todoItems[index],
                             icon: Icon(
                               Icons.delete_forever,
                               color: Colors.red[400],
@@ -63,11 +63,17 @@ class   OwnerNormalAddServiceView extends StatelessWidget {
                             backgroundColor: kOnBoardingBG,
                               title: "Add Service",
                               middleText: "Write label for your service",
-                              content: AuthTextFiled(label: "Add Service", hint: "write your service",myController: controller.labelController,),
+                              content: Column(
+                                children: [
+                                  AuthTextFiled(label: "Add Service", hint: "write your service",myController: controller.labelController,),
+                                  SizedBox(height: 10,),
+                                  AuthTextFiled(label: "Time", hint: "Add time for this service",myController: controller.timeController,keyboardType: TextInputType.number,),
+                                ],
+                              ),
                               onCancel: (){},
                               textCancel: "Cancel",
                               onConfirm: (){
-                                controller.addItem(TodoItem(label: controller.labelController.text));
+                                controller.addItem(TodoItem(label: controller.labelController.text, time: int.parse(controller.timeController.text)));
                                 Get.back();
                               },
                               textConfirm: "Add",

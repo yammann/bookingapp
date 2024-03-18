@@ -1,6 +1,7 @@
 import 'package:e_store/core/class/auth.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/data/model/usermodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -15,7 +16,7 @@ abstract class SignUpController extends GetxController {
 
 class SignUpControllerImp extends SignUpController {
   final MaskTextInputFormatter phoneNumberFormatter = MaskTextInputFormatter(
-    mask: '###-###-####',  // Customize the mask as needed
+    mask: '0###-###-####', // Customize the mask as needed
     filter: {"#": RegExp(r'[0-9]')},
   );
   GlobalKey<FormState> formKey = GlobalKey();
@@ -35,12 +36,7 @@ class SignUpControllerImp extends SignUpController {
   signUp() async {
     var formState = formKey.currentState;
     if (formState!.validate()) {
-      auth.signUp(UserModel(
-          userName: userNameController.text,
-          email: emailController.text,
-          phone: phoneNumberController.text,
-          password: passwordController.text, 
-          ));
+      auth.signUp(passwordController.text,phoneNumberController.text,emailController.text,userNameController.text,);
     }
   }
 

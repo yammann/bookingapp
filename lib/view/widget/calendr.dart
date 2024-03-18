@@ -1,8 +1,6 @@
 
-import 'package:e_store/controller/add_appoint/calender_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MyCalender extends StatelessWidget {
@@ -17,9 +15,7 @@ class MyCalender extends StatelessWidget {
   final DateTime endDay;
   @override
   Widget build(BuildContext context) {
-    Get.put(CalenderControllerImp());
     final DateTime today = DateTime.now();
-
     return TableCalendar( 
       holidayPredicate: (day) {
        

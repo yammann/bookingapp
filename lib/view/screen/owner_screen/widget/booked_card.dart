@@ -1,43 +1,62 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/view/widget/user_detail_row.dart';
 import 'package:flutter/material.dart';
 
 class BookedCard extends StatelessWidget {
-  const BookedCard({super.key});
-
+  const BookedCard({super.key, required this.appointmentModel, this.onTapIcon,});
+final AppointmentModel appointmentModel;
+final Function()? onTapIcon;
   @override
   Widget build(BuildContext context) {
     return  Container(
                 width: double.infinity,
-                margin: EdgeInsets.symmetric(vertical: 5),
+                margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: kOnBoardingBG),
+                    color:appointmentModel.isBlocked?kWorrningSnackbar: kOnBoardingBG),
                 child:  Column(
                   children: [
-                    const Row(
+                     Row(
                       children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage:
-                              AssetImage("assets/images/person.jpeg"),
+                        Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.grey),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: appointmentModel.userProfImg!,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                            child: CircularProgressIndicator(
+                              value: downloadProgress.progress,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.cover,
+                          width: 50, 
+                          height: 50, 
                         ),
-                        SizedBox(width: 5,),
+                      ),
+                    ),
+                        const SizedBox(width: 5,),
                         Expanded(
                           child: Column(
                             children: [
                               UserDetailesRow(
-                                  title: "User Name", value: "Yaman Cawad"),
+                                  title: "User Name", value: appointmentModel.userName!),
                               UserDetailesRow(
-                                  title: "Time", value: "09:00 - 10:00"),
-                              UserDetailesRow(title: "Detail", value: "Hair cut"),
+                                  title: "Time", value: "${appointmentModel.time.substring(0,6)} (${appointmentModel.duration} minute)"),
+                              UserDetailesRow(title: "Detail", value: appointmentModel.detail!),
                             ],
                           ),
                         ),
                       ],
                     ),
-                     IconButton(onPressed: () {}, icon: const Icon(Icons.cancel,color: Colors.red,size: 40,)),
+                     IconButton(onPressed:appointmentModel.isBlocked?(){}: onTapIcon, icon: const Icon(Icons.cancel,color: Colors.red,size: 40,)),
                   ],
                 ),
               );

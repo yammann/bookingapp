@@ -17,33 +17,16 @@ abstract class SpecialTodoListController extends GetxController {
 class SpecialTodoListControllerImp extends SpecialTodoListController {
   final CollectionReference colectionRef =
       FirebaseFirestore.instance.collection("Special_todo");
-  // List todoList = [];
   List todoItems = [];
 
   late TextEditingController labelController;
 
-  // @override
-  // void toggleCheckbox(int index) {
-  //   todoItems[index].isSelected = !todoItems[index].isSelected;
-  //   update();
-  // }
-
-  // @override
-  // void selectedTodo(String value) {
-  //   if (!todoList.contains(value)) {
-  //     todoList.add(value);
-  //     print(' exists in the list.........$todoList');
-  //   } else {
-  //     todoList.remove(value);
-  //     print(' does not exist in the list or the list is null......$todoList');
-  //   }
-  //   update();
-  // }
 
   @override
   void addItem(TodoItem todoItem) async {
     try {
       await colectionRef.doc(todoItem.label).set(todoItem.toMap());
+      labelController.clear();
       fetchItem();
       print("added$todoItem");
     } catch (e) {

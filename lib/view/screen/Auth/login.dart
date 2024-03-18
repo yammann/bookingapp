@@ -9,11 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
-
+  LoginView({super.key});
+  final LoginControllerImp loginControllerImp= Get.put(LoginControllerImp());
   @override
   Widget build(BuildContext context) {
-    Get.put(LoginControllerImp());
     return Scaffold(
       body: PopScope(
         canPop: false,

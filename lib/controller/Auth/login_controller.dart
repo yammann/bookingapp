@@ -26,7 +26,7 @@ class LoginControllerImp extends LoginController {
     var formState = formKey.currentState;
     if (formState!.validate()) {
       if (await checkInternet()) {
-        auth.login(UserModel(email: emailController.text, password: passwordController.text));
+        auth.login(emailController.text, passwordController.text);
       }
     }
   }

@@ -1,4 +1,3 @@
-import 'package:e_store/controller/add_appoint/normal_todo_list_controller.dart';
 import 'package:e_store/controller/add_appoint/special_todo_list_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/widget/todo_item_card.dart';
@@ -7,7 +6,8 @@ import 'package:get/get.dart';
 
 class SpecialServiceView extends StatelessWidget {
    SpecialServiceView({super.key});
-  final SpecialTodoListControllerImp specialTodoListControllerImp=Get.find();
+    final SpecialTodoListControllerImp specialTodoListControllerImp=Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -42,7 +42,7 @@ class SpecialServiceView extends StatelessWidget {
                               
                         );
                       },
-                      label: controller.todoItems[index].label,
+                      todoItem: controller.todoItems[index],
                       icon: Icon(Icons.star,color: Colors.amber,),
                     );
                   },
@@ -51,7 +51,7 @@ class SpecialServiceView extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
         ],
       ),

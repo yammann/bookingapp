@@ -1,4 +1,4 @@
-import 'package:e_store/controller/add_post_controller.dart';
+import 'package:e_store/controller/post_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/screen/owner_screen/widget/profile_button.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +8,10 @@ import 'package:image_picker/image_picker.dart';
 class AddPostFirstView extends StatelessWidget {
   AddPostFirstView({super.key});
 
-  final AddPostControllerImp addPostControllerImp = Get.put(AddPostControllerImp());
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddPostControllerImp>(
+    return GetBuilder<PostControllerImp>(
+      init: PostControllerImp(),
       builder: (controller) {
         return Scaffold(
           backgroundColor: kOnBoardingBG,

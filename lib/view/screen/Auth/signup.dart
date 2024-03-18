@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpView extends StatelessWidget {
-  const SignUpView({super.key});
-
+  SignUpView({super.key});
+  final SignUpControllerImp signUpControllerImp= Get.put(SignUpControllerImp());
   @override
   Widget build(BuildContext context) {
-    Get.put(SignUpControllerImp);
+    
     return Scaffold(
       body: GetBuilder<SignUpControllerImp>(
         builder: (controller) {

@@ -7,28 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddAppointView extends StatelessWidget {
-  const AddAppointView({super.key});
+   AddAppointView({super.key});
+    final  AddAppointControllerImp addAppointControllerImp= Get.find();
+
   @override
   Widget build(BuildContext context) {
-    Get.put(NormalTodoListControllerImp());
-    Get.put(SpecialTodoListControllerImp());
-    final AddAppointControllerImp addAppointControllerImp =
-        Get.put(AddAppointControllerImp());
     return GetBuilder<AddAppointControllerImp>(
       builder: (controller) {
         return Column(
           children: [
             DoubleButton(
               onTapNormal: () {
-                addAppointControllerImp.currentPage(0);
+                controller.currentPage(0);
               },
               onTapSpecial: () {
-                addAppointControllerImp.currentPage(1);
+                controller.currentPage(1);
               },
             ),
-            servicePages[addAppointControllerImp.currentIndex],
+            userServicePages[controller.currentIndex],
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
           ],
         );

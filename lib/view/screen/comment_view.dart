@@ -1,16 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_store/controller/comment_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CommentPage extends StatelessWidget {
   CommentPage({
     super.key,
   });
-
-  final commentTextController = TextEditingController();
-
+  final CommentControllerImp commentControllerImp =
+      Get.put(CommentControllerImp());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,37 +22,52 @@ class CommentPage extends StatelessWidget {
         centerTitle: true,
         title: const Text("Commentis"),
       ),
-      body: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.white),
-        padding: const EdgeInsets.symmetric(vertical: 20,),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.all(8),
-                child: ListView.builder(
-                  itemCount: 13,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
+      body: GetBuilder<CommentControllerImp>(
+        builder: (CommentControllerImp controller) {
+          return Container(
+            width: double.infinity,
+            margin:
+                const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30), color: Colors.white),
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(8),
+                    child: ListView.builder(
+                      itemCount: controller.comments.length,
+                      itemBuilder: (context, index) {
+                        print(controller.comments.length);
+                        return Container(
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(3),
                                 decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey),
-                                child: const CircleAvatar(
-                                  radius: 33,
-                                  backgroundImage: AssetImage(
-                                      "assets/images/onboarding.png"),
+                                    shape: BoxShape.circle, color: Colors.grey),
+                                child: ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl: controller
+                                        .comments[index].commenterProImg,
+                                    progressIndicatorBuilder:
+                                        (context, url, downloadProgress) =>
+                                            Center(
+                                      child: CircularProgressIndicator(
+                                        value: downloadProgress.progress,
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    fit: BoxFit.cover,
+                                    width: 33, 
+                                    height: 33,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -59,124 +76,93 @@ class CommentPage extends StatelessWidget {
                               Container(
                                 width: 200,
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      "Yaman Jawad",
+                                    Text(
+                                      controller
+                                          .comments[index].commenterUserName,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                    const Text(
-                                      "Nice!",
+                                    Text(
+                                      controller.comments[index].commentText,
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                    Text(DateFormat.yMMMMd()
-                                        .format(DateTime.now())),
+                                    Text(
+                                      DateFormat.yMMMMd().format(controller
+                                          .comments[index].datePublished),
+                                      style:
+                                          const TextStyle(color: Colors.grey),
+                                    ),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.favorite))
-                        ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.grey),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: Get.arguments[1].imgProfile,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                            child: CircularProgressIndicator(
+                              value: downloadProgress.progress,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.cover,
+                          width: 50, // Adjust the size as needed
+                          height: 50, // Adjust the size as needed
+                        ),
                       ),
-                    );
-                  },
-                  // children:
-                  //     snapshot.data!.docs.map((DocumentSnapshot document) {
-                  //   Map<String, dynamic> data =
-                  //       document.data()! as Map<String, dynamic>;
-                  //   return
-                  // }).toList(),
-                ),
-              ),
-            ),
-            // StreamBuilder<QuerySnapshot>(
-            //   stream: FirebaseFirestore.instance
-            //       .collection("posts")
-            //       .doc(widget.data["postId"])
-            //       .collection("comments")
-            //       .orderBy("datePublished")
-            //       .snapshots(),
-            //   builder: (BuildContext context,
-            //       AsyncSnapshot<QuerySnapshot> snapshot) {
-            //     if (snapshot.hasError) {
-            //       return Text('Error: ${snapshot.error}');
-            //     }
-        
-            //     if (snapshot.connectionState == ConnectionState.waiting) {
-            //       return Center(
-            //         child: CircularProgressIndicator(color: Colors.white),
-            //       );
-            //     }
-        
-            //     if (!snapshot.hasData || snapshot.data == null) {
-            //       // Handle the case where the data is null.
-            //       return Text('No data available');
-            //     }
-            //     return
-            //   },
-            // ),
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey),
-                  child: const CircleAvatar(
-                      radius: 25,
-                      backgroundImage: AssetImage("assets/images/logo.jpeg")),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  width: 300,
-                  height: 50,
-                  child: const AuthTextFiled(
-                      label: "Add Comment",
-                      hint: "Write your comment",
-                      icon: Icon(Icons.send)),
-                ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 300,
+                      height: 50,
+                      child: AuthTextFiled(
+                        myController: controller.commentTextController,
+                        label: "Add Comment",
+                        hint: "Write your comment",
+                        icon: IconButton(
+                          onPressed: () {
+                            if (controller.commentTextController.text != "") {
+                              controller.commenting(
+                                  postId: Get.arguments[0],
+                                  profImg: Get.arguments[1].imgProfile,
+                                  username: Get.arguments[1].userName!,
+                                  uID: Get.arguments[1].userId);
+                            } else {
+                              Get.snackbar("Warrning", "this comment is empty");
+                            }
+                          },
+                          icon: const Icon(Icons.send),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 }
-//  TextField(
-//                     controller: commentTextController,
-//                     keyboardType: TextInputType.text,
-//                     decoration: InputDecoration(
-//                         suffixIcon: IconButton(
-//                             onPressed: () async {
-//                               // await FirestoreMethods().Commenting(
-//                               //     commentTextController:
-//                               //         commentTextController.text,
-//                               //     postId: widget.data["postId"],
-//                               //     url: commenterData.url,
-//                               //     username: commenterData.username,
-//                               //     uID: commenterData.uID,
-//                               //     context: context);
-//                               // commentTextController.clear();
-//                             },
-//                             icon: const Icon(Icons.send)),
-//                         fillColor: kOnBoardingBG,
-//                         filled: true,
-//                         hintText: "Comment as UserName",
-//                         hintStyle: const TextStyle(color: Colors.black),
-//                         focusedBorder: const OutlineInputBorder(
-//                           borderSide: BorderSide(
-//                             color: kOnBoardingP,
-//                             width: 2,
-//                           ),
-//                         ),
-//                         enabledBorder:
-//                             const OutlineInputBorder(borderSide: BorderSide.none)),
-//                   ),
