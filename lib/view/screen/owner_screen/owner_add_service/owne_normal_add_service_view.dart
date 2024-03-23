@@ -68,6 +68,8 @@ class   OwnerNormalAddServiceView extends StatelessWidget {
                                   AuthTextFiled(label: "Add Service", hint: "write your service",myController: controller.labelController,),
                                   SizedBox(height: 10,),
                                   AuthTextFiled(label: "Time", hint: "Add time for this service",myController: controller.timeController,keyboardType: TextInputType.number,),
+                                  SizedBox(height: 10,),
+                                  Text("Note: This service that you will add will appear to the customer in the language in which it is added. We suggest that you add it in this way Example:  حلاقة شعر (haircut)",style: TextStyle(fontSize: 10),)
                                 ],
                               ),
                               onCancel: (){},

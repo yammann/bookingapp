@@ -73,6 +73,7 @@ dependencies:
   google_sign_in: ^6.2.1
   mask_text_input_formatter: ^2.9.0
   firebase_storage: ^11.6.8
+  flutter_local_notifications: ^17.0.0
   
 
 dev_dependencies:

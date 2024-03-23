@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_store/data/data-source/static/static.dart';
+import 'package:e_store/core/function/appointment_exceed.dart';
+import 'package:e_store/core/function/launch_url.dart';
+import 'package:e_store/core/function/send_mesage_to_email.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ abstract class BookedAppointmentController extends GetxController {
   cancelAndAvailableAppointment(String appointmentId, String documentId);
   cancelAndBlockedAppointment(String appointmentId, String date);
   getSnapshots(String documentId);
+  sendEmail(AppointmentModel appointmentModel, bool isBlocking);
 }
 
 class BookedAppointmentControllerImp extends BookedAppointmentController {
@@ -24,7 +27,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   @override
   void onInit() {
     super.onInit();
-
+    appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
     if (DateTime.now().weekday == DateTime.wednesday ||
         DateTime.now().weekday == DateTime.sunday) {
     } else {
@@ -149,5 +152,36 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
       bookedAppointList.addAll(uniqueAppointments);
       update();
     });
+  }
+  
+  @override
+  sendEmail(AppointmentModel appointmentModel, bool isBlocking)async {
+     DocumentSnapshot<Map<String, dynamic>> snap = await FirebaseFirestore
+        .instance
+        .collection("users")
+        .doc(appointmentModel.userId)
+        .get();
+
+    UserModel userModel = UserModel.fromJson(snap.data()!);
+    // sendMesageToEmail(userModel.email,
+    // "Jawad Barber",
+    // """Dear customer:
+    //  we apologize for canceling your scheduled appointment on the date
+    //  of ${appointmentModel.date}  ${appointmentModel.time}
+    //  due to an emergency""");
+    launchSendEmail(userModel.email,
+    "Jawad Barber",
+    """Dear customer:
+     we apologize for canceling your scheduled appointment on the date
+     of ${appointmentModel.date}  ${appointmentModel.time}
+     due to an emergency""");
+     
+    if (!isBlocking) {
+      await cancelAndAvailableAppointment(appointmentModel.appointmentId!,
+          appointmentModel.date!);
+    } else {
+      await cancelAndBlockedAppointment(
+          appointmentModel.appointmentId!, appointmentModel.date!);
+    }
   }
 }

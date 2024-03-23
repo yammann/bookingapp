@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -69,7 +68,6 @@ class MyAppointmentControllerImp extends MyAppointmentController {
         "userId": null,
         "detail": null,
         "state": true,
-        "isBlocked": false,
         "duration": null,
         "appointmentId": null,
       });

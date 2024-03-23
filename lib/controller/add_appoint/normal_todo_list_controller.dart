@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/model/todo_item.dart';
+import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +25,8 @@ class NormalTodoListControllerImp extends NormalTodoListController {
   List<TodoItem> todoItems = [];
 
   final User currentUser=FirebaseAuth.instance.currentUser!;
+
+  late UserModel userModel;
 
   late TextEditingController labelController;
   late TextEditingController timeController;
@@ -50,13 +54,15 @@ class NormalTodoListControllerImp extends NormalTodoListController {
 
   @override
   void addItem(TodoItem todoItem) async {
-    try {
-      await collectionRef.doc(todoItem.label).set(todoItem.toMap());
-      fetchItem();
-      print("added$todoItem");
-    } catch (e) {
-      print("has error");
-    }
+    if (timeController.text.isNotEmpty&&labelController.text.isNotEmpty) {
+  try {
+    await collectionRef.doc(todoItem.label).set(todoItem.toMap());
+    fetchItem();
+    print("added$todoItem");
+  } catch (e) {
+    print("has error");
+  }
+}
   }
 
   @override
@@ -71,7 +77,8 @@ class NormalTodoListControllerImp extends NormalTodoListController {
   }
 
   @override
-  void onInit() {
+  void onInit() async{
+    userModel = await getUserData(currentUser.uid);
     labelController = TextEditingController();
     timeController = TextEditingController();
     fetchItem();
@@ -112,7 +119,9 @@ class NormalTodoListControllerImp extends NormalTodoListController {
     } else {
        Get.toNamed(
         AppRoute.calendarPage,
-        arguments: {'selectedTodoList': selectedTodoList},);
+        arguments: {
+        'selectedTodoList': selectedTodoList,
+        "userModel":userModel,},);
     }
   }
 }

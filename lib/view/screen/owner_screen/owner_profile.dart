@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_store/controller/post_controller.dart';
+import 'package:e_store/controller/user_profile_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/services/services.dart';
@@ -15,46 +16,65 @@ class OwnerProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(3),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey,
+        GetBuilder<UserProfileControllerImp>(
+          init: UserProfileControllerImp(),
+          builder: (controller) {
+            return Container(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(1),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color:kOnBoardingBG,
+                  ),
+                  child: ClipOval(
+                      child: controller.isloadin
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                  color: kOnBoardingP))
+                          : CachedNetworkImage(
+                              imageUrl: controller.userModel.imgProfile,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Center(
+                                child: CircularProgressIndicator(
+                                  value: downloadProgress.progress,
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              fit: BoxFit.cover,
+                              width: 100, // Adjust the size as needed
+                              height: 100, // Adjust the size as needed
+                            ),
+                    ),
                 ),
-                child: const CircleAvatar(
-                  radius: 45,
-                  backgroundImage: AssetImage("assets/images/person.jpeg"),
+                 SizedBox(
+                  width: 40,
                 ),
-              ),
-              const SizedBox(
-                width: 40,
-              ),
-              const Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
+                 Expanded(
+                  child: InkWell(
+                    onTap: (){Get.toNamed(AppRoute.costumerView);},
+                    child: Column(
                       children: [
                         Text(
-                          "0",
-                          style: TextStyle(
+                          controller.countCoustumer.toString(),
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Text("Coustumer"),
+                        const Text("Coustumer"),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          );
+          },
         ),
         const Divider(
           color: kOnBoardingP,
@@ -63,7 +83,10 @@ class OwnerProfileView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const ProfileButton(
+             ProfileButton(
+              onPressed: () {
+                Get.toNamed(AppRoute.profile);
+              },
               icon: Icon(
                 Icons.edit,
                 color: Colors.black,
@@ -114,6 +137,17 @@ class OwnerProfileView extends StatelessWidget {
                 itemCount: controller.posts.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
+                    onLongPress: () {
+                      Get.defaultDialog(
+                        backgroundColor: kOnBoardingBG,
+                        title: "Are you need delete this post",
+                        middleText: "",
+                        onCancel: () {},
+                        onConfirm: () {
+                          controller.deletPost(controller.posts[index].imgPath,controller.posts[index].postId);
+                        },
+                      );
+                    },
                     child: CachedNetworkImage(
                       imageUrl: controller.posts[index].postImg,
                       progressIndicatorBuilder:

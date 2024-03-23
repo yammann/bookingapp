@@ -1,9 +1,4 @@
-import 'package:e_store/controller/add_appoint/add_appoint_controller.dart';
-import 'package:e_store/controller/add_appoint/normal_todo_list_controller.dart';
-import 'package:e_store/controller/add_appoint/special_todo_list_controller.dart';
 import 'package:e_store/controller/home_controller.dart';
-import 'package:e_store/controller/my_appointment_cpntroller.dart';
-import 'package:e_store/controller/post_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/function/exit_alert.dart';
 import 'package:e_store/data/data-source/static/static.dart';
@@ -22,7 +17,7 @@ final HomeControllerImp homeControllerImp=Get.find();
           bottomNavigationBar: BottomAppBar(
             height: 50,
             padding: EdgeInsets.zero,
-            color: kOnBoardingBG, // Set the color of the BottomAppBar as needed
+            color: kOnBoardingBG,
             shape: const CircularNotchedRectangle(),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -41,7 +36,7 @@ final HomeControllerImp homeControllerImp=Get.find();
                 ),
                 IconButton(
                   icon: const Icon(
-                    Icons.person_3,
+                    Icons.list_alt_rounded,
                     size: 40,
                   ),
                   color: controller1.currentIndex == 1
@@ -54,7 +49,7 @@ final HomeControllerImp homeControllerImp=Get.find();
                 const SizedBox(width: 40), // Adjust the space as needed
                 IconButton(
                   icon: const Icon(
-                    Icons.list_alt_rounded,
+                    Icons.person_3,
                     size:40,
                   ),
                   color: controller1.currentIndex == 2

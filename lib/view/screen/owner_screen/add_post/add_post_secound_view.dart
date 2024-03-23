@@ -1,6 +1,5 @@
 import 'package:e_store/controller/post_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/data/model/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

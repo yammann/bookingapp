@@ -4,6 +4,7 @@ import 'package:e_store/view/screen/owner_screen/widget/booked_card.dart';
 import 'package:e_store/view/widget/calendr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class BookedAppointmentsView extends StatelessWidget {
   BookedAppointmentsView({super.key});
@@ -20,6 +21,8 @@ class BookedAppointmentsView extends StatelessWidget {
           return Column(
             children: [
               MyCalender(
+                calendarFormat: CalendarFormat.week,
+                availableCalendarFormats: const {CalendarFormat.week: "week"},
                 focusedDay: controller.isSelectedDay,
                 onDaySelected: (selectedDay, focusedDay) {
                   controller.onSelectedDay(selectedDay, focusedDay);
@@ -39,7 +42,8 @@ class BookedAppointmentsView extends StatelessWidget {
                         itemCount: controller.bookedAppointList.length,
                         itemBuilder: (context, index) {
                           return BookedCard(
-                            appointmentModel: controller.bookedAppointList[index],
+                            appointmentModel:
+                                controller.bookedAppointList[index],
                             onTapIcon: () {
                               Get.defaultDialog(
                                 title: "?",
@@ -54,37 +58,65 @@ class BookedAppointmentsView extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
                                         ElevatedButton(
                                           onPressed: () async {
+                                            Get.back();
                                             Get.defaultDialog(
-                                              contentPadding: const EdgeInsets.all(20),
-                                              middleText: "You need to tell the customer",
-                                              middleTextStyle: const TextStyle(fontSize: 16),
+                                              contentPadding:
+                                                  const EdgeInsets.all(20),
+                                              middleText:"You need to tell the customer",
+                                              middleTextStyle:const TextStyle(fontSize: 16),
+                                              content: Row(
+                                                mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  ElevatedButton(
+                                                    onPressed: () async {controller.sendEmail(controller.bookedAppointList[index],false);},
+                                                    child:
+                                                        const Text("Send mail"),
+                                                  ),
+                                                  ElevatedButton(
+                                                    onPressed: () { controller.call(controller.bookedAppointList[index],false);},
+                                                    child:
+                                                        const Text("Call him"),
+                                                  )
+                                                ],
+                                              ),
                                               onCancel: () {},
                                               textCancel: "Cancel",
-                                              onConfirm: () {
-                                                controller.call(controller.bookedAppointList[index], false);
-                                                Get.back(); // Close the dialog
-                                              },
-                                              textConfirm: "call",
                                             );
                                           },
                                           child: const Text("Available"),
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
+                                            Get.back();   
                                             Get.defaultDialog(
-                                              contentPadding: const EdgeInsets.all(20),
-                                              middleText: "You need to tell the customer",
-                                              middleTextStyle: const TextStyle(fontSize: 16),
+                                              contentPadding:
+                                                  const EdgeInsets.all(20),
+                                              middleText:
+                                                  "You need to tell the customer",
+                                              middleTextStyle:
+                                                  const TextStyle(fontSize: 16),
                                               onCancel: () {},
                                               textCancel: "Cancel",
-                                              onConfirm: () {
-                                                controller.call(controller.bookedAppointList[index], true);
-                                                Get.back();
-                                              },
+                                              content: Row(
+                                                mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  ElevatedButton(
+                                                    onPressed: () async {controller.sendEmail(controller.bookedAppointList[index],true);},
+                                                    child:
+                                                        const Text("Send mail"),
+                                                  ),
+                                                  ElevatedButton(
+                                                    onPressed: () { controller.call(controller.bookedAppointList[index],true);},
+                                                    child:
+                                                        const Text("Call him"),
+                                                  )
+                                                ],
+                                              ),
                                               textConfirm: "Block",
                                             );
                                           },

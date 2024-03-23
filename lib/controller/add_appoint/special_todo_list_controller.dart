@@ -1,25 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_store/data/data-source/static/static.dart';
+import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/model/todo_item.dart';
+import 'package:e_store/data/model/usermodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class SpecialTodoListController extends GetxController {
-  // void toggleCheckbox(int index);
-  // void selectedTodo(String value);
+ 
   void deleteItem(String label);
   void addItem(TodoItem todoItem);
   void fetchItem();
   void call(String phoneNumber);
+  navToCalender();
+  getUsers();
+  onSelectOfDropdownList(UserModel userModel);
 }
 
 class SpecialTodoListControllerImp extends SpecialTodoListController {
-  final CollectionReference colectionRef =
-      FirebaseFirestore.instance.collection("Special_todo");
+  final CollectionReference colectionRef =FirebaseFirestore.instance.collection("Special_todo");
   List todoItems = [];
+  final User currentUser=FirebaseAuth.instance.currentUser!;
+  List<UserModel>users=[];
+  String title="Select Costumer";
+  late UserModel costumer;
 
-  late TextEditingController labelController;
+  late TextEditingController labelController = TextEditingController();
+  late TextEditingController durationController= TextEditingController();
+  late TextEditingController detailController= TextEditingController();
 
 
   @override
@@ -28,9 +39,8 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
       await colectionRef.doc(todoItem.label).set(todoItem.toMap());
       labelController.clear();
       fetchItem();
-      print("added$todoItem");
     } catch (e) {
-      print("has error");
+      Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 
@@ -39,15 +49,15 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
     try {
       await colectionRef.doc(label).delete();
       fetchItem();
-      print("deleted");
     } catch (e) {
-      print("has error delete");
+      Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 
   @override
-  void onInit() {
-    labelController = TextEditingController();
+  void onInit() async{
+    costumer=await getUserData(currentUser.uid);
+    getUsers();
     fetchItem();
     super.onInit();
   }
@@ -64,10 +74,10 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
         forImplement.add(todoItem);
       }
       todoItems = forImplement;
-      print(todoItems);
+      
       update();
     } catch (_) {
-      print("has error 2");
+      Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 
@@ -79,5 +89,39 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  @override
+  navToCalender() {
+    if (detailController.text.isNotEmpty&&durationController.text.isNotEmpty) {
+    List<TodoItem> todoItem=[TodoItem(label: detailController.text, time: int.parse(durationController.text))];
+      Get.toNamed(
+        AppRoute.calendarPage,
+        arguments: {'selectedTodoList': todoItem,'userModel':costumer},);
+    } else {
+       Get.snackbar("Warrning", "Cant entre empty value",
+          backgroundColor:kWorrningSnackbar);
+    }
+  }
+  
+  @override
+  getUsers() async{
+    try {
+      QuerySnapshot usersQuerySnapshot=await FirebaseFirestore.instance.collection("users").get();
+      for(DocumentSnapshot usersDocumentSnapshot in usersQuerySnapshot.docs){
+        UserModel userModel=UserModel.fromJson(usersDocumentSnapshot.data() as Map<String,dynamic>);
+        users.add(userModel);
+      }
+      update();
+    } catch (e) {
+      Get.snackbar("warrning", "has error");
+    }
+  }
+  
+  @override
+  onSelectOfDropdownList(UserModel userModel) {
+   title=userModel.userName!;
+   costumer=userModel;
+   update();
   }
 }

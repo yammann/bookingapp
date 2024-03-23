@@ -22,9 +22,9 @@ final Function()? onTapIcon;
                      Row(
                       children: [
                         Container(
-                      padding: const EdgeInsets.all(3),
+                      padding: const EdgeInsets.all(1),
                       decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey),
+                          shape: BoxShape.circle, color: kOnBoardingP),
                       child: ClipOval(
                         child: CachedNetworkImage(
                           imageUrl: appointmentModel.userProfImg!,

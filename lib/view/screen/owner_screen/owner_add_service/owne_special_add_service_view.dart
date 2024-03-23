@@ -64,10 +64,19 @@ class OwnerSpecialAddServiceView extends StatelessWidget {
                       backgroundColor: kOnBoardingBG,
                       title: "Add Service",
                       middleText: "Write label for your service",
-                      content: AuthTextFiled(
-                        label: "Add Service",
-                        hint: "write your service",
-                        myController: controller.labelController,
+                      content: Column(
+                        children: [
+                          AuthTextFiled(
+                            label: "Add Service",
+                            hint: "write your service",
+                            myController: controller.labelController,
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Note: This service that you will add will appear to the customer in the language in which it is added. We suggest that you add it in this way Example:  حلاقة شعر (haircut)",
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
                       ),
                       onCancel: () {},
                       textCancel: "Cancel",

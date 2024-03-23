@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/controller/comment_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
@@ -23,6 +22,7 @@ class CommentPage extends StatelessWidget {
         title: const Text("Commentis"),
       ),
       body: GetBuilder<CommentControllerImp>(
+        init: CommentControllerImp(),
         builder: (CommentControllerImp controller) {
           return Container(
             width: double.infinity,

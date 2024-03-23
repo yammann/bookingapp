@@ -19,14 +19,14 @@ class AppointmentModel {
   final String? userName;
   final String? userId;
   final String? appointmentId;
-  String? date;
+  final String? date;
   final String? detail;
   final String time;
   final String? userProfImg;
   final int? duration;
   final bool state;
   final bool isBlocked;
-  bool appointmentExceed;
+  final bool appointmentExceed;
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel(

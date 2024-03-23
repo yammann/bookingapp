@@ -1,7 +1,6 @@
 import 'package:e_store/core/class/auth.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/function/check_internet.dart';
-import 'package:e_store/data/model/usermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +10,6 @@ abstract class LoginController extends GetxController {
   navToForgetPassword();
   navBack();
   obsure();
-  loginWithGoogle();
 }
 
 class LoginControllerImp extends LoginController {
@@ -66,8 +64,5 @@ class LoginControllerImp extends LoginController {
     update();
   }
 
-  @override
-  loginWithGoogle()async {
-    await auth.loginWithGoogle();
-  }
+ 
 }

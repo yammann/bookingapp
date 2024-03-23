@@ -21,14 +21,13 @@ class ConfirmeControllerImp extends ConfirmeController {
   User currentUser = FirebaseAuth.instance.currentUser!;
   String detail = "";
   int duration = 0;
-  late UserModel userModel;
+  UserModel userModel=Get.arguments["userModel"];
   
   @override
   void onInit() async {
     appointment = Get.arguments["appointment"];
     selectedTodoItem = Get.arguments["selectedTodoList"];
     detailText();
-    userModel = await getUserData();
     super.onInit();
   }
 

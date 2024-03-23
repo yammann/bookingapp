@@ -1,8 +1,6 @@
-import 'dart:math';
 
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
-import 'package:e_store/view/screen/Auth/widget/auth_appbar.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

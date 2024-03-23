@@ -1,6 +1,5 @@
 import 'package:e_store/core/class/middelware.dart';
 import 'package:e_store/core/constants/route.dart';
-import 'package:e_store/main.dart';
 import 'package:e_store/view/screen/Auth/forget_password.dart';
 import 'package:e_store/view/screen/Auth/login.dart';
 import 'package:e_store/view/screen/Auth/reset_password.dart';
@@ -10,6 +9,9 @@ import 'package:e_store/view/screen/Auth/success_signup.dart';
 import 'package:e_store/view/screen/Auth/verify_code_res_pas.dart';
 import 'package:e_store/view/screen/Auth/verify_code_signup.dart';
 import 'package:e_store/view/screen/language/language.dart';
+import 'package:e_store/view/screen/owner_screen/costumer_view.dart';
+import 'package:e_store/view/screen/owner_screen/owner_add_appoint/blocking_calender.dart';
+import 'package:e_store/view/screen/splach_view.dart';
 import 'package:e_store/view/screen/user_screen/add_appoint/add_appoint.dart';
 import 'package:e_store/view/screen/comment_view.dart';
 import 'package:e_store/view/screen/owner_screen/add_post/add_post_view.dart';
@@ -24,14 +26,14 @@ import 'package:e_store/view/screen/owner_screen/owner_add_service/owner_add_Ser
 import 'package:e_store/view/screen/owner_screen/owner_add_appoint/owner_add_appoint.dart';
 import 'package:e_store/view/screen/owner_screen/owner_home.dart';
 import 'package:e_store/view/screen/owner_screen/owner_profile.dart';
-import 'package:e_store/view/screen/user_screen/user_profile.dart';
+import 'package:e_store/view/screen/user_profile.dart';
 import 'package:get/get.dart';
 
 
 List<GetPage<dynamic>>?routes=[
-  GetPage(name:  AppRoute.rest, page: ()=>const LanguegeView(),middlewares:[ MyMiddelware()]),
+  GetPage(name:  "/", page: ()=>const SplachView()),
   // GetPage(name:  "/", page: ()=>   Home()),
-  GetPage(name:  AppRoute.onBoarding, page: ()=>const OnBoardingView()),
+  GetPage(name:  AppRoute.onBoarding, page: ()=>const OnBoardingView(),middlewares:[ MyMiddelware()]),
   GetPage(name:  AppRoute.login, page: ()=> LoginView()),
   GetPage(name:  AppRoute.signUp, page: ()=>  SignUpView()),
   GetPage(name:  AppRoute.forgetPassword, page: ()=> ForgetPasswordView()),
@@ -55,6 +57,10 @@ List<GetPage<dynamic>>?routes=[
   GetPage(name:  AppRoute.calendarPage, page: ()=>   CalendarPage()),
   GetPage(name:  AppRoute.confirmePage, page: ()=>   ConfirmeView()),
   GetPage(name:  AppRoute.addPost, page: ()=>   AddPost()),
+  GetPage(name:  AppRoute.language, page: ()=>   LanguegeView()),
+  GetPage(name:  AppRoute.blockingCalender, page: ()=>   BlockingCalender()),
+  GetPage(name:  AppRoute.costumerView, page: ()=>   CostumerView()),
+  
  
   
 ];

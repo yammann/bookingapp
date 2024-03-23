@@ -8,11 +8,15 @@ class MyCalender extends StatelessWidget {
       {super.key,
       this.onDaySelected,
       required this.focusedDay,
-      required this.endDay});
+      required this.endDay, 
+      required this.availableCalendarFormats, 
+      required this.calendarFormat});
 
   final Function(DateTime, DateTime)? onDaySelected;
   final DateTime focusedDay;
   final DateTime endDay;
+  final Map<CalendarFormat, String> availableCalendarFormats;
+  final CalendarFormat calendarFormat;
   @override
   Widget build(BuildContext context) {
     final DateTime today = DateTime.now();
@@ -23,12 +27,12 @@ class MyCalender extends StatelessWidget {
       },
       weekendDays: const [DateTime.friday],
         startingDayOfWeek: StartingDayOfWeek.monday,
-        calendarFormat: CalendarFormat.week,
+        calendarFormat: calendarFormat,
         focusedDay: focusedDay,
         firstDay: today,
         lastDay: endDay,
         selectedDayPredicate: (day) => isSameDay(day, focusedDay),
-        availableCalendarFormats: const {CalendarFormat.week: 'week'},
+        availableCalendarFormats: availableCalendarFormats,
         calendarStyle: const CalendarStyle(
           todayDecoration: BoxDecoration(
             color: kOnBoardingP,

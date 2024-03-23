@@ -20,8 +20,6 @@ class FetchUserDataControllerImp extends FetchUserDataController {
     }, (r) {
       currentUser = r;
     });
-    print("000000000000000000000000000000${currentUser}");
-    print("000000000000000000000000000000${status}");
     if (currentUser.isNotEmpty) {
       status = Status.success;
     } else {

@@ -29,4 +29,7 @@ abstract class AppRoute {
   static const String calendarPage="/OwnerCalendarPage";
   static const String confirmePage="/OwnerConfirme";
   static const String addPost="/addPost";
+  static const String splach="/splach";
+  static const String blockingCalender="/blockingCalender";
+  static const String costumerView="/costumer";
 }

@@ -5,11 +5,13 @@ class UserDetailesRow extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
-    this.isEdite=false
+    this.isEdite=false, 
+    this.onTap
   });
   final String title;
   final String value;
   final bool isEdite;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -32,6 +34,7 @@ class UserDetailesRow extends StatelessWidget {
           ),
         ),
         GestureDetector(
+          onTap: onTap,
           child:isEdite? const Icon(Icons.edit_outlined):const Text(""),
         )
       ],

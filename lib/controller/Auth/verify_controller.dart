@@ -32,14 +32,11 @@ class VerifyControllerImp extends VerifyController {
 
     if (user.emailVerified) {
       // Email is verified, navigate to the next screen or perform desired action
-      print('Email is verified. Navigate to the next screen.');
       isVerifyed = true;
       update();
       timer.cancel();
       // Get.offNamed(AppRoute.login);
     } else {
-     
-      print('Email is not verified. Please check your email.');
     }
   }
 

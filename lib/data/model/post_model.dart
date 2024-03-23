@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostModel {
   final String username;
+  final String imgPath;
   final String describtion;
   final dynamic profilImg;
   final String uId;
@@ -13,6 +14,7 @@ class PostModel {
 
   PostModel({
     required this.username,
+    required this.imgPath,
     required this.describtion,
     required this.profilImg,
     required this.uId,
@@ -34,6 +36,7 @@ class PostModel {
       "datePublished": datePublished,
       "liks": liks,
       "isLiked":isLiked,
+      "imgName":imgPath,
     };
   }
 
@@ -47,6 +50,7 @@ class PostModel {
         postImg: json["postImg"],
         datePublished: (json['datePublished'] as Timestamp).toDate(),
         liks: json["liks"],
-        isLiked: json["isLiked"]);
+        isLiked: json["isLiked"], 
+        imgPath:json["imgName"]);
   }
 }

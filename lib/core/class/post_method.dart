@@ -1,7 +1,5 @@
-import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_store/core/function/img_storge_and_get_url.dart';
 import 'package:e_store/data/model/post_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -15,6 +13,7 @@ class PostMethod {
       CollectionReference posts =
           FirebaseFirestore.instance.collection("posts");
       PostModel post = PostModel(
+        imgPath: postModel.imgPath,
           username: postModel.username,
           describtion: postModel.describtion,
           profilImg: postModel.profilImg,

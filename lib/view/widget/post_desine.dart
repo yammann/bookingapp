@@ -1,8 +1,6 @@
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/data/model/post_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -36,9 +34,9 @@ class PostDesign extends StatelessWidget {
                 Row(
                   children: [
                    Container(
-                      padding: const EdgeInsets.all(3),
+                      padding: const EdgeInsets.all(1),
                       decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey),
+                          shape: BoxShape.circle, color: kOnBoardingBG),
                       child: ClipOval(
                         child: CachedNetworkImage(
                           imageUrl:  postModel.profilImg,

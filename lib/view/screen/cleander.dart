@@ -3,10 +3,10 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/view/widget/apoint_time.dart';
 import 'package:e_store/view/widget/calendr.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatelessWidget {
   CalendarPage({super.key});
@@ -16,8 +16,6 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User currentUser = FirebaseAuth.instance.currentUser!;
-    Get.put(CalenderControllerImp());
     return Scaffold(
       backgroundColor: kOnBoardingBG,
       appBar: AppBar(
@@ -32,15 +30,18 @@ class CalendarPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(30), color: Colors.white),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         child: GetBuilder<CalenderControllerImp>(
+          init: CalenderControllerImp(),
           builder: (controller) {
             return Column(
               children: [
                 MyCalender(
+                  calendarFormat: CalendarFormat.week,
+                  availableCalendarFormats: const { CalendarFormat.week:"week"},
                   focusedDay: controller.isSelectedDay,
                   onDaySelected: (selectedDay, focusedDay) {
-                    controller.onSelectedDay(selectedDay, focusedDay);
+                    controller.onSelectedDay(selectedDay);
                   },
-                  endDay:currentUser.uid==ownerUserId? DateTime.now().add(const Duration(days: 30)):DateTime.now().add(const Duration(days: 6)),
+                  endDay:controller.currentUser.uid==ownerUserId? DateTime.now().add(const Duration(days: 30)):DateTime.now().add(const Duration(days: 6)),
                 ),
                 const SizedBox(
                   height: 10,

@@ -2,21 +2,24 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/appointment_exceed.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/todo_item.dart';
+import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class CalenderController extends GetxController {
-  onSelectedDay(DateTime selectedDay, DateTime focusedDay);
+  onSelectedDay(DateTime selectedDay);
   getApointment(String documentId);
   changeSelectedTime(int index);
   timeCalculation();
   onSelectTime(int index);
-  onAppointmentExceed(String documentId);
   appointmentExists();
+  nextAppointmentIsAvailable(int index);
+  addDateToAppointment(String date);
 }
 
 class CalenderControllerImp extends CalenderController {
@@ -25,9 +28,12 @@ class CalenderControllerImp extends CalenderController {
   List<AppointmentModel> upAppointmentlist = [];
   bool hasAppoint = false;
   int selectedTime = 0;
-  late List selectedTodoList;
+  List selectedTodoList = Get.arguments["selectedTodoList"];
+  UserModel userModel=Get.arguments["userModel"];
   int time = 0;
   final User currentUser = FirebaseAuth.instance.currentUser!;
+
+  List<AppointmentModel> willBookedAppointment = [];
 
   Future<void> getDataList(String documentId) async {
     List<AppointmentModel> listForImplement = [];
@@ -36,6 +42,7 @@ class CalenderControllerImp extends CalenderController {
         .collection("apointment")
         .doc(documentId)
         .collection("time");
+        
     QuerySnapshot timeQuerySnapshot = await timeCollection.get();
     for (var timeDocumentSnapshot in timeQuerySnapshot.docs) {
       AppointmentModel appointment = AppointmentModel.fromJson(
@@ -43,7 +50,7 @@ class CalenderControllerImp extends CalenderController {
       listForImplement.add(appointment);
     }
     upAppointmentlist = listForImplement;
-    print(upAppointmentlist);
+    print("11111111111111111111111111$upAppointmentlist");
     update();
   }
 
@@ -54,18 +61,17 @@ class CalenderControllerImp extends CalenderController {
         FirebaseFirestore.instance.collection("apointment").doc(documentId);
     DocumentSnapshot documentSnapshot = await documentReference.get();
     if (documentSnapshot.exists) {
-      getDataList(documentId);
+      await getDataList(documentId);
     } else {
-      Get.snackbar("Alert",
-          "You have to wait for a few seconds to load the appointments",
-          backgroundColor: kOnBoardingP);
+      Get.snackbar("Alert","You have to wait for a few seconds to load the appointments",backgroundColor: kOnBoardingP);
+      
       for (AppointmentModel appointment in appointmentList) {
-        appointment.date = documentId;
-        var data = appointment.toMap();
+        Map<String, dynamic> data = appointment.toMap();
         await documentReference.set({"date": documentId});
         await documentReference.collection("time").doc(data["time"]).set(data);
       }
-      getDataList(documentId);
+      await addDateToAppointment(documentId);
+      await getDataList(documentId);
     }
   }
 
@@ -76,19 +82,20 @@ class CalenderControllerImp extends CalenderController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
     if (DateTime.now().weekday == DateTime.wednesday ||
         DateTime.now().weekday == DateTime.sunday) {
+      timeCalculation();
       appointmentExists();
     } else {
       holiday = false;
-      getApointment(isSelectedDay.toString().substring(0, 10));
-      onAppointmentExceed(isSelectedDay.toString().substring(0, 10));
+      appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
+      await getApointment(isSelectedDay.toString().substring(0, 10));
       appointmentExists();
+      timeCalculation();
     }
-    selectedTodoList = Get.arguments["selectedTodoList"];
     print(Get.arguments["selectedTodoList"]);
     print(selectedTodoList);
   }
@@ -99,12 +106,13 @@ class CalenderControllerImp extends CalenderController {
   }
 
   @override
-  onSelectedDay(DateTime selectedDay, DateTime focusedDay) {
+  onSelectedDay(DateTime selectedDay) {
     upAppointmentlist.clear();
     update();
     if (selectedDay.weekday == DateTime.wednesday ||
         selectedDay.weekday == DateTime.sunday) {
       holiday = true;
+      isSelectedDay = selectedDay;
       update();
     } else {
       holiday = false;
@@ -127,7 +135,7 @@ class CalenderControllerImp extends CalenderController {
   @override
   onSelectTime(int index) {
     //check if has appointment
-    timeCalculation();
+
     changeSelectedTime(index);
     //check if appointment is available
     if (upAppointmentlist[index].state && !upAppointmentlist[index].isBlocked) {
@@ -136,37 +144,18 @@ class CalenderControllerImp extends CalenderController {
             backgroundColor: kWorrningSnackbar);
       } else {
         //check if appointment is need more than 30 m
-        if (time > 30) {
-          //check if the last appointment
-          if (upAppointmentlist.length == index + 1) {
-            Get.offNamed(AppRoute.confirmePage, arguments: {
-              "selectedTodoList": selectedTodoList,
-              "appointment": [upAppointmentlist[index]]
-            });
-            //check if next appointment is available
-          } else {
-            if (upAppointmentlist[index + 1].state &&
-                !upAppointmentlist[index + 1].isBlocked) {
-              Get.offNamed(AppRoute.confirmePage, arguments: {
-                "selectedTodoList": selectedTodoList,
-                "appointment": [
-                  upAppointmentlist[index],
-                  upAppointmentlist[index + 1]
-                ]
-              });
-            } else {
-              Get.snackbar(
-                "Warrning",
-                "The services you have chosen require time more than 30 minutes. Please choose a time that follows is empty so that we can book a 1-hour appointment for you.",
-                backgroundColor: kWorrningSnackbar,
-              );
-            }
-          }
-        } else {
+        if (nextAppointmentIsAvailable(index)) {
           Get.offNamed(AppRoute.confirmePage, arguments: {
             "selectedTodoList": selectedTodoList,
-            "appointment": [upAppointmentlist[index]]
+            "appointment": willBookedAppointment,
+            "userModel":userModel,
           });
+        } else {
+          Get.snackbar(
+            "Warrning",
+            "The services you have chosen require time $time minutes. Please choose a time that follows is empty so that we can book a 1-hour appointment for you.",
+            backgroundColor: kWorrningSnackbar,
+          );
         }
       }
     } else {
@@ -186,60 +175,9 @@ class CalenderControllerImp extends CalenderController {
     }
   }
 
-  @override
-  onAppointmentExceed(String documentId) async {
-    DateTime currentTime = DateTime.now();
+ 
 
-    CollectionReference appointCollection =
-        FirebaseFirestore.instance.collection("apointment");
-
-    Stream<QuerySnapshot<Object?>> appointQuerySnapshot =
-        appointCollection.snapshots();
-
-    appointQuerySnapshot.listen(
-      (QuerySnapshot snapshot) {
-        for (QueryDocumentSnapshot document in snapshot.docs) {
-          Stream<QuerySnapshot<Object?>> subCollectionSnapshot = document
-              .reference
-              .collection("time")
-              .where("appointmentExceed", isEqualTo: false)
-              .snapshots();
-
-          subCollectionSnapshot.listen(
-            (QuerySnapshot snapshot) {
-              List<AppointmentModel> uniqueAppointments = [];
-
-              for (QueryDocumentSnapshot document in snapshot.docs) {
-                AppointmentModel appointmentModel = AppointmentModel.fromJson(
-                    document.data() as Map<String, dynamic>);
-                uniqueAppointments.add(appointmentModel);
-              }
-
-              for (AppointmentModel appointment in uniqueAppointments) {
-                String dateString =
-                    '${appointment.date} ${appointment.time.substring(0, 5)}:00';
-                print(dateString);
-                DateTime dateTime = DateTime.parse(dateString);
-                print(dateTime);
-                if (!appointment.appointmentExceed &&
-                    currentTime.isAfter(dateTime)) {
-                  FirebaseFirestore.instance
-                      .collection("apointment")
-                      .doc(appointment.date)
-                      .collection("time")
-                      .doc(appointment.time)
-                      .update({
-                    "appointmentExceed": true,
-                  });
-                }
-              }
-            },
-          );
-        }
-      },
-    );
-  }
-
+  
   @override
   appointmentExists() async {
     CollectionReference appointCollection =
@@ -271,4 +209,44 @@ class CalenderControllerImp extends CalenderController {
       },
     );
   }
+
+  @override
+  nextAppointmentIsAvailable(int index) {
+    double countAppointment = time / 30;
+    bool available = false;
+    print("77777777777777777777777777777777777777$countAppointment");
+    for (int i = 0; i < countAppointment; i++) {
+      if (index + i <= 19) {
+        if (upAppointmentlist[index + i].state &&
+            !upAppointmentlist[index + i].isBlocked) {
+          willBookedAppointment.add(upAppointmentlist[index + i]);
+          update();
+          available = true;
+        } else {
+          willBookedAppointment.clear();
+          update();
+          available = false;
+          break;
+        }
+      } else {
+        willBookedAppointment.clear();
+          update();
+        available = false;
+      }
+    }
+    return available;
+  }
+  
+  @override
+  addDateToAppointment(String date) async{
+   CollectionReference timeCollection = FirebaseFirestore.instance
+        .collection("apointment")
+        .doc(date)
+        .collection("time");
+    QuerySnapshot timeQuerySnapshot = await timeCollection.get();
+    for (var timeDocumentSnapshot in timeQuerySnapshot.docs) {
+     timeDocumentSnapshot.reference.update({"date":date});
+    }
+  }
 }
+ 

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/services/services.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -27,9 +28,7 @@ UserModel userModel=UserModel(userId: credential.user!.uid, email: email, passwo
           .doc(credential.user!.uid)
           .set(userModel.toMap())
           .then((value) {
-        print('Data added successfully!');
       }).catchError((error) {
-        print('Error adding data: $error');
       });
       Get.snackbar("Verification".tr, "VerificationMSG".tr);
       Get.toNamed(AppRoute.verifyCodeSignUp);
@@ -37,11 +36,11 @@ UserModel userModel=UserModel(userId: credential.user!.uid, email: email, passwo
     if (e is FirebaseAuthException && e.code == 'email-already-in-use') {
       Get.snackbar(
           "Warning".tr, "haveAccountWarrning".tr,
-          backgroundColor: Colors.redAccent);
+          backgroundColor: kWorrningSnackbar);
     } else {
       Get.snackbar(
           "Warning".tr, 'Error: $e',
-          backgroundColor: Colors.redAccent);
+          backgroundColor:kWorrningSnackbar);
     }
   }
   }
@@ -55,7 +54,6 @@ UserModel userModel=UserModel(userId: credential.user!.uid, email: email, passwo
       );
 
       User user = userCredential.user!;
-      print("-----------------------------${user.email}");
       myServices.sharedPreferences.setBool("login", true);
       if (user.email == "buzzard.black19977@gmail.com") {
         Get.offNamed(AppRoute.ownerHome);
@@ -76,72 +74,6 @@ UserModel userModel=UserModel(userId: credential.user!.uid, email: email, passwo
     }
   }
 
-  loginWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
 
-      if (googleSignInAccount == null) {
-        // User canceled the sign-in process
-        return null;
-      }
 
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      User user = userCredential.user!;
-      bool isUserRegistered = await isEmailRegistered(user.email!);
-      if (isUserRegistered) {
-        // User is registered, proceed with login
-        if (user.email == "amjad@gmail.com") {
-          Get.offNamed(AppRoute.ownerHome);
-          myServices.sharedPreferences.setBool("owner", true);
-        } else {
-          Get.offNamed(AppRoute.home);
-          myServices.sharedPreferences.setBool("owner", false);
-        }
-      } else {
-        Get.snackbar("Warning".tr,"dontHaveAccountWarrning".tr);
-        Get.offNamed(AppRoute.signUp);
-      }
-    } catch (e) {
-      print('Error signing in with Google: $e');
-      return null;
-    }
-  }
-
-  void checkEmailRegistration(String email) async {
-    bool isRegistered = await isEmailRegistered(email);
-
-    if (isRegistered) {
-      print('Email is already registered.');
-    } else {
-      print('Email is not registered.');
-    }
-  }
-
-  Future<bool> isEmailRegistered(String email) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: 'dummyPassword');
-
-      // If there is a user, the email is already registered
-      return userCredential.user != null;
-    } on FirebaseAuthException catch (e) {
-      // If the error code is 'user-not-found', the email is not registered
-      if (e.code == 'user-not-found') {
-        return false;
-      }
-      // Handle other errors as needed
-      print('Error checking email registration: $e');
-      return false;
-    }
-  }
 }

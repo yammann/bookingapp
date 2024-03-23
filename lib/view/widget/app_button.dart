@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppButton extends StatelessWidget {
-   const AppButton({super.key, required this.title,this.onTap});
+   const AppButton({super.key, required this.title,this.onTap, this.color=kOnBoardingP});
 
   final String title;
   final void Function()? onTap;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -15,7 +16,7 @@ class AppButton extends StatelessWidget {
         width: 360, 
         height: 50,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: kOnBoardingP),
+            borderRadius: BorderRadius.circular(15), color:color),
         child: Center(
           child: Text(title.tr),
         ),

@@ -101,20 +101,7 @@ class LoginView extends StatelessWidget {
                       title: "btnText".tr,
                     ),
                     const Spacer(flex: 1),
-                    SocialMedia(
-                      onTap: () async {
-                        // UserCredential? userCredential =
-                        await controller.loginWithGoogle();
-
-                        // if (userCredential != null) {
-                        //  Get.offNamed(AppRoute.home);
-                        // } else {
-                        //    print(
-                        //       'has error');
-                        // }
-                      },
-                    ),
-                    const Spacer(flex: 1),
+                   
                     Center(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

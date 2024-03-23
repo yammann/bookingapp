@@ -30,9 +30,7 @@ class HomeImpView extends StatelessWidget {
                 isLiked: controller.posts[index].isLiked,
                 countLike: controller.posts[index].liks.length,
                 onPressedComment: () async {
-                  UserModel userModel = await getUserData();
-                  Get.toNamed(AppRoute.comment,
-                      arguments: [controller.posts[index].postId, userModel]);
+                  controller.onPressedComment(index);
                 },
               );
             },

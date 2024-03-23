@@ -14,8 +14,7 @@ import 'package:e_store/view/screen/owner_screen/owner_add_service/owne_special_
 import 'package:e_store/view/screen/owner_screen/owner_add_service/owner_add_Service.dart';
 import 'package:e_store/view/screen/owner_screen/owner_add_appoint/owner_add_appoint.dart';
 import 'package:e_store/view/screen/owner_screen/owner_profile.dart';
-import 'package:e_store/view/screen/user_screen/user_profile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:e_store/view/screen/user_profile.dart';
 import 'package:flutter/material.dart';
 
 List<OnBoardingModel> onBoardingList = [
@@ -51,8 +50,8 @@ List<AppointmentModel> appointmentList = [
 
 List<Widget> userHomePages = [
   HomeImpView(),
+  MyAppointView(),  
   UserProfileView(),
-   MyAppointView(),
   const AboutView(),
   AddAppointView()
 ];
@@ -66,8 +65,8 @@ List<Widget> ownerHomePages = [
 
 List appbarTitle = [
   "Amjad Jawad",
-  "Profile",
   "My Appointment",
+  "Profile",
   "About Us",
   "Add Appointment"
 ];
@@ -95,3 +94,6 @@ List<Widget> ownerAddServicePages = [
 
 String personPlaceholderImg = "";
 String ownerUserId = "Bn37pPu1x2OLzv9aKrI9ZP7ov3H3";
+String userPhoneNumber="+49 178 2696138";
+String ownerTiktok="//www.tiktok.com/@amjad.jaw?_t=8krFHrMrCfF&_r=1";
+String ownerInstagram= "//www.instagram.com/amjad.jwd?igsh=ZHpsMm1sejJ3ZzEz";

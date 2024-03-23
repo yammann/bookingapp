@@ -25,6 +25,9 @@
   <key>LSApplicationQueriesSchemes</key>
   <array>
   <string>tel</string>
+  <string>http</string>
+  <string>https</string>
+  <string>mailto</string>
   </array>
 </dict>
 </plist>

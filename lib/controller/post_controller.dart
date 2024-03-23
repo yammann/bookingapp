@@ -2,12 +2,14 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/class/post_method.dart';
+import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/core/function/img_storge_and_get_url.dart';
 import 'package:e_store/data/model/post_model.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show basename;
 import 'package:get/get.dart';
@@ -21,9 +23,12 @@ abstract class PostController extends GetxController {
   isPostLod();
   getPosts();
   like(String postId);
+  deletPost(String imgPath, String postId);
+  onPressedComment(int index);
 }
 
 class PostControllerImp extends PostController {
+
   late String? imgName;
 
   Uint8List? imgPaht;
@@ -36,15 +41,15 @@ class PostControllerImp extends PostController {
 
   final describtioncontroller = TextEditingController();
 
-  final User user = FirebaseAuth.instance.currentUser!;
+  final User currentUser = FirebaseAuth.instance.currentUser!;
 
-  String postId = const Uuid().v1();
+  late UserModel userModel;
+
+  String kPostId = const Uuid().v1();
 
   List<PostModel> posts = [];
 
   PostMethod postMethod = PostMethod();
-
-
 
   @override
   addImage(ImageSource imgSorc) async {
@@ -59,10 +64,10 @@ class PostControllerImp extends PostController {
         secound = true;
         update();
       } else {
-        print("no image");
+        Get.snackbar( "Warning".tr, "error".tr);
       }
     } catch (e) {
-      print(e.toString());
+      Get.snackbar( "Warning".tr, "error".tr);
     }
     Get.back();
   }
@@ -83,17 +88,16 @@ class PostControllerImp extends PostController {
   addPost() async {
     isPostLod();
     dynamic postImg = await imgStorgeAndGetUrl(
-        imgName: imgName!,
-        imgPaht: imgPaht!,
-        foldername: "imgPost/${user.uid}");
-    UserModel userModel = await getUserData();
+        imgName: imgName!, imgPaht: imgPaht!, foldername: "imgPost/$kPostId");
+    UserModel userModel = await getUserData(currentUser.uid);
     await postMethod.posting(
       postModel: PostModel(
+          imgPath: "imgPost/$kPostId/$imgName",
           username: userModel.userName!,
           describtion: describtioncontroller.text,
           profilImg: userModel.imgProfile,
-          uId: user.uid,
-          postId: postId,
+          uId: currentUser.uid,
+          postId: kPostId,
           postImg: postImg,
           datePublished: DateTime.now(),
           liks: []),
@@ -111,35 +115,38 @@ class PostControllerImp extends PostController {
   }
 
   @override
-getPosts() async {
-  List<PostModel> listForImplement = [];
+  getPosts() async {
+    List<PostModel> listForImplement = [];
 
-  try {
-    QuerySnapshot postQuerySnapshot =
-        await FirebaseFirestore.instance.collection("posts").orderBy("datePublished",descending: true).get();
-    for (QueryDocumentSnapshot postDocumentSnapshot
-        in postQuerySnapshot.docs) {
-      PostModel postModel = PostModel.fromJson(
-          postDocumentSnapshot.data() as Map<String, dynamic>);
+    try {
+      QuerySnapshot postQuerySnapshot = await FirebaseFirestore.instance
+          .collection("posts")
+          .orderBy("datePublished", descending: true)
+          .get();
+      for (QueryDocumentSnapshot postDocumentSnapshot
+          in postQuerySnapshot.docs) {
+        PostModel postModel = PostModel.fromJson(
+            postDocumentSnapshot.data() as Map<String, dynamic>);
 
-      // Check if the current user liked the post
-      if (postModel.liks.contains(user.uid)) {
-        postModel.isLiked = true;
-      } else {
-        postModel.isLiked = false;
+        // Check if the current user liked the post
+        if (postModel.liks.contains(currentUser.uid)) {
+          postModel.isLiked = true;
+        } else {
+          postModel.isLiked = false;
+        }
+
+        listForImplement.add(postModel);
       }
-
-      listForImplement.add(postModel);
+      posts = listForImplement;
+      update();
+    } catch (e) {
+      Get.snackbar( "Warning".tr, "error".tr);
     }
-    posts = listForImplement;
-    update();
-  } catch (e) {
-    print("post get error");
   }
-}
 
   @override
-  void onInit() {
+  void onInit()async {
+    userModel=await getUserData(currentUser.uid);
     getPosts();
     super.onInit();
   }
@@ -156,11 +163,11 @@ getPosts() async {
       if (postData != null) {
         List<dynamic> likes = postData["liks"] ?? [];
 
-        if (likes.contains(user.uid)) {
-          likes.remove(user.uid);
+        if (likes.contains(currentUser.uid)) {
+          likes.remove(currentUser.uid);
           update();
         } else {
-          likes.add(user.uid);
+          likes.add(currentUser.uid);
           update();
         }
         await FirebaseFirestore.instance
@@ -172,9 +179,36 @@ getPosts() async {
       }
       getPosts();
     } catch (e) {
-      print("Error updating likes: $e");
+      Get.snackbar( "Warning".tr, "error".tr);
     }
   }
+
+  @override
+  void dispose() {
+    describtioncontroller.dispose();
+    super.dispose();
+  }
+
+  @override
+  deletPost(String imgPath, String postId) async {
+    try {
+      await FirebaseFirestore.instance.collection("posts").doc(postId).delete();
+
+      await FirebaseStorage.instance.ref().child(imgPath).delete();
+
+      getPosts();
+    } catch (e) {
+      Get.snackbar("Warning", "Has error", backgroundColor: kWorrningSnackbar);
+    }
+    Get.back();
+    Get.snackbar("Alert", "Post deleted", backgroundColor: kSuccessSnackbar);
+   
+  }
   
- 
+  @override
+  onPressedComment(int index) {
+    Get.toNamed(AppRoute.comment,arguments: [posts[index].postId, userModel]);
+  }
+  
+  
 }

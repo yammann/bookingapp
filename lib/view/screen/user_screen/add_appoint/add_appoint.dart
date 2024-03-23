@@ -1,6 +1,4 @@
 import 'package:e_store/controller/add_appoint/add_appoint_controller.dart';
-import 'package:e_store/controller/add_appoint/normal_todo_list_controller.dart';
-import 'package:e_store/controller/add_appoint/special_todo_list_controller.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/view/widget/double_button.dart';
 import 'package:flutter/material.dart';

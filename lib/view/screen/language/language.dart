@@ -1,4 +1,3 @@
-import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/localisation/local_controller.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class LanguegeView extends GetView<LocalController> {
             title: "ar".tr,
             onTap: () {
               controller.changeLang("ar");
-              Get.offNamed(AppRoute.onBoarding);
+              Get.back();
             },
           ),
           const SizedBox(
@@ -33,7 +32,7 @@ class LanguegeView extends GetView<LocalController> {
             title: "en".tr,
             onTap: () {
               controller.changeLang("en");
-              Get.offNamed(AppRoute.onBoarding);
+              Get.back();
             },
           ),
           const SizedBox(
@@ -43,7 +42,7 @@ class LanguegeView extends GetView<LocalController> {
             title: "gr".tr,
             onTap: () {
               controller.changeLang("gr");
-              Get.offNamed(AppRoute.onBoarding);
+              Get.back();
             },
           ),
         ],

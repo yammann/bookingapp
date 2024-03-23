@@ -57,6 +57,7 @@ class MyTranslation extends Translations {
           "signBottomText": "اذهب لتسجيل الدخول",
           //warrning
           "Warning": "تحذير",
+          "error":"بها خطأ",
           "haveAccountWarrning":"عنوان البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب آخر",
           "passwordOremail": "البريد الإلكتروني أو كلمة المرور غير صحيح",
           "dontHaveAccountWarrning": "ليس لديك حساب على هذا البريد الإلكتروني",
@@ -121,6 +122,7 @@ class MyTranslation extends Translations {
           "signBottomText": "Go to login",
           //warrning
           "Warning": "Warning",
+          "error":"Has error",
           "haveAccountWarrning":
               "The email address is already in use by another account",
           "passwordOremail": "Incorrect email or password",
@@ -188,6 +190,7 @@ class MyTranslation extends Translations {
           "signBottomText": "Gehen Sie zum Anmelden",
           //warrning
           "Warning": "Warnung",
+          "error":"Hat einen Fehler",
           "haveAccountWarrning":
               "Die E-Mail-Adresse wird bereits von einem anderen Konto verwendet",
           "dontHaveAccountWarrning": "Sie haben kein Konto für diese E-Mail",

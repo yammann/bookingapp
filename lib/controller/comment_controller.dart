@@ -72,9 +72,8 @@ class CommentControllerImp extends CommentController {
       }
       comments=listForImplement;
       update();
-      print(comments);
     } catch (e) {
-      print(e);
+      Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 }

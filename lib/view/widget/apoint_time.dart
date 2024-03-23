@@ -27,7 +27,7 @@ class ApointTime extends StatelessWidget {
                             : Colors.grey,
                         borderRadius: BorderRadius.circular(15)),
                     child: Center(
-                      child: Text(appointmentModel.time!),
+                      child: Text(appointmentModel.time),
                     ),
                   ),
                 );
