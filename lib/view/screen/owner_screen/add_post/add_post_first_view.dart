@@ -17,7 +17,7 @@ class AddPostFirstView extends StatelessWidget {
           backgroundColor: kOnBoardingBG,
           appBar: AppBar(
             backgroundColor: kOnBoardingBG,
-            title: const Text("Add Post"),
+            title:  Text("Add Post".tr),
           ),
           body: Center(
             child: Column(
@@ -29,7 +29,7 @@ class AddPostFirstView extends StatelessWidget {
                             size: 40,
                             color: kOnBoardingP,
                           ),
-                          title: "Camera",
+                          title: "Camera".tr,
                           onPressed: () async {
                             await controller.addImage(ImageSource.camera);
                             controller.isImgPathNotEmpty(controller.imgPaht);
@@ -41,7 +41,7 @@ class AddPostFirstView extends StatelessWidget {
                             size: 40,
                             color: kOnBoardingP,
                           ),
-                          title: "Gallery",
+                          title: "Gallery".tr,
                           onPressed: () async {
                             await controller.addImage(ImageSource.gallery);
                             controller.isImgPathNotEmpty(controller.imgPaht);

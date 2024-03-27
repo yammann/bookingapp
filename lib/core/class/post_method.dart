@@ -51,7 +51,7 @@ class PostMethod {
         "commentId": commentId,
       });
     } else {
-      Get.snackbar("Warrning", "this comment is empty");
+      Get.snackbar("Warning".tr, "emptyComment".tr);
     }
   }
 

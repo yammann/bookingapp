@@ -1,6 +1,7 @@
 
 import 'package:e_store/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MyCalender extends StatelessWidget {
@@ -21,6 +22,7 @@ class MyCalender extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateTime today = DateTime.now();
     return TableCalendar( 
+      locale:"calenderLocal".tr ,
       holidayPredicate: (day) {
        
        return day.weekday == DateTime.sunday || day.weekday == DateTime.wednesday;

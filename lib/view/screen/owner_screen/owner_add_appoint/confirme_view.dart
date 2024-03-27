@@ -1,6 +1,7 @@
 
 import 'package:e_store/controller/add_appoint/confirme_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:e_store/view/widget/user_detail_row.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class ConfirmeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kOnBoardingBG,
         centerTitle: true,
-        title: const Text("Confirme"),
+        title:  Text("Confirme".tr),
       ),
       body: GetBuilder<ConfirmeControllerImp>(
         init:ConfirmeControllerImp() ,
@@ -40,19 +41,19 @@ class ConfirmeView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15)),
                     child:  Column(
                       children: [
-                        const Text(
-                          "Your Apointment has been confermide",
-                          style: TextStyle(
+                         Text(
+                          "Your Apointment has been confermide".tr,
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         const Spacer(
                           flex: 1,
                         ),
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 150,
                           backgroundImage:
-                              AssetImage("assets/images/logo-color.png"),
+                              AssetImage(logoImg),
                         ),
                         const SizedBox(
                           height: 20,
@@ -64,22 +65,22 @@ class ConfirmeView extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        const Text(
-                          "Your Apointment",
-                          style: TextStyle(
+                         Text(
+                          "Your Apointment".tr,
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         const Spacer(
                           flex: 1,
                         ),
-                        UserDetailesRow(title: "Date", value: controller.appointment[0].date!),
+                        UserDetailesRow(title: "Date".tr, value: controller.appointment[0].date!),
                         const SizedBox(height: 10),
                          UserDetailesRow(
-                            title: "Time", value: "${controller.appointment[0].time.substring(0,6)} (${controller.duration} minute)"),
+                            title: "Time".tr, value: "${controller.appointment[0].time.substring(0,6)} (${controller.duration} minute)"),
                         const SizedBox(height: 10),
                         UserDetailesRow(
-                            title: "Detail",
+                            title: "Detail".tr,
                             value: controller.detail),
                         const Spacer(
                           flex: 1,
@@ -89,7 +90,7 @@ class ConfirmeView extends StatelessWidget {
                   ),
                 ),
                 AppButton(
-                    title: "Confirme",
+                    title: "Confirme".tr,
                     onTap: () {
                       controller.confirme();
                     }),

@@ -1,7 +1,4 @@
 import 'package:e_store/controller/post_controller.dart';
-import 'package:e_store/core/constants/route.dart';
-import 'package:e_store/core/function/get_user_data.dart';
-import 'package:e_store/data/model/usermodel.dart';
 import 'package:e_store/view/widget/post_desine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

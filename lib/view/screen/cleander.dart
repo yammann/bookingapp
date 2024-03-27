@@ -21,7 +21,7 @@ class CalendarPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kOnBoardingBG,
         centerTitle: true,
-        title: const Text("Chooes Date"),
+        title:  Text("Chooes Date".tr),
       ),
       body: Container(
         width: double.infinity,
@@ -52,8 +52,8 @@ class CalendarPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: controller.holiday
-                      ? const Center(
-                          child: Text("Holiday"),
+                      ?  Center(
+                          child: Text("Holiday".tr),
                         )
                       : controller.upAppointmentlist.length < 13
                           ? Lottie.asset("assets/lottie/loading.json")

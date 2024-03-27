@@ -41,13 +41,8 @@ class NormalTodoListControllerImp extends NormalTodoListController {
   void selectedTodo(TodoItem todoItem) {
     if (!selectedTodoList.contains(todoItem)) {
       selectedTodoList.add(todoItem);
-
-      print(' exists in the list.........$selectedTodoList');
     } else {
       selectedTodoList.remove(todoItem);
-
-      print(
-          ' does not exist in the list or the list is null......$selectedTodoList');
     }
     update();
   }
@@ -58,9 +53,9 @@ class NormalTodoListControllerImp extends NormalTodoListController {
   try {
     await collectionRef.doc(todoItem.label).set(todoItem.toMap());
     fetchItem();
-    print("added$todoItem");
+
   } catch (e) {
-    print("has error");
+     Get.snackbar( "Warning".tr, "error".tr);
   }
 }
   }
@@ -70,9 +65,9 @@ class NormalTodoListControllerImp extends NormalTodoListController {
     try {
       await collectionRef.doc(label).delete();
       fetchItem();
-      print("deleted");
+
     } catch (e) {
-      print("has error delete");
+       Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 
@@ -97,10 +92,10 @@ class NormalTodoListControllerImp extends NormalTodoListController {
         forImplement.add(todoItem);
       }
       todoItems = forImplement;
-      print(todoItems);
+
       update();
     } catch (_) {
-      print("has error 2");
+       Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 
@@ -114,7 +109,7 @@ class NormalTodoListControllerImp extends NormalTodoListController {
   @override
   navToCalender() {
     if (selectedTodoList.isEmpty) {
-      Get.snackbar("Warrning", "You must choose at least one service",
+      Get.snackbar("Warning".tr, "chooseAtLeastOne".tr,
           backgroundColor:kWorrningSnackbar);
     } else {
        Get.toNamed(

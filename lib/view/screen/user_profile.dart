@@ -6,6 +6,7 @@ import 'package:e_store/core/services/services.dart';
 import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
 import 'package:e_store/view/screen/owner_screen/widget/profile_button.dart';
 import 'package:e_store/view/widget/app_button.dart';
+import 'package:e_store/view/widget/cached_network_img.dart';
 import 'package:e_store/view/widget/user_detail_row.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,26 +36,7 @@ class UserProfileView extends StatelessWidget {
                   shape: BoxShape.circle,
                   color:kOnBoardingBG,
                 ),
-                child: ClipOval(
-                      child: controller.isloadin
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                  color: kOnBoardingP))
-                          : CachedNetworkImage(
-                              imageUrl: controller.userModel.imgProfile,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                child: CircularProgressIndicator(
-                                  value: downloadProgress.progress,
-                                ),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                              fit: BoxFit.cover,
-                              width: 100, // Adjust the size as needed
-                              height: 100, // Adjust the size as needed
-                            ),
-                    ),
+                child: CachedImag(isloadin: controller.isloadin, imgProfile: controller.userModel.imgProfile,)
                   ),
                   Positioned(
                       right: 0,
@@ -67,13 +49,13 @@ class UserProfileView extends StatelessWidget {
                                   onPressed: () {
                                     Get.defaultDialog(
                                         backgroundColor: kOnBoardingBG,
-                                        title: "Select",
+                                        title: "Select".tr,
                                         content: Column(
                                           children: [
                                             ProfileButton(
                                                 icon: const Icon(
                                                     Icons.camera_alt_outlined),
-                                                title: "Camera",
+                                                title: "Camera".tr,
                                                 onPressed: () {
                                                   controller.changeProfileImg(
                                                       ImageSource.camera);
@@ -81,7 +63,7 @@ class UserProfileView extends StatelessWidget {
                                             const SizedBox(height: 10),
                                             ProfileButton(
                                               icon: const Icon(Icons.photo),
-                                              title: "gallery",
+                                              title: "Gallery".tr,
                                               onPressed: () {
                                                 controller.changeProfileImg(
                                                     ImageSource.gallery);
@@ -113,20 +95,20 @@ class UserProfileView extends StatelessWidget {
                           children: [
                             UserDetailesRow(
                               isEdite: true,
-                              title: 'Full Name',
+                              title: 'Full Name'.tr,
                               value: controller.userModel.userName!,
                               onTap: () {
                                 Get.defaultDialog(
                                   backgroundColor: kOnBoardingBG,
-                                  title: "Change User Name",
+                                  title: "Change User Name".tr,
                                   contentPadding: const EdgeInsets.all(20),
                                   content: AuthTextFiled(
                                     valid: (val) {
                                       return validation(val, 4, 20, Type.userName);
                                     },
                                     keyboardType: TextInputType.name,
-                                    label: "User Name",
-                                    hint: "Enter new user name",
+                                    label: "User Name".tr,
+                                    hint: "Enter new user name".tr,
                                     myController: controller.userNameControler,
                                   ),
                                   onCancel: () {},
@@ -139,19 +121,19 @@ class UserProfileView extends StatelessWidget {
                             const SizedBox(height: 15),
                             UserDetailesRow(
                               isEdite: true,
-                              title: 'Phone Number',
+                              title: "Phone number".tr,
                               value: controller.userModel.phone!,
                               onTap: () {
                                 Get.defaultDialog(
                                   backgroundColor: kOnBoardingBG,
-                                  title: "Change phone number",
+                                  title: "Change phone number".tr,
                                   contentPadding: const EdgeInsets.all(20),
                                   content: AuthTextFiled(
                                     valid: (val) {
                                       return validation(val, 5, 15, Type.phoneNumber);
                                     },
-                                    label: "Phone number",
-                                    hint: "Enter new phone number",
+                                    label: "Phone number".tr,
+                                    hint: "Enter new phone number".tr,
                                     myController: controller.phoneControler,
                                     keyboardType: TextInputType.phone,
                                   ),
@@ -165,7 +147,7 @@ class UserProfileView extends StatelessWidget {
                             const SizedBox(height: 15),
                             UserDetailesRow(
                               isEdite: false,
-                              title: 'Mail',
+                              title: 'Email'.tr,
                               value: controller.userModel.email,
                             ),
                             const SizedBox(height: 15),
@@ -173,7 +155,7 @@ class UserProfileView extends StatelessWidget {
                         ),
                       ),
                       AppButton(
-                        title: "Log out",
+                        title: "Log out".tr,
                         onTap: () async {
                           await FirebaseAuth.instance.signOut();
                           myServices.sharedPreferences.setBool("login", false);
@@ -183,7 +165,7 @@ class UserProfileView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10,),
                       AppButton(
-                        title: "Change Language",
+                        title: "Change Language".tr,
                         onTap: ()  {
                           
                           Get.toNamed(AppRoute.language);

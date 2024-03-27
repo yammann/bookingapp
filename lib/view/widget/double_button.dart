@@ -1,5 +1,6 @@
 import 'package:e_store/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DoubleButton extends StatelessWidget {
   const DoubleButton({super.key, this.onTapSpecial, this.onTapNormal});
@@ -34,8 +35,8 @@ class DoubleButton extends StatelessWidget {
                 ),
                 child: TextButton(
                   onPressed: onTapNormal,
-                  child: const Text(
-                    "Normal",
+                  child:  Text(
+                    "Normal".tr,
                     style: TextStyle(
                       color: kOnBoardingP,
                       fontSize: 16,
@@ -64,8 +65,8 @@ class DoubleButton extends StatelessWidget {
                 ),
                 child: TextButton(
                   onPressed: onTapSpecial,
-                  child: const Text(
-                    "Special",
+                  child:  Text(
+                    "Special".tr,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

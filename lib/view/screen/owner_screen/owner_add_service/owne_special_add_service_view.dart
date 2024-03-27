@@ -34,13 +34,13 @@ class OwnerSpecialAddServiceView extends StatelessWidget {
                       ),
                       onTapIcon: () {
                         Get.defaultDialog(
-                          title: "Confirme",
+                          title: "Confirme".tr,
                           middleText:
-                              "Are you sure you need to delete this service",
+                              "Are you sure you need to delete this service".tr,
                           backgroundColor: kOnBoardingBG,
                           onCancel: () {},
-                          textCancel: "Cancel",
-                          textConfirm: "Confirme",
+                          textCancel: "Cancel".tr,
+                          textConfirm: "Confirme".tr,
                           onConfirm: () {
                             controller
                                 .deleteItem(controller.todoItems[index].label);
@@ -57,35 +57,34 @@ class OwnerSpecialAddServiceView extends StatelessWidget {
                 height: 10,
               ),
               AppButton(
-                  title: "Add Service",
+                  title: "Add Service".tr,
                   onTap: () {
                     Get.defaultDialog(
                       contentPadding: const EdgeInsets.all(20),
                       backgroundColor: kOnBoardingBG,
-                      title: "Add Service",
-                      middleText: "Write label for your service",
+                      title: "Add Service".tr,
+                      middleText: "Write label for your service".tr,
                       content: Column(
                         children: [
                           AuthTextFiled(
-                            label: "Add Service",
-                            hint: "write your service",
+                            label: "Add Service".tr,
+                            hint: "write your service".tr,
                             myController: controller.labelController,
                           ),
                           const SizedBox(height: 10),
-                          const Text(
-                            "Note: This service that you will add will appear to the customer in the language in which it is added. We suggest that you add it in this way Example:  حلاقة شعر (haircut)",
+                           Text("note".tr,
                             style: TextStyle(fontSize: 10),
                           ),
                         ],
                       ),
                       onCancel: () {},
-                      textCancel: "Cancel",
+                      textCancel: "Cancel".tr,
                       onConfirm: () {
                         controller.addItem(TodoItem(
                             label: controller.labelController.text, time: 00));
                         Get.back();
                       },
-                      textConfirm: "Add",
+                      textConfirm: "Add".tr,
                     );
                   }),
             ],

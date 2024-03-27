@@ -99,7 +99,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
         AppRoute.calendarPage,
         arguments: {'selectedTodoList': todoItem,'userModel':costumer},);
     } else {
-       Get.snackbar("Warrning", "Cant entre empty value",
+       Get.snackbar("Warning".tr, "emptyValue".tr,
           backgroundColor:kWorrningSnackbar);
     }
   }
@@ -114,7 +114,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
       }
       update();
     } catch (e) {
-      Get.snackbar("warrning", "has error");
+      Get.snackbar( "Warning".tr, "error".tr);
     }
   }
   

@@ -1,6 +1,8 @@
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/data/model/post_model.dart';
+import 'package:e_store/view/widget/cached_network_img.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -33,27 +35,14 @@ class PostDesign extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                   Container(
-                      padding: const EdgeInsets.all(1),
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: kOnBoardingBG),
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl:  postModel.profilImg,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                            child: CircularProgressIndicator(
-                              value: downloadProgress.progress,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          fit: BoxFit.cover,
-                          width: 50, // Adjust the size as needed
-                          height: 50, // Adjust the size as needed
-                        ),
-                      ),
-                    ),
+                    Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: kOnBoardingBG),
+                        child: CachedImag(
+                            isloadin: false, imgProfile: postModel.profilImg,
+                            width: 50,
+                            height: 50,)),
                     const SizedBox(
                       width: 20,
                     ),
@@ -104,15 +93,15 @@ class PostDesign extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  "$countLike likes",
-                  style: const TextStyle(fontSize: 18),
+                  "$countLike ${"likes".tr}",
+                  style: const TextStyle(fontSize: 14),
                 ),
                 TextButton(
                     style: const ButtonStyle(
                         padding: MaterialStatePropertyAll(EdgeInsets.all(0))),
                     onPressed: onPressedComment,
-                    child: const Text(
-                      "view all comment",
+                    child:  Text(
+                      "view all comment".tr,
                       style: TextStyle(color: Colors.black),
                     )),
                 Text(DateFormat.yMMMd().format(postModel.datePublished)),

@@ -35,8 +35,8 @@ class BookedAppointmentsView extends StatelessWidget {
               ),
               Expanded(
                 child: controller.holiday
-                    ? const Center(
-                        child: Text("Holiday"),
+                    ?  Center(
+                        child: Text("Holiday".tr),
                       )
                     : ListView.builder(
                         itemCount: controller.bookedAppointList.length,
@@ -50,8 +50,8 @@ class BookedAppointmentsView extends StatelessWidget {
                                 onCancel: () {},
                                 content: Column(
                                   children: [
-                                    const Text(
-                                      "Do you want to make this appointment available to another customer or do you want to block the appointment completely?",
+                                     Text(
+                                      "Do you want to make this appointment available to another customer or do you want to block the appointment completely?".tr,
                                       textAlign: TextAlign.center,
                                     ),
                                     const SizedBox(
@@ -65,9 +65,10 @@ class BookedAppointmentsView extends StatelessWidget {
                                           onPressed: () async {
                                             Get.back();
                                             Get.defaultDialog(
+                                              title: "Alert".tr,
                                               contentPadding:
                                                   const EdgeInsets.all(20),
-                                              middleText:"You need to tell the customer",
+                                              middleText:"You need to tell the customer".tr,
                                               middleTextStyle:const TextStyle(fontSize: 16),
                                               content: Row(
                                                 mainAxisAlignment:MainAxisAlignment.spaceAround,
@@ -75,52 +76,53 @@ class BookedAppointmentsView extends StatelessWidget {
                                                   ElevatedButton(
                                                     onPressed: () async {controller.sendEmail(controller.bookedAppointList[index],false);},
                                                     child:
-                                                        const Text("Send mail"),
+                                                         Text("Send mail".tr),
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () { controller.call(controller.bookedAppointList[index],false);},
                                                     child:
-                                                        const Text("Call him"),
+                                                         Text("Call him".tr),
                                                   )
                                                 ],
                                               ),
                                               onCancel: () {},
-                                              textCancel: "Cancel",
+                                              textCancel: "Cancel".tr,
                                             );
                                           },
-                                          child: const Text("Available"),
+                                          child:  Text("Available".tr),
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
                                             Get.back();   
                                             Get.defaultDialog(
+                                              title: "Alert".tr,
                                               contentPadding:
                                                   const EdgeInsets.all(20),
                                               middleText:
-                                                  "You need to tell the customer",
+                                                  "You need to tell the customer".tr,
                                               middleTextStyle:
                                                   const TextStyle(fontSize: 16),
                                               onCancel: () {},
-                                              textCancel: "Cancel",
+                                              textCancel: "Cancel".tr,
                                               content: Row(
                                                 mainAxisAlignment:MainAxisAlignment.spaceAround,
                                                 children: [
                                                   ElevatedButton(
                                                     onPressed: () async {controller.sendEmail(controller.bookedAppointList[index],true);},
                                                     child:
-                                                        const Text("Send mail"),
+                                                         Text("Send mail".tr),
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () { controller.call(controller.bookedAppointList[index],true);},
                                                     child:
-                                                        const Text("Call him"),
+                                                         Text("Call him".tr),
                                                   )
                                                 ],
                                               ),
-                                              textConfirm: "Block",
+                                              textConfirm: "Block".tr,
                                             );
                                           },
-                                          child: const Text("Blocking"),
+                                          child:  Text("Blocking".tr),
                                         )
                                       ],
                                     ),

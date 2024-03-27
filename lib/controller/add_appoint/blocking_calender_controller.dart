@@ -50,8 +50,8 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
 
         if (uniqueAppointments.isNotEmpty) {
           // Get.back();
-          Get.snackbar("Alert",
-              "you are have appointments in this day you need cancel this appointment before blocking",backgroundColor: kWorrningSnackbar);
+          Get.snackbar("Alert".tr,
+              "blockinError".tr,backgroundColor: kWorrningSnackbar);
         } else {
            QuerySnapshot appointQuerySnapshot = await documentReference
             .collection("time")
@@ -59,7 +59,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
           for (QueryDocumentSnapshot appointmentDocument in appointQuerySnapshot.docs) {
             appointmentDocument.reference.update({"isBlocked": true});
           }
-           Get.snackbar("Alert", "Blocking success",backgroundColor: kSuccessSnackbar);
+           Get.snackbar("Alert".tr, "blockingSuccess".tr,backgroundColor: kSuccessSnackbar);
         }
       } else {
         for (AppointmentModel appointment in appointmentList) {
@@ -82,12 +82,12 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
           appointmentDocument.reference.update({"isBlocked": true});
         }
 
-        Get.snackbar("Alert", "Blocking success",backgroundColor: kSuccessSnackbar);
+        Get.snackbar("Alert".tr, "blockingSuccess".tr,backgroundColor: kSuccessSnackbar);
       }
       isLoading=false;
       update();
     } catch (e) {
-      Get.snackbar("Warning", "Has error ", backgroundColor: kSuccessSnackbar);
+      Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
     }
   }
 }

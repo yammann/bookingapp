@@ -50,7 +50,6 @@ class CalenderControllerImp extends CalenderController {
       listForImplement.add(appointment);
     }
     upAppointmentlist = listForImplement;
-    print("11111111111111111111111111$upAppointmentlist");
     update();
   }
 
@@ -63,7 +62,7 @@ class CalenderControllerImp extends CalenderController {
     if (documentSnapshot.exists) {
       await getDataList(documentId);
     } else {
-      Get.snackbar("Alert","You have to wait for a few seconds to load the appointments",backgroundColor: kOnBoardingP);
+      Get.snackbar("Alert".tr,"waiting".tr,backgroundColor: kOnBoardingP);
       
       for (AppointmentModel appointment in appointmentList) {
         Map<String, dynamic> data = appointment.toMap();
@@ -140,7 +139,7 @@ class CalenderControllerImp extends CalenderController {
     //check if appointment is available
     if (upAppointmentlist[index].state && !upAppointmentlist[index].isBlocked) {
       if (hasAppoint) {
-        Get.snackbar("Warrning", "you are onready have a appointment ",
+        Get.snackbar("Warning".tr, "haveAppoint".tr,
             backgroundColor: kWorrningSnackbar);
       } else {
         //check if appointment is need more than 30 m
@@ -152,8 +151,8 @@ class CalenderControllerImp extends CalenderController {
           });
         } else {
           Get.snackbar(
-            "Warrning",
-            "The services you have chosen require time $time minutes. Please choose a time that follows is empty so that we can book a 1-hour appointment for you.",
+            "Warning".tr,
+            "requiredTime1".tr +time.toString()+  "requiredTime2".tr,
             backgroundColor: kWorrningSnackbar,
           );
         }
@@ -162,13 +161,13 @@ class CalenderControllerImp extends CalenderController {
       if (!upAppointmentlist[index].state) {
         if (upAppointmentlist[index].isBlocked) {
           Get.snackbar(
-            "Alert",
-            "This appointment is blocked select another appointment",
+            "Alert".tr,
+            "appointBlocked".tr,
             backgroundColor: kWorrningSnackbar,
           );
         } else {
           Get.snackbar(
-              "Alert", "This appointment is booked select another appointment",
+              "Alert".tr,  "appointBooked".tr,
               backgroundColor: Colors.grey);
         }
       }
@@ -214,7 +213,6 @@ class CalenderControllerImp extends CalenderController {
   nextAppointmentIsAvailable(int index) {
     double countAppointment = time / 30;
     bool available = false;
-    print("77777777777777777777777777777777777777$countAppointment");
     for (int i = 0; i < countAppointment; i++) {
       if (index + i <= 19) {
         if (upAppointmentlist[index + i].state &&

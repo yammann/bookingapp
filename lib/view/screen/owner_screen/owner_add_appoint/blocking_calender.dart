@@ -3,7 +3,6 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/widget/calendr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BlockingCalender extends StatelessWidget {
@@ -16,7 +15,7 @@ class BlockingCalender extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kOnBoardingBG,
         centerTitle: true,
-        title: const Text("Chooes Date"),
+        title:  Text("Chooes Date".tr),
       ),
       body: Container(
         width: double.infinity,
@@ -41,9 +40,9 @@ class BlockingCalender extends StatelessWidget {
                         controller.onSelectedDay(selectedDay);
                         Get.defaultDialog(
                           backgroundColor: kOnBoardingBG,
-                          title: "Alert",
+                          title: "Alert".tr,
                           middleText:
-                              "Are you sure you need blocking this day ${controller.isSelectedDay.toString().substring(0, 11)}",
+                              "${"Are you sure you need blocking this day".tr} ${controller.isSelectedDay.toString().substring(0, 11)}",
                           onCancel: () {},
                           onConfirm: () {
                             controller.blockingDay();

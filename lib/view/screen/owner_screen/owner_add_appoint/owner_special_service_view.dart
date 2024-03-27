@@ -1,7 +1,6 @@
 import 'package:e_store/controller/add_appoint/special_todo_list_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
-import 'package:e_store/core/function/validat.dart';
 import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
 import 'package:e_store/view/screen/owner_screen/widget/dropdownList.dart';
 import 'package:e_store/view/widget/app_button.dart';
@@ -15,9 +14,9 @@ class OwnerSpecialServiceView extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          const Text(
-            "Special services",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+           Text(
+            "Special services".tr,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           Expanded(
@@ -25,17 +24,17 @@ class OwnerSpecialServiceView extends StatelessWidget {
               init: SpecialTodoListControllerImp(),
               builder: (controller) {
                 return Container(
-                  margin: EdgeInsets.only(right: 15, left: 15, top: 15),
+                  margin: const EdgeInsets.only(right: 15, left: 15, top: 15),
                   child: Column(
                     children: [
                       DropdownList(
                         items:controller.users,
-                        title: controller.title,
+                        title: controller.title.tr,
                         onChanged: (userModel) {
                           controller.onSelectOfDropdownList(userModel!);
                         },),
                      
-                      Spacer(flex: 1,),
+                      const Spacer(flex: 1,),
                       AuthTextFiled(
                         myController: controller.detailController,
                         keyboardType: TextInputType.text,
@@ -45,7 +44,7 @@ class OwnerSpecialServiceView extends StatelessWidget {
                           Icons.description_outlined,
                         ),
                       ),
-                      Spacer(flex: 1,),
+                      const Spacer(flex: 1,),
                       AuthTextFiled(
                         myController: controller.durationController,
                         keyboardType: TextInputType.number,
@@ -56,9 +55,9 @@ class OwnerSpecialServiceView extends StatelessWidget {
                           Icons.hourglass_top_rounded,
                         ),
                       ),
-                     Spacer(flex: 5,),
+                     const Spacer(flex: 5,),
                       AppButton(
-                        title: "Next",
+                        title: "Next".tr,
                         onTap: () {
                           controller.navToCalender();
                         },
@@ -68,7 +67,7 @@ class OwnerSpecialServiceView extends StatelessWidget {
                       ),
                       AppButton(
                         color: kWorrningSnackbar,
-                        title: "Blocked for a whole day",
+                        title: "Blocked for a whole day".tr,
                         onTap: () {
                           Get.toNamed(AppRoute.blockingCalender);
                         },

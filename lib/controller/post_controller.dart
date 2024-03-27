@@ -198,10 +198,10 @@ class PostControllerImp extends PostController {
 
       getPosts();
     } catch (e) {
-      Get.snackbar("Warning", "Has error", backgroundColor: kWorrningSnackbar);
+       Get.snackbar( "Warning".tr, "error".tr, backgroundColor: kWorrningSnackbar);
     }
     Get.back();
-    Get.snackbar("Alert", "Post deleted", backgroundColor: kSuccessSnackbar);
+    Get.snackbar("Alert".tr, "PostDeleted".tr, backgroundColor: kSuccessSnackbar);
    
   }
   

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_store/controller/comment_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
+import 'package:e_store/view/widget/cached_network_img.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,7 @@ class CommentPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kOnBoardingBG,
         centerTitle: true,
-        title: const Text("Commentis"),
+        title:  Text("Commentis".tr),
       ),
       body: GetBuilder<CommentControllerImp>(
         init: CommentControllerImp(),
@@ -113,22 +114,7 @@ class CommentPage extends StatelessWidget {
                       padding: const EdgeInsets.all(3),
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: Colors.grey),
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: Get.arguments[1].imgProfile,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                            child: CircularProgressIndicator(
-                              value: downloadProgress.progress,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          fit: BoxFit.cover,
-                          width: 50, // Adjust the size as needed
-                          height: 50, // Adjust the size as needed
-                        ),
-                      ),
+                      child: CachedImag(isloadin: false, imgProfile: Get.arguments[1].imgProfile,width: 50,height: 50,),
                     ),
                     const SizedBox(
                       width: 10,
@@ -138,8 +124,8 @@ class CommentPage extends StatelessWidget {
                       height: 50,
                       child: AuthTextFiled(
                         myController: controller.commentTextController,
-                        label: "Add Comment",
-                        hint: "Write your comment",
+                        label: "Add Comment".tr,
+                        hint: "Write your comment".tr,
                         icon: IconButton(
                           onPressed: () {
                             if (controller.commentTextController.text != "") {
@@ -149,7 +135,7 @@ class CommentPage extends StatelessWidget {
                                   username: Get.arguments[1].userName!,
                                   uID: Get.arguments[1].userId);
                             } else {
-                              Get.snackbar("Warrning", "this comment is empty");
+                              Get.snackbar("Warning".tr, "this comment is empty".tr);
                             }
                           },
                           icon: const Icon(Icons.send),

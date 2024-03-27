@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_store/core/class/local_noification.dart';
 import 'package:e_store/core/function/appointment_exceed.dart';
 import 'package:e_store/core/function/launch_url.dart';
-import 'package:e_store/core/function/send_mesage_to_email.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:get/get.dart';
@@ -77,6 +77,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
       }
     
     Get.back();
+    LocalNotification.cancel(2);
   }
 
   @override
@@ -97,6 +98,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
         });
       }
       Get.back();
+      LocalNotification.cancel(2);
   }
 
   @override
@@ -163,18 +165,14 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
         .get();
 
     UserModel userModel = UserModel.fromJson(snap.data()!);
-    // sendMesageToEmail(userModel.email,
-    // "Jawad Barber",
-    // """Dear customer:
-    //  we apologize for canceling your scheduled appointment on the date
-    //  of ${appointmentModel.date}  ${appointmentModel.time}
-    //  due to an emergency""");
+    
     launchSendEmail(userModel.email,
     "Jawad Barber",
-    """Dear customer:
-     we apologize for canceling your scheduled appointment on the date
-     of ${appointmentModel.date}  ${appointmentModel.time}
-     due to an emergency""");
+     "canselMsg1".tr
+     + appointmentModel.date! 
+     + appointmentModel.time
+     + "canselMsg2".tr
+     );
      
     if (!isBlocking) {
       await cancelAndAvailableAppointment(appointmentModel.appointmentId!,

@@ -2,6 +2,7 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/view/widget/user_detail_row.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppointCard extends StatelessWidget {
   const AppointCard({
@@ -24,16 +25,16 @@ final Function()? onTapCancel;
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               UserDetailesRow(
-                  title: "Date", value: appointmentModel.date!),
+                  title: "Date".tr, value: appointmentModel.date!),
               const SizedBox(height: 10),
               UserDetailesRow(
-                  title: "Time", value: "${appointmentModel.time.substring(0,6)} (${appointmentModel.duration} minute)"),
+                  title: "Time".tr, value: "${appointmentModel.time.substring(0,6)} (${appointmentModel.duration} ${"minute".tr})"),
               const SizedBox(height: 10),
               UserDetailesRow(
-                  title: "Detail", value: appointmentModel.detail! ),
+                  title: "Detail".tr, value: appointmentModel.detail! ),
               const SizedBox(height: 10),
                UserDetailesRow(
-                  title: "State", value: !appointmentModel.state&&!appointmentModel.isBlocked?"Activeti":"is blocked" ),
+                  title: "State".tr, value: !appointmentModel.state&&!appointmentModel.isBlocked?"Activeti".tr:"is blocked".tr ),
               const SizedBox(height: 10),
             ],
           ),
@@ -45,7 +46,7 @@ final Function()? onTapCancel;
             elevation: 0,
             color: const Color.fromARGB(255, 255, 111, 109),
             onPressed: onTapCancel,
-            child: const Text("Cancel"),
+            child:  Text("Cancel".tr),
           ),
         ],
       ),

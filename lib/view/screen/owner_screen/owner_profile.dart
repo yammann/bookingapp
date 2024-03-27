@@ -5,6 +5,7 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/services/services.dart';
 import 'package:e_store/view/screen/owner_screen/widget/profile_button.dart';
+import 'package:e_store/view/widget/cached_network_img.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,26 +30,7 @@ class OwnerProfileView extends StatelessWidget {
                     shape: BoxShape.circle,
                     color:kOnBoardingBG,
                   ),
-                  child: ClipOval(
-                      child: controller.isloadin
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                  color: kOnBoardingP))
-                          : CachedNetworkImage(
-                              imageUrl: controller.userModel.imgProfile,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                child: CircularProgressIndicator(
-                                  value: downloadProgress.progress,
-                                ),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                              fit: BoxFit.cover,
-                              width: 100, // Adjust the size as needed
-                              height: 100, // Adjust the size as needed
-                            ),
-                    ),
+                  child: CachedImag(imgProfile: controller.userModel.imgProfile,isloadin: controller.isloadin,)
                 ),
                  SizedBox(
                   width: 40,
@@ -66,7 +48,7 @@ class OwnerProfileView extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        const Text("Coustumer"),
+                         Text("Customers".tr),
                       ],
                     ),
                   ),
@@ -91,14 +73,14 @@ class OwnerProfileView extends StatelessWidget {
                 Icons.edit,
                 color: Colors.black,
               ),
-              title: "Edit Profile",
+              title: "Edit Profile".tr,
             ),
             ProfileButton(
               icon: const Icon(
                 Icons.add_photo_alternate_outlined,
                 color: Colors.black,
               ),
-              title: "Add Post",
+              title: "Add Post".tr,
               color: Colors.green[200],
               onPressed: () async {
                 Get.toNamed(AppRoute.addPost);
@@ -109,7 +91,7 @@ class OwnerProfileView extends StatelessWidget {
                 Icons.logout_outlined,
                 color: Colors.black,
               ),
-              title: "Logout",
+              title: "Logout".tr,
               color: Colors.red[200],
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
@@ -140,7 +122,7 @@ class OwnerProfileView extends StatelessWidget {
                     onLongPress: () {
                       Get.defaultDialog(
                         backgroundColor: kOnBoardingBG,
-                        title: "Are you need delete this post",
+                        title: "Are you need delete this post".tr,
                         middleText: "",
                         onCancel: () {},
                         onConfirm: () {

@@ -73,7 +73,7 @@ class MyAppointmentControllerImp extends MyAppointmentController {
       });
     }
     Get.back();
-    Get.snackbar("Alert", "Your appointment is canceled",backgroundColor: kSuccessSnackbar);
+    Get.snackbar("Alert".tr, "canceled".tr,backgroundColor: kSuccessSnackbar);
     
   }
 }

@@ -79,7 +79,7 @@ class OwnerHomeBody extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: kOnBoardingBG,
             centerTitle: true,
-            title: Text("${ownerAppbarTitle[controller1.currentIndex]}"),
+            title: Text("${ownerAppbarTitle[controller1.currentIndex]}".tr),
           ),
           body: PopScope(
             canPop: false,

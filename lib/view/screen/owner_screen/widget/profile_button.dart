@@ -19,7 +19,7 @@ class ProfileButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         margin: const EdgeInsets.only(right: 3,left: 3),
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),
           color: color,
@@ -33,7 +33,7 @@ class ProfileButton extends StatelessWidget {
             ),
             Text(
               title,
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(fontSize: 10, color: Colors.black),
             ),
           ],
         ),

@@ -1,4 +1,4 @@
-import 'package:e_store/controller/my_appointment_cpntroller.dart';
+import 'package:e_store/controller/my_appointment_controller.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/view/widget/appoint_card.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class MyAppointView extends StatelessWidget {
 
               if (appointments == null || appointments.isEmpty) {
                 return Center(
-                  child: Text("You don't have any appointments."),
+                  child: Text("You don't have any appointments.".tr),
                 );
               }
 
@@ -38,9 +38,9 @@ class MyAppointView extends StatelessWidget {
                     appointmentModel: appointments[index],
                     onTapCancel: () {
                       Get.defaultDialog(
-                        title: "Alert",
+                        title: "Alert".tr,
                         middleText:
-                            "Are you sure you want to cancel your appointment?",
+                            "Are you sure you want to cancel your appointment?".tr,
                         onCancel: () {},
                         onConfirm: () {
                           controller.cancelAppointment(

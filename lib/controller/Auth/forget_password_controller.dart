@@ -1,12 +1,10 @@
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/core/constants/route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class ForgetPasswordController extends GetxController {
   resetPassword(String email);
-  navToVeriFiyCode();
   navBack();
 }
 
@@ -36,10 +34,10 @@ class ForgetPasswordControllerImp extends ForgetPasswordController {
       } catch (e) {
         if (e is FirebaseAuthException) {
           if (e.code == 'user-not-found') {
-            Get.snackbar("Error", "No user found with this email address",
+            Get.snackbar("Warning".tr, "NoUserFound".tr,
                 snackPosition: SnackPosition.BOTTOM);
           } else {
-            Get.snackbar("Error", "has error",
+             Get.snackbar( "Warning".tr, "error".tr,
                 snackPosition: SnackPosition.BOTTOM);
           }
         }
@@ -47,10 +45,7 @@ class ForgetPasswordControllerImp extends ForgetPasswordController {
     }
   }
 
-  @override
-  navToVeriFiyCode() {
-    Get.toNamed(AppRoute.verifyCodeResPas);
-  }
+ 
 
   @override
   void onInit() {

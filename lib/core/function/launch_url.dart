@@ -14,7 +14,7 @@ launchURL(String https) async {
 launchWhatsApp() async {
     String message = 'Hello!';
     
-    final Uri url = Uri.parse('https://wa.me/$userPhoneNumber/?text=${Uri.encodeFull(message)}');
+    final Uri url = Uri.parse('https://wa.me/$ownerPhoneNumber/?text=${Uri.encodeFull(message)}');
     
     if (await canLaunchUrl(url)) {
     await launchUrl(url);

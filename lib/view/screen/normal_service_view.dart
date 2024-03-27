@@ -11,8 +11,8 @@ class NormalServiceView extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          const Text(
-            "Normal services ",
+           Text(
+            "Normal services ".tr,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
@@ -50,7 +50,7 @@ class NormalServiceView extends StatelessWidget {
             init: NormalTodoListControllerImp(),
             builder: (controller) {
               return AppButton(
-                  title: "Next",
+                  title: "Next".tr,
                   onTap: () {
                     controller.navToCalender();
                   });

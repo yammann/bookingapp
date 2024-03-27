@@ -1,6 +1,7 @@
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/data/model/todo_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TodoItemCard extends StatelessWidget {
   const TodoItemCard({
@@ -35,7 +36,7 @@ class TodoItemCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${todoItem.time} minute",
+                  "(${todoItem.time} ${"minute".tr})",
                   style: const TextStyle(fontSize: 16),
                 ),
                 SizedBox(

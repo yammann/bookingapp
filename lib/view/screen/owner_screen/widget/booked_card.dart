@@ -3,6 +3,7 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/view/widget/user_detail_row.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BookedCard extends StatelessWidget {
   const BookedCard({super.key, required this.appointmentModel, this.onTapIcon,});
@@ -42,15 +43,15 @@ final Function()? onTapIcon;
                         ),
                       ),
                     ),
-                        const SizedBox(width: 5,),
+                         SizedBox(width: 5,),
                         Expanded(
                           child: Column(
                             children: [
                               UserDetailesRow(
-                                  title: "User Name", value: appointmentModel.userName!),
+                                  title: "User Name".tr, value: appointmentModel.userName!),
                               UserDetailesRow(
-                                  title: "Time", value: "${appointmentModel.time.substring(0,6)} (${appointmentModel.duration} minute)"),
-                              UserDetailesRow(title: "Detail", value: appointmentModel.detail!),
+                                  title: "Time".tr, value: "${appointmentModel.time.substring(0,6)} (${appointmentModel.duration}${"minute".tr})"),
+                              UserDetailesRow(title: "Detail".tr, value: appointmentModel.detail!),
                             ],
                           ),
                         ),

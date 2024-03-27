@@ -34,6 +34,9 @@ class LocalController extends GetxController {
     } else if (sharPrefLang == "gr") {
       language = const Locale("gr");
       themeData = englishThemeData;
+    }else if (sharPrefLang == "tr") {
+      language = const Locale("tr");
+      themeData = englishThemeData;
     } else {
       language = Locale(Get.deviceLocale!.languageCode);
       themeData = englishThemeData;

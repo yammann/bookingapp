@@ -14,7 +14,7 @@ class CostumerView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kOnBoardingBG,
         centerTitle: true,
-        title: const Text("Customers"),
+        title:  Text("Customers".tr),
       ),
       body: Container(
         width: double.infinity,

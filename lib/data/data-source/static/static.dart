@@ -64,14 +64,14 @@ List<Widget> ownerHomePages = [
 ];
 
 List appbarTitle = [
-  "Amjad Jawad",
+  "Yaman Jawad",
   "My Appointment",
   "Profile",
   "About Us",
   "Add Appointment"
 ];
 List ownerAppbarTitle = [
-  "Amjad Jawad",
+  "Yaman Jawad",
   "Booked Appointments",
   "Add Service",
   "Profile",
@@ -94,6 +94,8 @@ List<Widget> ownerAddServicePages = [
 
 String personPlaceholderImg = "";
 String ownerUserId = "Bn37pPu1x2OLzv9aKrI9ZP7ov3H3";
-String userPhoneNumber="+49 178 2696138";
+String ownerPhoneNumber="+49 178 2696138";
 String ownerTiktok="//www.tiktok.com/@amjad.jaw?_t=8krFHrMrCfF&_r=1";
 String ownerInstagram= "//www.instagram.com/amjad.jwd?igsh=ZHpsMm1sejJ3ZzEz";
+String logoImg="assets/images/logo-color.png";
+String salonName="Yaman";

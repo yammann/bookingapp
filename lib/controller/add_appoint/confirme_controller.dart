@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_store/core/class/local_noification.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
-import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/todo_item.dart';
@@ -64,8 +64,8 @@ class ConfirmeControllerImp extends ConfirmeController {
         });
       }
       Get.snackbar(
-        "Success",
-        "Appointment Confermied ",
+        "Success".tr,
+       "AppointConfermied".tr,
         backgroundColor: kSuccessSnackbar,
         icon: Icon(
           Icons.check_circle_rounded,
@@ -79,10 +79,30 @@ class ConfirmeControllerImp extends ConfirmeController {
       else{
         Get.offNamed(AppRoute.home);
       }
+      print(appointment[0].date!);
+      int year=int.parse(appointment[0].date!.substring(0,4));
+      print(year.toString());
+
+      int month=int.parse(appointment[0].date!.substring(5,7));
+      print(month.toString());
+
+      int day=int.parse(appointment[0].date!.substring(8,10))-1;
+      print(day.toString());
+      String now=DateTime.now().toString().substring(0,10);
+
+      if(appointment[0].date!=now){
+         LocalNotification.cancel(2);
+         LocalNotification.scheduleNotification(year,month,day,
+      "notifRimening1".tr + "notifRimening2".tr + appointment[0].time.substring(0,5));
+      }
+     LocalNotification.cancel(1);
+      LocalNotification.repeatNotification(
+       "notifRimening1".tr + "notifRimening3".tr);
+
     } catch (e) {
       Get.snackbar(
-        "Warrning",
-        "Has error try again ",
+        "Warning".tr,
+        "error".tr,
         backgroundColor: kWorrningSnackbar,
         icon: Icon(
           Icons.cancel_presentation_rounded,

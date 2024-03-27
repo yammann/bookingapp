@@ -111,7 +111,7 @@ class UserProfileControllerImp extends UserProfileController {
         update();
         Get.back();
     } catch (e) {
-      Get.snackbar("Warning", "Has error");
+       Get.snackbar( "Warning".tr, "error".tr);
     }
   } @override
 
@@ -125,7 +125,7 @@ class UserProfileControllerImp extends UserProfileController {
         update();
         Get.back();
     } catch (e) {
-      Get.snackbar("Warning", "Has error");
+      Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 
@@ -148,7 +148,7 @@ class UserProfileControllerImp extends UserProfileController {
       }
       update();
     } catch (e) {
-      Get.snackbar("warrning", "has error");
+       Get.snackbar( "Warning".tr, "error".tr);
     }
   }
 }

@@ -46,7 +46,7 @@ final HomeControllerImp homeControllerImp=Get.find();
                     controller1.currentPage(1);
                   },
                 ),
-                const SizedBox(width: 40), // Adjust the space as needed
+                const SizedBox(width: 40), 
                 IconButton(
                   icon: const Icon(
                     Icons.person_3,
@@ -78,7 +78,7 @@ final HomeControllerImp homeControllerImp=Get.find();
           appBar: AppBar(
             backgroundColor: kOnBoardingBG,
             centerTitle: true,
-            title: Text("${appbarTitle[controller1.currentIndex]}"),
+            title: Text("${appbarTitle[controller1.currentIndex]}".tr),
           ),
           body: PopScope(
             canPop: false,
