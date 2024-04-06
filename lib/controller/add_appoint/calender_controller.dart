@@ -125,7 +125,7 @@ class CalenderControllerImp extends CalenderController {
   timeCalculation() {
     time = 0;
     for (TodoItem todoItem in selectedTodoList) {
-      time += todoItem.time;
+      time += todoItem.time!;
       update();
     }
     print(time);

@@ -10,18 +10,20 @@ class TodoItemCard extends StatelessWidget {
     this.onTap,
     this.onTapIcon,
     required this.icon,
+    this.padding=const EdgeInsets.all(20)
   });
 
   final TodoItem todoItem;
   final Function()? onTapIcon;
   final Function()? onTap;
   final Icon icon;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding:padding ,
         margin: const EdgeInsets.all( 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: kOnBoardingBG),

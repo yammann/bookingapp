@@ -35,7 +35,7 @@ class ConfirmeControllerImp extends ConfirmeController {
   detailText() {
     for (TodoItem todoItem in selectedTodoItem) {
       String label = todoItem.label;
-      int time = todoItem.time;
+      int time = todoItem.time!;
       detail = "$detail-$label";
       duration += time;
     }
