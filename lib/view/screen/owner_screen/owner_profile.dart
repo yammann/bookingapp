@@ -32,25 +32,50 @@ class OwnerProfileView extends StatelessWidget {
                   ),
                   child: CachedImag(imgProfile: controller.userModel.imgProfile,isloadin: controller.isloadin,)
                 ),
-                 SizedBox(
+                 const SizedBox(
                   width: 40,
                 ),
                  Expanded(
-                  child: InkWell(
-                    onTap: (){Get.toNamed(AppRoute.costumerView);},
-                    child: Column(
-                      children: [
-                        Text(
-                          controller.countCoustumer.toString(),
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          controller.onTapCustomer();
+                          Get.toNamed(AppRoute.costumerView);},
+                        child: Column(
+                          children: [
+                            Text(
+                              controller.countCoustumer.toString(),
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              height: 5
+                            ),
+                             Text("Customers".tr),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 5,
+                      ),
+                      InkWell(
+                        onTap: (){
+                          controller.onTapBarber();
+                          Get.toNamed(AppRoute.costumerView);},
+                        child: Column(
+                          children: [
+                            Text(
+                              controller.countBarber.toString(),
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              height: 5
+                            ),
+                             Text("Barbers"),
+                          ],
                         ),
-                         Text("Customers".tr),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -69,7 +94,7 @@ class OwnerProfileView extends StatelessWidget {
               onPressed: () {
                 Get.toNamed(AppRoute.profile);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit,
                 color: Colors.black,
               ),
@@ -91,13 +116,10 @@ class OwnerProfileView extends StatelessWidget {
                 Icons.logout_outlined,
                 color: Colors.black,
               ),
-              title: "Logout".tr,
-              color: Colors.red[200],
+              title: "Add Barber".tr,
+              color: Colors.amber[200],
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                myServices.sharedPreferences.setBool("login", false);
-                Get.offAllNamed(AppRoute.rest);
-                // await FirebaseAuth.instance.signOut();
+                Get.toNamed(AppRoute.addBarber);
               },
             ),
           ],

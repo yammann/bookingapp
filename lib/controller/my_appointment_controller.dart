@@ -2,27 +2,44 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/model/apointment-model.dart';
+import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 abstract class MyAppointmentController extends GetxController {
-  Stream<List<AppointmentModel>> get appointmentsStream;
-  Future<void> cancelAppointment(String documentId, String appointmentId);
+  fetchMyAppointment();
+  Future<void> cancelAppointment(AppointmentModel appointmentModel);
 }
 
 class MyAppointmentControllerImp extends MyAppointmentController {
   final User currentUser = FirebaseAuth.instance.currentUser!;
+  late UserModel userModel;
+  List<AppointmentModel> bookedAppointList = [];
 
   @override
-  Stream<List<AppointmentModel>> get appointmentsStream {
-    CollectionReference appointCollection =
-        FirebaseFirestore.instance.collection("apointment");
+  void onInit() async {
+    userModel = await getUserData(currentUser.uid);
+    await fetchMyAppointment();
+    super.onInit();
+  }
 
-    return appointCollection.snapshots().asyncMap((snapshot) async {
-      List<AppointmentModel> bookedAppointList = [];
+  @override
+  fetchMyAppointment() async {
+    QuerySnapshot barberSnapshot =
+        await FirebaseFirestore.instance.collection("barber").get();
 
-      for (QueryDocumentSnapshot document in snapshot.docs) {
+    for (DocumentSnapshot barberDoc in barberSnapshot.docs) {
+      CollectionReference appointCollection = FirebaseFirestore.instance
+          .collection("barber")
+          .doc(barberDoc.id)
+          .collection("apointment");
+
+      QuerySnapshot appointSnapshot = await appointCollection.get();
+
+      for (QueryDocumentSnapshot document in appointSnapshot.docs) {
         QuerySnapshot subCollectionSnapshot = await document.reference
             .collection("time")
             .where("userId", isEqualTo: currentUser.uid)
@@ -41,21 +58,21 @@ class MyAppointmentControllerImp extends MyAppointmentController {
           }
         }
       }
-
-      return bookedAppointList;
-    });
+    }
+    update();
   }
 
   @override
-  Future<void> cancelAppointment(
-      String documentId, String appointmentId) async {
+  Future<void> cancelAppointment(AppointmentModel appointmentModel) async {
     CollectionReference appointCollection = FirebaseFirestore.instance
+        .collection("barber")
+        .doc(appointmentModel.barberId)
         .collection("apointment")
-        .doc(documentId)
+        .doc(appointmentModel.date)
         .collection("time");
 
     QuerySnapshot appointQuerySnapshot = await appointCollection
-        .where("appointmentId", isEqualTo: appointmentId)
+        .where("appointmentId", isEqualTo: appointmentModel.appointmentId)
         .get();
 
     for (QueryDocumentSnapshot appointDocumentSnapshot
@@ -70,10 +87,12 @@ class MyAppointmentControllerImp extends MyAppointmentController {
         "state": true,
         "duration": null,
         "appointmentId": null,
+        "barberId": null,
+        "barberName": null,
       });
     }
     Get.back();
-    Get.snackbar("Alert".tr, "canceled".tr,backgroundColor: kSuccessSnackbar);
-    
+    Get.snackbar("Alert".tr, "canceled".tr, backgroundColor: kSuccessSnackbar);
+    Get.offAllNamed(AppRoute.onBoarding);
   }
 }

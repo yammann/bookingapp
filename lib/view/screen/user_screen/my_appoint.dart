@@ -1,9 +1,7 @@
 import 'package:e_store/controller/my_appointment_controller.dart';
-import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/view/widget/appoint_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class MyAppointView extends StatelessWidget {
   MyAppointView({Key? key}) : super(key: key);
@@ -12,49 +10,31 @@ class MyAppointView extends StatelessWidget {
     return GetBuilder<MyAppointmentControllerImp>(
       init: MyAppointmentControllerImp(),
       builder: (controller) {
-        return StreamBuilder<List<AppointmentModel>>(
-            stream: controller.appointmentsStream,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child:Lottie.asset("assets/lottie/loading.json"));
-              }
-
-              if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              }
-
-              List<AppointmentModel>? appointments = snapshot.data;
-
-              if (appointments == null || appointments.isEmpty) {
-                return Center(
-                  child: Text("You don't have any appointments.".tr),
-                );
-              }
-
-              return ListView.builder(
-                itemCount: appointments.length,
+        return controller.bookedAppointList.isEmpty
+            ? Center(
+                child: Text("You don't have any appointments.".tr),
+              )
+            : ListView.builder(
+                itemCount: controller.bookedAppointList.length,
                 itemBuilder: (context, index) {
                   return AppointCard(
-                    appointmentModel: appointments[index],
+                    appointmentModel: controller.bookedAppointList[index],
                     onTapCancel: () {
                       Get.defaultDialog(
                         title: "Alert".tr,
                         middleText:
-                            "Are you sure you want to cancel your appointment?".tr,
+                            "Are you sure you want to cancel your appointment?"
+                                .tr,
                         onCancel: () {},
                         onConfirm: () {
                           controller.cancelAppointment(
-                            appointments[index].date!,
-                            appointments[index].appointmentId!,
-                          );
+                              controller.bookedAppointList[index]);
                         },
                       );
                     },
                   );
                 },
               );
-            },
-          );
       },
     );
   }

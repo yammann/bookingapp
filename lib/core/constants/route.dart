@@ -16,6 +16,7 @@ abstract class AppRoute {
   static const String profile="/proile";
   static const String homeImp="/homeImp";
   static const String comment="/comment";
+  static const String chooesBarber="/chooesBarber";
 
   // Owner Pages
     static const String ownerHome="/ownerHome";
@@ -23,10 +24,14 @@ abstract class AppRoute {
   static const String bookedAppoint="/bookedAppoint";
   static const String ownerAddService="/ownerAddService";
   static const String ownerAddAppoint="/ownerAddAppoint";
-  static const String calendarPage="/OwnerCalendarPage";
-  static const String confirmePage="/OwnerConfirme";
+  static const String calendarPage="/CalendarPage";
+  static const String confirmePage="/Confirme";
   static const String addPost="/addPost";
   static const String splach="/splach";
   static const String blockingCalender="/blockingCalender";
   static const String costumerView="/costumer";
+  static const String addBarber="/addBarber";
+  //barber pages
+    static const String barberView="/barberView";
+
 }

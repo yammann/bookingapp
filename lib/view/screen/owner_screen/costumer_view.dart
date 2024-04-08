@@ -26,7 +26,7 @@ class CostumerView extends StatelessWidget {
           init: UserProfileControllerImp(),
           builder: (controller) {
             return ListView.builder(
-              itemCount: controller.users.length,
+              itemCount:controller.isCustomer? controller.users.length: controller.barbers.length,
               itemBuilder: (context, index) {
                 return Container(
                   padding: const EdgeInsets.only(bottom: 5, top: 5),
@@ -36,7 +36,7 @@ class CostumerView extends StatelessWidget {
                     children: [
                       ClipOval(
                         child: CachedNetworkImage(
-                          imageUrl: controller.users[index].imgProfile,
+                          imageUrl:controller.isCustomer? controller.users[index].imgProfile: controller.barbers[index].imgProfile,
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) => Center(
                             child: CircularProgressIndicator(
@@ -51,7 +51,7 @@ class CostumerView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 15),
-                      Text(controller.users[index].userName!),
+                      Text(controller.isCustomer? controller.users[index].userName!: controller.barbers[index].userName!),
                      
                     ],
                   ),

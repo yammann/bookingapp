@@ -18,18 +18,26 @@ abstract class NormalTodoListController extends GetxController {
 }
 
 class NormalTodoListControllerImp extends NormalTodoListController {
-  final CollectionReference collectionRef =
-      FirebaseFirestore.instance.collection("todo");
   List<TodoItem> selectedTodoList = [];
 
   List<TodoItem> todoItems = [];
 
-  final User currentUser=FirebaseAuth.instance.currentUser!;
+  final User currentUser = FirebaseAuth.instance.currentUser!;
 
   late UserModel userModel;
+  late UserModel? barber = Get.arguments;
 
   late TextEditingController labelController;
   late TextEditingController timeController;
+
+  @override
+  void onInit() async {
+    userModel = await getUserData(currentUser.uid);
+    labelController = TextEditingController();
+    timeController = TextEditingController();
+    fetchItem();
+    super.onInit();
+  }
 
   @override
   void toggleCheckbox(int index) {
@@ -49,42 +57,47 @@ class NormalTodoListControllerImp extends NormalTodoListController {
 
   @override
   void addItem(TodoItem todoItem) async {
-    if (timeController.text.isNotEmpty&&labelController.text.isNotEmpty) {
-  try {
-    await collectionRef.doc(todoItem.label).set(todoItem.toMap());
-    fetchItem();
+    if (timeController.text.isNotEmpty && labelController.text.isNotEmpty) {
+      try {
+        await FirebaseFirestore.instance
+            .collection("barber")
+            .doc(userModel.userId)
+            .collection("todo")
+            .doc(todoItem.label)
+            .set(todoItem.toMap());
 
-  } catch (e) {
-     Get.snackbar( "Warning".tr, "error".tr);
-  }
-}
+        fetchItem();
+      } catch (e) {
+        Get.snackbar("Warning".tr, "error".tr);
+      }
+    }
   }
 
   @override
   void deleteItem(String label) async {
     try {
-      await collectionRef.doc(label).delete();
+      await FirebaseFirestore.instance
+          .collection("barber")
+          .doc(userModel.userId)
+          .collection("todo")
+          .doc(label)
+          .delete();
+
       fetchItem();
-
     } catch (e) {
-       Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
-  }
-
-  @override
-  void onInit() async{
-    userModel = await getUserData(currentUser.uid);
-    labelController = TextEditingController();
-    timeController = TextEditingController();
-    fetchItem();
-    super.onInit();
   }
 
   @override
   void fetchItem() async {
     List<TodoItem> forImplement = [];
     try {
-      QuerySnapshot itemQuerySnapshot = await collectionRef.get();
+      QuerySnapshot itemQuerySnapshot = await FirebaseFirestore.instance
+          .collection("barber")
+          .doc(barber?.userId ?? userModel.userId)
+          .collection("todo")
+          .get();
 
       for (var itemDocumentSnapshot in itemQuerySnapshot.docs) {
         TodoItem todoItem = TodoItem.fromJson(
@@ -95,7 +108,7 @@ class NormalTodoListControllerImp extends NormalTodoListController {
 
       update();
     } catch (_) {
-       Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
   }
 
@@ -110,13 +123,16 @@ class NormalTodoListControllerImp extends NormalTodoListController {
   navToCalender() {
     if (selectedTodoList.isEmpty) {
       Get.snackbar("Warning".tr, "chooseAtLeastOne".tr,
-          backgroundColor:kWorrningSnackbar);
+          backgroundColor: kWorrningSnackbar);
     } else {
-       Get.toNamed(
+      Get.toNamed(
         AppRoute.calendarPage,
         arguments: {
-        'selectedTodoList': selectedTodoList,
-        "userModel":userModel,},);
+          'selectedTodoList': selectedTodoList,
+          "userModel": userModel,
+          "barber":barber,
+        },
+      );
     }
   }
 }

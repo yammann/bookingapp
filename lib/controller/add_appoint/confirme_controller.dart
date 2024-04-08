@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/class/local_noification.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
-import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/todo_item.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -16,17 +15,18 @@ abstract class ConfirmeController extends GetxController {
 }
 
 class ConfirmeControllerImp extends ConfirmeController {
-  late List<AppointmentModel> appointment;
-  late List<TodoItem> selectedTodoItem;
+  List<AppointmentModel> appointment = Get.arguments["appointment"];
+  List<TodoItem> selectedTodoItem = Get.arguments["selectedTodoList"];
+  UserModel userModel=Get.arguments["userModel"];
+  UserModel? barber=Get.arguments["barber"];
+  UserModel? customer=Get.arguments["customer"];
+
   User currentUser = FirebaseAuth.instance.currentUser!;
   String detail = "";
   int duration = 0;
-  UserModel userModel=Get.arguments["userModel"];
   
   @override
   void onInit() async {
-    appointment = Get.arguments["appointment"];
-    selectedTodoItem = Get.arguments["selectedTodoList"];
     detailText();
     super.onInit();
   }
@@ -39,7 +39,6 @@ class ConfirmeControllerImp extends ConfirmeController {
       detail = "$detail-$label";
       duration += time;
     }
-    print(detail);
     update();
   }
 
@@ -49,6 +48,8 @@ class ConfirmeControllerImp extends ConfirmeController {
       String appointmentId=uuid.v1();
       for (AppointmentModel appointmentModel in appointment) {
         await FirebaseFirestore.instance
+            .collection("barber")
+            .doc(barber?.userId??userModel.userId)
             .collection("apointment")
             .doc(appointmentModel.date.toString())
             .collection("time")
@@ -56,29 +57,23 @@ class ConfirmeControllerImp extends ConfirmeController {
             .update({
           "detail": detail,
           "state": false,
-          "userId": userModel.userId,
-          "userName": userModel.userName,
-          "userProfImg": userModel.imgProfile,
+          "userId": customer?.userId??userModel.userId,
+          "userName": customer?.userName??userModel.userName,
+          "userProfImg": customer?.imgProfile??userModel.imgProfile,
           "duration":duration,
           "appointmentId":appointmentId,
+          "barberId":barber?.userId??userModel.userId,
+          "barberName":barber?.userName??userModel.userName,
         });
       }
       Get.snackbar(
-        "Success".tr,
-       "AppointConfermied".tr,
-        backgroundColor: kSuccessSnackbar,
-        icon: Icon(
-          Icons.check_circle_rounded,
-          size: 30,
-          color: Colors.green[900],
+        "Success".tr,"AppointConfermied".tr,backgroundColor: kSuccessSnackbar,
+        icon: Icon(Icons.check_circle_rounded,size: 30,color: Colors.green[900],
         ),
       );
-      if(currentUser.uid==ownerUserId){
-        Get.offNamed(AppRoute.ownerHome);
-      }
-      else{
-        Get.offNamed(AppRoute.home);
-      }
+      
+        Get.offAllNamed(AppRoute.onBoarding);
+      
       print(appointment[0].date!);
       int year=int.parse(appointment[0].date!.substring(0,4));
       print(year.toString());

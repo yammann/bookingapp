@@ -20,6 +20,7 @@ abstract class CalenderController extends GetxController {
   appointmentExists();
   nextAppointmentIsAvailable(int index);
   addDateToAppointment(String date);
+  addAppointToDB(DocumentReference documentReference, String date);
 }
 
 class CalenderControllerImp extends CalenderController {
@@ -29,20 +30,42 @@ class CalenderControllerImp extends CalenderController {
   bool hasAppoint = false;
   int selectedTime = 0;
   List selectedTodoList = Get.arguments["selectedTodoList"];
-  UserModel userModel=Get.arguments["userModel"];
+  UserModel userModel = Get.arguments["userModel"];
+  UserModel? barber = Get.arguments["barber"];
+  UserModel? customer = Get.arguments["customer"];
   int time = 0;
   final User currentUser = FirebaseAuth.instance.currentUser!;
-
   List<AppointmentModel> willBookedAppointment = [];
+
+  @override
+  void onInit() async {
+    super.onInit();
+
+    if (DateTime.now().weekday == DateTime.wednesday ||
+        DateTime.now().weekday == DateTime.sunday) {
+      timeCalculation();
+      await appointmentExists();
+    } else {
+      holiday = false;
+      appointmentIfExceed(
+          isSelectedDay.toString().substring(0, 10), currentUser.uid);
+      await getApointment(isSelectedDay.toString().substring(0, 10));
+      await appointmentExists();
+      timeCalculation();
+    }
+    
+  }
 
   Future<void> getDataList(String documentId) async {
     List<AppointmentModel> listForImplement = [];
 
     CollectionReference timeCollection = FirebaseFirestore.instance
+        .collection("barber")
+        .doc(barber?.userId ?? userModel.userId)
         .collection("apointment")
         .doc(documentId)
         .collection("time");
-        
+
     QuerySnapshot timeQuerySnapshot = await timeCollection.get();
     for (var timeDocumentSnapshot in timeQuerySnapshot.docs) {
       AppointmentModel appointment = AppointmentModel.fromJson(
@@ -56,21 +79,32 @@ class CalenderControllerImp extends CalenderController {
   @override
   Future<void> getApointment(String documentId) async {
     //documentId = Date
-    DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("apointment").doc(documentId);
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("barber")
+        .doc(barber?.userId ?? userModel.userId)
+        .collection("apointment")
+        .doc(documentId);
     DocumentSnapshot documentSnapshot = await documentReference.get();
     if (documentSnapshot.exists) {
       await getDataList(documentId);
     } else {
-      Get.snackbar("Alert".tr,"waiting".tr,backgroundColor: kOnBoardingP);
-      
-      for (AppointmentModel appointment in appointmentList) {
-        Map<String, dynamic> data = appointment.toMap();
-        await documentReference.set({"date": documentId});
-        await documentReference.collection("time").doc(data["time"]).set(data);
-      }
+      Get.snackbar("Alert".tr, "waiting".tr, backgroundColor: kOnBoardingP);
+      await addAppointToDB(documentReference, documentId);
       await addDateToAppointment(documentId);
       await getDataList(documentId);
+    }
+  }
+
+  @override
+  addAppointToDB(DocumentReference documentReference, String date) async {
+    try {
+      for (AppointmentModel appointment in appointmentList) {
+        var data = appointment.toMap();
+        await documentReference.set({"date": date});
+        await documentReference.collection("time").doc(data["time"]).set(data);
+      }
+    } catch (e) {
+      Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
     }
   }
 
@@ -78,30 +112,6 @@ class CalenderControllerImp extends CalenderController {
   changeSelectedTime(int index) {
     selectedTime = index;
     update();
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-
-    if (DateTime.now().weekday == DateTime.wednesday ||
-        DateTime.now().weekday == DateTime.sunday) {
-      timeCalculation();
-      appointmentExists();
-    } else {
-      holiday = false;
-      appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
-      await getApointment(isSelectedDay.toString().substring(0, 10));
-      appointmentExists();
-      timeCalculation();
-    }
-    print(Get.arguments["selectedTodoList"]);
-    print(selectedTodoList);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -128,13 +138,10 @@ class CalenderControllerImp extends CalenderController {
       time += todoItem.time!;
       update();
     }
-    print(time);
   }
 
   @override
   onSelectTime(int index) {
-    //check if has appointment
-
     changeSelectedTime(index);
     //check if appointment is available
     if (upAppointmentlist[index].state && !upAppointmentlist[index].isBlocked) {
@@ -142,17 +149,18 @@ class CalenderControllerImp extends CalenderController {
         Get.snackbar("Warning".tr, "haveAppoint".tr,
             backgroundColor: kWorrningSnackbar);
       } else {
-        //check if appointment is need more than 30 m
         if (nextAppointmentIsAvailable(index)) {
           Get.offNamed(AppRoute.confirmePage, arguments: {
             "selectedTodoList": selectedTodoList,
             "appointment": willBookedAppointment,
-            "userModel":userModel,
+            "userModel": userModel,
+            "barber": barber,
+            "customer":customer,
           });
         } else {
           Get.snackbar(
             "Warning".tr,
-            "requiredTime1".tr +time.toString()+  "requiredTime2".tr,
+            "requiredTime1".tr + time.toString() + "requiredTime2".tr,
             backgroundColor: kWorrningSnackbar,
           );
         }
@@ -166,8 +174,7 @@ class CalenderControllerImp extends CalenderController {
             backgroundColor: kWorrningSnackbar,
           );
         } else {
-          Get.snackbar(
-              "Alert".tr,  "appointBooked".tr,
+          Get.snackbar("Alert".tr, "appointBooked".tr,
               backgroundColor: Colors.grey);
         }
       }
@@ -176,32 +183,43 @@ class CalenderControllerImp extends CalenderController {
 
  
 
-  
   @override
   appointmentExists() async {
-    CollectionReference appointCollection =
-        FirebaseFirestore.instance.collection("apointment");
-    Stream<QuerySnapshot<Object?>> appointQuerySnapshot =
-        appointCollection.snapshots();
-    appointQuerySnapshot.listen(
-      (QuerySnapshot snapshot) async {
-        for (QueryDocumentSnapshot document in snapshot.docs) {
-          Stream<QuerySnapshot<Object?>> subCollectionSnapshot = document
-              .reference
-              .collection("time")
-              .where("userId", isEqualTo: currentUser.uid)
-              .snapshots();
-          subCollectionSnapshot.listen(
-            (QuerySnapshot snapshot) {
-              for (QueryDocumentSnapshot document in snapshot.docs) {
-                AppointmentModel appointmentModel = AppointmentModel.fromJson(
-                    document.data() as Map<String, dynamic>);
+    CollectionReference barberCollection =FirebaseFirestore.instance.collection("barber");
 
-                hasAppoint = !appointmentModel.appointmentExceed &&
-                    !appointmentModel.isBlocked &&
-                    appointmentModel.userId != ownerUserId;
+    Stream<QuerySnapshot<Object?>> barberQuerySnapshot =barberCollection.snapshots();
+
+    barberQuerySnapshot.listen((QuerySnapshot snapshot) async {
+
+        for (QueryDocumentSnapshot document in snapshot.docs) {
+          CollectionReference appointCollection = document.reference.collection("apointment");
+
+          Stream<QuerySnapshot<Object?>> appointQuerySnapshot = appointCollection.snapshots();
+          appointQuerySnapshot.listen((QuerySnapshot snapshot) async {
+
+              for (QueryDocumentSnapshot document in snapshot.docs) {
+                Stream<QuerySnapshot<Object?>> timeCollectionSnapshot = document
+                    .reference
+                    .collection("time")
+                    .where("userId", isEqualTo: currentUser.uid)
+                    .snapshots();
+
+                timeCollectionSnapshot.listen((QuerySnapshot snapshot) {
+
+                    for (QueryDocumentSnapshot document in snapshot.docs) {
+                      AppointmentModel appointmentModel =AppointmentModel.fromJson(document.data() as Map<String, dynamic>);
+
+                      if(userModel.role==Role.customer){
+                        if(!appointmentModel.appointmentExceed &&
+                          !appointmentModel.isBlocked){
+                            hasAppoint = true;
+                          }
+                      }
+                    }
+                    update();
+                  },
+                );
               }
-              update();
             },
           );
         }
@@ -213,6 +231,8 @@ class CalenderControllerImp extends CalenderController {
   nextAppointmentIsAvailable(int index) {
     double countAppointment = time / 30;
     bool available = false;
+    //fur update upAppointment list
+    getDataList(isSelectedDay.toString().substring(0, 10));
     for (int i = 0; i < countAppointment; i++) {
       if (index + i <= 19) {
         if (upAppointmentlist[index + i].state &&
@@ -228,23 +248,24 @@ class CalenderControllerImp extends CalenderController {
         }
       } else {
         willBookedAppointment.clear();
-          update();
+        update();
         available = false;
       }
     }
     return available;
   }
-  
+
   @override
-  addDateToAppointment(String date) async{
-   CollectionReference timeCollection = FirebaseFirestore.instance
+  addDateToAppointment(String date) async {
+    CollectionReference timeCollection = FirebaseFirestore.instance
+        .collection("barber")
+        .doc(barber?.userId ?? userModel.userId)
         .collection("apointment")
         .doc(date)
         .collection("time");
     QuerySnapshot timeQuerySnapshot = await timeCollection.get();
     for (var timeDocumentSnapshot in timeQuerySnapshot.docs) {
-     timeDocumentSnapshot.reference.update({"date":date});
+      timeDocumentSnapshot.reference.update({"date": date});
     }
   }
 }
- 

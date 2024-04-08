@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class SpecialTodoListController extends GetxController {
- 
   void deleteItem(String label);
   void addItem(TodoItem todoItem);
   void fetchItem();
@@ -21,42 +20,56 @@ abstract class SpecialTodoListController extends GetxController {
 }
 
 class SpecialTodoListControllerImp extends SpecialTodoListController {
-  final CollectionReference colectionRef =FirebaseFirestore.instance.collection("Special_todo");
   List todoItems = [];
-  final User currentUser=FirebaseAuth.instance.currentUser!;
-  List<UserModel>users=[];
-  String title="Select Costumer";
-  late UserModel costumer;
+
+  final User currentUser = FirebaseAuth.instance.currentUser!;
+
+  List<UserModel> users = [];
+
+  String title = "Select Costumer";
+
+  late UserModel userModel;
+  late UserModel customer;
 
   late TextEditingController labelController = TextEditingController();
-  late TextEditingController durationController= TextEditingController();
-  late TextEditingController detailController= TextEditingController();
-
+  late TextEditingController durationController = TextEditingController();
+  late TextEditingController detailController = TextEditingController();
 
   @override
   void addItem(TodoItem todoItem) async {
     try {
-      await colectionRef.doc(todoItem.label).set(todoItem.toMap());
+      await FirebaseFirestore.instance
+          .collection("barber")
+          .doc(userModel.userId)
+          .collection("Special_todo")
+          .doc(todoItem.label)
+          .set(todoItem.toMap());
       labelController.clear();
       fetchItem();
     } catch (e) {
-      Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
   }
 
   @override
   void deleteItem(String label) async {
     try {
-      await colectionRef.doc(label).delete();
+      await FirebaseFirestore.instance
+          .collection("barber")
+          .doc(userModel.userId)
+          .collection("Special_todo")
+          .doc(label)
+          .delete();
+
       fetchItem();
     } catch (e) {
-      Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
   }
 
   @override
-  void onInit() async{
-    costumer=await getUserData(currentUser.uid);
+  void onInit() async {
+    userModel = await getUserData(currentUser.uid);
     getUsers();
     fetchItem();
     super.onInit();
@@ -66,7 +79,11 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
   void fetchItem() async {
     List<TodoItem> forImplement = [];
     try {
-      QuerySnapshot itemQuerySnapshot = await colectionRef.get();
+      QuerySnapshot itemQuerySnapshot = await FirebaseFirestore.instance
+          .collection("barber")
+          .doc(userModel.userId)
+          .collection("Special_todo")
+          .get();
 
       for (var itemDocumentSnapshot in itemQuerySnapshot.docs) {
         TodoItem todoItem = TodoItem.fromJson(
@@ -74,10 +91,10 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
         forImplement.add(todoItem);
       }
       todoItems = forImplement;
-      
+
       update();
     } catch (_) {
-      Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
   }
 
@@ -93,35 +110,43 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
 
   @override
   navToCalender() {
-    if (detailController.text.isNotEmpty&&durationController.text.isNotEmpty) {
-    List<TodoItem> todoItem=[TodoItem(label: detailController.text, time: int.parse(durationController.text))];
+    if (detailController.text.isNotEmpty &&
+        durationController.text.isNotEmpty) {
+      List<TodoItem> todoItem = [
+        TodoItem(
+            label: detailController.text,
+            time: int.parse(durationController.text))
+      ];
       Get.toNamed(
         AppRoute.calendarPage,
-        arguments: {'selectedTodoList': todoItem,'userModel':costumer},);
+        arguments: {'selectedTodoList': todoItem, 'userModel': userModel,'customer':customer},
+      );
     } else {
-       Get.snackbar("Warning".tr, "emptyValue".tr,
-          backgroundColor:kWorrningSnackbar);
+      Get.snackbar("Warning".tr, "emptyValue".tr,
+          backgroundColor: kWorrningSnackbar);
     }
   }
-  
+
   @override
-  getUsers() async{
+  getUsers() async {
     try {
-      QuerySnapshot usersQuerySnapshot=await FirebaseFirestore.instance.collection("users").get();
-      for(DocumentSnapshot usersDocumentSnapshot in usersQuerySnapshot.docs){
-        UserModel userModel=UserModel.fromJson(usersDocumentSnapshot.data() as Map<String,dynamic>);
+      QuerySnapshot usersQuerySnapshot =
+          await FirebaseFirestore.instance.collection("users").get();
+      for (DocumentSnapshot usersDocumentSnapshot in usersQuerySnapshot.docs) {
+        UserModel userModel = UserModel.fromJson(
+            usersDocumentSnapshot.data() as Map<String, dynamic>);
         users.add(userModel);
       }
       update();
     } catch (e) {
-      Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
   }
-  
+
   @override
   onSelectOfDropdownList(UserModel userModel) {
-   title=userModel.userName!;
-   costumer=userModel;
-   update();
+    title = userModel.userName!;
+    customer = userModel;
+    update();
   }
 }

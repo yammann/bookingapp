@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/core/services/services.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -53,18 +54,23 @@ class Auth {
           .signInWithEmailAndPassword(email: email, password: password);
 
       User user = userCredential.user!;
-      bool isOwner = user.uid ==ownerUserId;
+      UserModel userModel = await getUserData(user.uid);
 
       // Set login status and user type in SharedPreferences
       myServices.sharedPreferences.setBool("login", true);
-      myServices.sharedPreferences.setBool("owner", isOwner);
 
       // Redirect user based on their type
-      if (isOwner) {
-        Get.offNamed(AppRoute.ownerHome);
-        print("User is an owner");
-      } else {
+      if (userModel.role == Role.customer) {
         Get.offNamed(AppRoute.home);
+        myServices.sharedPreferences.setString("role", "customer");
+        print("User is an customer");
+      } else if (userModel.role == Role.barber) {
+        Get.offNamed(AppRoute.barberView);
+        myServices.sharedPreferences.setString("role", "barber");
+        print("User is not an owner");
+      }else if (userModel.role == Role.owner) {
+        Get.offNamed(AppRoute.ownerHome);
+        myServices.sharedPreferences.setString("role", "owner");
         print("User is not an owner");
       }
 
@@ -77,7 +83,7 @@ class Auth {
         } else if (e.code == 'wrong-password') {
           Get.snackbar("Warning".tr, "error2".tr);
         } else {
-          Get.snackbar("Warning".tr,"error1".tr);
+          Get.snackbar("Warning".tr, "error1".tr);
         }
       } else {
         // Handle other unexpected errors

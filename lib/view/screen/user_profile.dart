@@ -167,9 +167,15 @@ class UserProfileView extends StatelessWidget {
                       AppButton(
                         title: "Change Language".tr,
                         onTap: ()  {
-                          
                           Get.toNamed(AppRoute.language);
                         },
+                      ),
+                       const SizedBox(height: 10,),
+                      AppButton(
+                        title: "Change Password",
+                        onTap: ()  {
+                          controller.changePassword()
+;                        },
                       ),
                     ],
                   ),

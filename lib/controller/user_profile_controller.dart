@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/core/function/img_storge_and_get_url.dart';
 import 'package:e_store/data/data-source/static/static.dart';
@@ -15,15 +16,20 @@ abstract class UserProfileController extends GetxController {
   changeProfileImg(ImageSource imgSorc);
   changeUserName();
   isImageLod();
-  changePhoneNumber();  
-  countcoustumer();
+  changePhoneNumber();
+  countCoustumers();
+  countBarbers();
   getUsers();
-
+  getarbers();
+  onTapBarber();
+  onTapCustomer();
+  changePassword();
 }
 
 class UserProfileControllerImp extends UserProfileController {
+  int countCoustumer = 0;
 
-  int countCoustumer=0;
+  int countBarber = 0;
 
   late UserModel userModel;
 
@@ -35,13 +41,17 @@ class UserProfileControllerImp extends UserProfileController {
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
-  List<UserModel>users=[];
+  List<UserModel> users = [];
 
-  late  UserModel owner;
+  List<UserModel> barbers = [];
 
-  TextEditingController userNameControler=TextEditingController();
+  bool isCustomer = true;
 
-  TextEditingController phoneControler=TextEditingController();
+  late UserModel owner;
+
+  TextEditingController userNameControler = TextEditingController();
+
+  TextEditingController phoneControler = TextEditingController();
 
   @override
   changeProfileImg(ImageSource imgSorc) async {
@@ -61,7 +71,10 @@ class UserProfileControllerImp extends UserProfileController {
             imgPaht: imgPaht!,
             foldername: "userProfailImg/${currentUser.uid}");
 
-        FirebaseFirestore.instance.collection("users").doc(currentUser.uid).update({
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(currentUser.uid)
+            .update({
           "imgProfile": profilImg,
         });
         userModel = await getUserData(currentUser.uid);
@@ -69,11 +82,9 @@ class UserProfileControllerImp extends UserProfileController {
         update();
 
         isImageLod();
-      } else {
-        
-      }
+      } else {}
     } catch (e) {
-      Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
     Get.back();
   }
@@ -87,9 +98,11 @@ class UserProfileControllerImp extends UserProfileController {
   @override
   void onInit() async {
     userModel = await getUserData(currentUser.uid);
-    owner=await getUserData(ownerUserId);
-      countcoustumer();
-      await getUsers() ;
+    owner = await getUserData(ownerUserId);
+    countCoustumers();
+    await getUsers();
+    countBarbers();
+    await getarbers();
     super.onInit();
   }
 
@@ -99,56 +112,123 @@ class UserProfileControllerImp extends UserProfileController {
     userNameControler.dispose();
     super.dispose();
   }
-  
+
   @override
-  changeUserName()async {
+  changeUserName() async {
     try {
-      FirebaseFirestore.instance.collection("users").doc(currentUser.uid).update({
-          "userName": userNameControler.text,
-        });
-        userModel = await getUserData(currentUser.uid);
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUser.uid)
+          .update({
+        "userName": userNameControler.text,
+      });
+      userModel = await getUserData(currentUser.uid);
 
-        update();
-        Get.back();
+      update();
+      Get.back();
     } catch (e) {
-       Get.snackbar( "Warning".tr, "error".tr);
-    }
-  } @override
-
-  changePhoneNumber()async {
-    try {
-      FirebaseFirestore.instance.collection("users").doc(currentUser.uid).update({
-          "phone": phoneControler.text,
-        });
-        userModel = await getUserData(currentUser.uid);
-
-        update();
-        Get.back();
-    } catch (e) {
-      Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
     }
   }
 
-   @override
-  countcoustumer()async {
-    QuerySnapshot querySnapshot=await FirebaseFirestore.instance.collection("users").get();
-    countCoustumer=querySnapshot.size;
+  @override
+  changePhoneNumber() async {
+    try {
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUser.uid)
+          .update({
+        "phone": phoneControler.text,
+      });
+      userModel = await getUserData(currentUser.uid);
+
+      update();
+      Get.back();
+    } catch (e) {
+      Get.snackbar("Warning".tr, "error".tr);
+    }
+  }
+
+  @override
+  countCoustumers() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection("users").get();
+    countCoustumer = querySnapshot.size;
     update();
   }
-  
- 
 
   @override
-  getUsers() async{
+  countBarbers() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection("barber").get();
+    countBarber = querySnapshot.size;
+    update();
+  }
+
+  @override
+  getUsers() async {
     try {
-      QuerySnapshot usersQuerySnapshot=await FirebaseFirestore.instance.collection("users").get();
-      for(DocumentSnapshot usersDocumentSnapshot in usersQuerySnapshot.docs){
-        UserModel userModel=UserModel.fromJson(usersDocumentSnapshot.data() as Map<String,dynamic>);
+      QuerySnapshot usersQuerySnapshot =
+          await FirebaseFirestore.instance.collection("users").get();
+      for (DocumentSnapshot usersDocumentSnapshot in usersQuerySnapshot.docs) {
+        UserModel userModel = UserModel.fromJson(
+            usersDocumentSnapshot.data() as Map<String, dynamic>);
         users.add(userModel);
       }
       update();
     } catch (e) {
-       Get.snackbar( "Warning".tr, "error".tr);
+      Get.snackbar("Warning".tr, "error".tr);
+    }
+  }
+
+  @override
+  getarbers() async {
+    try {
+      QuerySnapshot usersQuerySnapshot =
+          await FirebaseFirestore.instance.collection("barber").get();
+      for (DocumentSnapshot usersDocumentSnapshot in usersQuerySnapshot.docs) {
+        UserModel userModel = UserModel.fromJson(
+            usersDocumentSnapshot.data() as Map<String, dynamic>);
+        barbers.add(userModel);
+      }
+      update();
+    } catch (e) {
+      Get.snackbar("Warning".tr, "error".tr);
+    }
+  }
+
+  @override
+  onTapBarber() {
+    isCustomer = false;
+    update();
+  }
+
+  @override
+  onTapCustomer() {
+    isCustomer = true;
+    update();
+  }
+
+  @override
+  changePassword() async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: userModel.email);
+      Get.snackbar("SBtitle".tr, "SBtext".tr,
+          duration: const Duration(seconds: 10),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: kOnBoardingBG,
+          padding: const EdgeInsets.all(20));
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        if (e.code == 'user-not-found') {
+          Get.snackbar("Warning".tr, "NoUserFound".tr,
+              snackPosition: SnackPosition.BOTTOM);
+        } else {
+          Get.snackbar("Warning".tr, "error".tr,
+              snackPosition: SnackPosition.BOTTOM);
+        }
+      }
     }
   }
 }

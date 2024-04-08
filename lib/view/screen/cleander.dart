@@ -30,7 +30,6 @@ class CalendarPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(30), color: Colors.white),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         child: GetBuilder<CalenderControllerImp>(
-          init: CalenderControllerImp(),
           builder: (controller) {
             return Column(
               children: [

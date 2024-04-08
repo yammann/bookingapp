@@ -3,6 +3,7 @@ import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/onboarding_model.dart';
 import 'package:e_store/view/screen/user_screen/about_view.dart';
 import 'package:e_store/view/screen/user_screen/add_appoint/add_appoint.dart';
+import 'package:e_store/view/screen/user_screen/add_appoint/chooes_barber.dart';
 import 'package:e_store/view/screen/user_screen/add_appoint/special_service_view.dart';
 import 'package:e_store/view/screen/user_screen/home_imp_view.dart';
 import 'package:e_store/view/screen/user_screen/my_appoint.dart';
@@ -53,7 +54,7 @@ List<Widget> userHomePages = [
   MyAppointView(),  
   UserProfileView(),
   const AboutView(),
-  AddAppointView()
+  ChooesBarberView(),
 ];
 List<Widget> ownerHomePages = [
   HomeImpView(),
@@ -63,15 +64,31 @@ List<Widget> ownerHomePages = [
   OwnerAddAppointView()
 ];
 
+List<Widget> barberHomePages = [
+  HomeImpView(),
+  BookedAppointmentsView(),
+  OwnerAddServiceView(),
+  UserProfileView(),
+  OwnerAddAppointView()
+];
+
 List appbarTitle = [
-  "Yaman Jawad",
+  "home",
   "My Appointment",
   "Profile",
   "About Us",
   "Add Appointment"
 ];
 List ownerAppbarTitle = [
-  "Yaman Jawad",
+  "home",
+  "Booked Appointments",
+  "Add Service",
+  "Profile",
+  "Add Appointment"
+];
+
+List barberAppbarTitle = [
+  "home",
   "Booked Appointments",
   "Add Service",
   "Profile",

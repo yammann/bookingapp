@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +24,7 @@ class AddBarberControllerImp extends AddBarberController {
   bool obscure = true;
 
   @override
-  Future<void> addBarber(
-      ) async {
+  Future<void> addBarber() async {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
           .instance
@@ -39,7 +37,7 @@ class AddBarberControllerImp extends AddBarberController {
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
-        ); 
+        );
 
         UserModel userModel = UserModel(
           userId: credential.user!.uid,
@@ -48,6 +46,7 @@ class AddBarberControllerImp extends AddBarberController {
           phone: phoneNumberController.text,
           userName: userNameController.text,
           role: Role.barber,
+          holidays: [1],
         );
 
         FirebaseFirestore userFirestore = FirebaseFirestore.instance;
@@ -66,7 +65,8 @@ class AddBarberControllerImp extends AddBarberController {
             .then((value) {})
             .catchError((error) {});
       } else {
-        await snapshot.docs.first.reference.update({"role": Role.barber.toString().split('.').last});
+        await snapshot.docs.first.reference
+            .update({"role": Role.barber.toString().split('.').last});
         UserModel userModel = UserModel.fromJson(snapshot.docs.first.data());
         FirebaseFirestore barberFirestore = FirebaseFirestore.instance;
         barberFirestore
@@ -76,13 +76,12 @@ class AddBarberControllerImp extends AddBarberController {
             .then((value) {})
             .catchError((error) {});
       }
-
-      Get.snackbar("Alert".tr, "Success".tr,backgroundColor: kSuccessSnackbar);
+      Get.snackbar("Alert".tr, "Success".tr, backgroundColor: kSuccessSnackbar);
       emailController.clear();
       phoneNumberController.clear();
       userNameController.clear();
       passwordController.clear();
-      Get.back();
+      
     } catch (e) {
       Get.snackbar("Warning".tr, 'Error: $e',
           backgroundColor: kWorrningSnackbar);

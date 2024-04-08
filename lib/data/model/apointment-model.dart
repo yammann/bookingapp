@@ -4,6 +4,8 @@ var uuid = const Uuid();
 
 class AppointmentModel {
   AppointmentModel({
+    this.barberName,
+    this.barberId,
     this.appointmentId,
     this.duration,
     this.userName,
@@ -18,6 +20,8 @@ class AppointmentModel {
   });
   final String? userName;
   final String? userId;
+  final String? barberName;
+  final String? barberId;
   final String? appointmentId;
   final String? date;
   final String? detail;
@@ -30,18 +34,20 @@ class AppointmentModel {
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel(
-        userName: json['userName'],
-        userId: json['userId'],
-        state: json['state'],
-        date: json['date'],
-        duration: json['duration'],
-        detail: json['detail'],
-        time: json['time'],
-        userProfImg: json['userProfImg'],
-        appointmentId: json['appointmentId'],
-        isBlocked: json['isBlocked'],
-        appointmentExceed: json['appointmentExceed'],
-        );
+      userName: json['userName'],
+      userId: json['userId'],
+      state: json['state'],
+      date: json['date'],
+      duration: json['duration'],
+      detail: json['detail'],
+      time: json['time'],
+      userProfImg: json['userProfImg'],
+      appointmentId: json['appointmentId'],
+      isBlocked: json['isBlocked'],
+      appointmentExceed: json['appointmentExceed'],
+      barberId: json['barberId'],
+      barberName: json['barberName'],
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -57,6 +63,8 @@ class AppointmentModel {
       'duration': duration,
       'appointmentId': appointmentId,
       'appointmentExceed': appointmentExceed,
+      'barberId':barberId,
+      'barberName':barberName
     };
   }
 }

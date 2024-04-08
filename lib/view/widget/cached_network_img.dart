@@ -3,7 +3,7 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CachedImag extends StatelessWidget {
-  const CachedImag({super.key, required this.isloadin, required this.imgProfile,  this.width=100,  this.height=100});
+  const CachedImag({super.key,  this.isloadin=false, required this.imgProfile,  this.width=100,  this.height=100});
 final bool isloadin;
 final String imgProfile;
 final double width;

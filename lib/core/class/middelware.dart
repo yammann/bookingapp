@@ -13,11 +13,11 @@ class MyMiddelware extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     if (myServices.sharedPreferences.get("onBoarding") == true) {
       if (myServices.sharedPreferences.get("login") == true) {
-        if (myServices.sharedPreferences.get("owner") == true) {
-          print("1");
+        if (myServices.sharedPreferences.get("role") == "owner") {
           return const RouteSettings(name: AppRoute.ownerHome);
+        } else if (myServices.sharedPreferences.get("role") == "barber") {
+          return const RouteSettings(name: AppRoute.barberView);
         } else {
-          print("2");
           return const RouteSettings(name: AppRoute.home);
         }
       } else {
