@@ -31,6 +31,9 @@ final Function()? onTapCancel;
                   title: "Time".tr, value: "${appointmentModel.time.substring(0,6)} (${appointmentModel.duration} ${"minute".tr})"),
               const SizedBox(height: 10),
               UserDetailesRow(
+                  title: "barber", value: "${appointmentModel.barberName}"),
+              const SizedBox(height: 10),
+              UserDetailesRow(
                   title: "Detail".tr, value: appointmentModel.detail! ),
               const SizedBox(height: 10),
                UserDetailesRow(

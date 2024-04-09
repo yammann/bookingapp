@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/core/function/img_storge_and_get_url.dart';
 import 'package:e_store/data/data-source/static/static.dart';
@@ -20,7 +21,7 @@ abstract class UserProfileController extends GetxController {
   countCoustumers();
   countBarbers();
   getUsers();
-  getarbers();
+  getbarbers();
   onTapBarber();
   onTapCustomer();
   changePassword();
@@ -79,6 +80,14 @@ class UserProfileControllerImp extends UserProfileController {
         });
         userModel = await getUserData(currentUser.uid);
 
+        if(userModel.role!=Role.customer){
+         FirebaseFirestore.instance
+          .collection("barber")
+          .doc(currentUser.uid)
+          .update({
+        "imgProfile": profilImg.text,
+      });
+      }
         update();
 
         isImageLod();
@@ -102,7 +111,7 @@ class UserProfileControllerImp extends UserProfileController {
     countCoustumers();
     await getUsers();
     countBarbers();
-    await getarbers();
+    await getbarbers();
     super.onInit();
   }
 
@@ -124,9 +133,18 @@ class UserProfileControllerImp extends UserProfileController {
       });
       userModel = await getUserData(currentUser.uid);
 
+      if(userModel.role!=Role.customer){
+         FirebaseFirestore.instance
+          .collection("barber")
+          .doc(currentUser.uid)
+          .update({
+        "userName": userNameControler.text,
+      });
+      }
       update();
       Get.back();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
@@ -141,7 +159,14 @@ class UserProfileControllerImp extends UserProfileController {
         "phone": phoneControler.text,
       });
       userModel = await getUserData(currentUser.uid);
-
+      if(userModel.role!=Role.customer){
+         FirebaseFirestore.instance
+          .collection("barber")
+          .doc(currentUser.uid)
+          .update({
+        "phone": phoneControler.text,
+      });
+      }
       update();
       Get.back();
     } catch (e) {
@@ -177,12 +202,13 @@ class UserProfileControllerImp extends UserProfileController {
       }
       update();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
 
   @override
-  getarbers() async {
+  getbarbers() async {
     try {
       QuerySnapshot usersQuerySnapshot =
           await FirebaseFirestore.instance.collection("barber").get();
@@ -193,6 +219,7 @@ class UserProfileControllerImp extends UserProfileController {
       }
       update();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
@@ -214,6 +241,7 @@ class UserProfileControllerImp extends UserProfileController {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: userModel.email);
+          isActiveSnackbar();
       Get.snackbar("SBtitle".tr, "SBtext".tr,
           duration: const Duration(seconds: 10),
           snackPosition: SnackPosition.BOTTOM,
@@ -222,9 +250,11 @@ class UserProfileControllerImp extends UserProfileController {
     } catch (e) {
       if (e is FirebaseAuthException) {
         if (e.code == 'user-not-found') {
+          isActiveSnackbar();
           Get.snackbar("Warning".tr, "NoUserFound".tr,
               snackPosition: SnackPosition.BOTTOM);
         } else {
+          isActiveSnackbar();
           Get.snackbar("Warning".tr, "error".tr,
               snackPosition: SnackPosition.BOTTOM);
         }

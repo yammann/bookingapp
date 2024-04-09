@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/class/local_noification.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/todo_item.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -66,6 +67,7 @@ class ConfirmeControllerImp extends ConfirmeController {
           "barberName":barber?.userName??userModel.userName,
         });
       }
+      isActiveSnackbar();
       Get.snackbar(
         "Success".tr,"AppointConfermied".tr,backgroundColor: kSuccessSnackbar,
         icon: Icon(Icons.check_circle_rounded,size: 30,color: Colors.green[900],
@@ -95,6 +97,7 @@ class ConfirmeControllerImp extends ConfirmeController {
        "notifRimening1".tr + "notifRimening3".tr);
 
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar(
         "Warning".tr,
         "error".tr,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/data/model/comment_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -73,6 +74,7 @@ class CommentControllerImp extends CommentController {
       comments=listForImplement;
       update();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar( "Warning".tr, "error".tr);
     }
   }

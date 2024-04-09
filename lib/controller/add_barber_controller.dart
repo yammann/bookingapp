@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,7 @@ class AddBarberControllerImp extends AddBarberController {
             .then((value) {})
             .catchError((error) {});
       }
+      isActiveSnackbar();
       Get.snackbar("Alert".tr, "Success".tr, backgroundColor: kSuccessSnackbar);
       emailController.clear();
       phoneNumberController.clear();
@@ -83,6 +85,7 @@ class AddBarberControllerImp extends AddBarberController {
       passwordController.clear();
       
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, 'Error: $e',
           backgroundColor: kWorrningSnackbar);
     }

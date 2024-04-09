@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/model/todo_item.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -66,10 +66,11 @@ class HolidayControllerImp extends HolidayController {
           .collection("users")
           .doc(currentUser.uid)
           .update({"holidays": selectedTodoList});
-
+          isActiveSnackbar();
           Get.snackbar("Alert".tr, "Success".tr,backgroundColor: kSuccessSnackbar);
           Get.offAllNamed("/");
     } on Exception catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Alert".tr, "blockinError".tr,backgroundColor: kWorrningSnackbar);
     }
   }

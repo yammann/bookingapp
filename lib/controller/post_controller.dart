@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/class/post_method.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/core/function/img_storge_and_get_url.dart';
 import 'package:e_store/data/model/post_model.dart';
@@ -64,9 +65,11 @@ class PostControllerImp extends PostController {
         secound = true;
         update();
       } else {
+        isActiveSnackbar();
         Get.snackbar( "Warning".tr, "error".tr);
       }
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar( "Warning".tr, "error".tr);
     }
     Get.back();
@@ -140,6 +143,7 @@ class PostControllerImp extends PostController {
       posts = listForImplement;
       update();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar( "Warning".tr, "error".tr);
     }
   }
@@ -179,6 +183,7 @@ class PostControllerImp extends PostController {
       }
       getPosts();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar( "Warning".tr, "error".tr);
     }
   }
@@ -198,9 +203,11 @@ class PostControllerImp extends PostController {
 
       getPosts();
     } catch (e) {
+      isActiveSnackbar();
        Get.snackbar( "Warning".tr, "error".tr, backgroundColor: kWorrningSnackbar);
     }
     Get.back();
+    isActiveSnackbar();
     Get.snackbar("Alert".tr, "PostDeleted".tr, backgroundColor: kSuccessSnackbar);
    
   }

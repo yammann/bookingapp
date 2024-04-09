@@ -82,7 +82,7 @@ class MyTranslation extends Translations {
           "requiredTime1": "الخدمات التي اخترتها تتطلب وقتًا",
           "requiredTime2":
               "دقائق. يرجى اختيار وقت غير محجوز لحجز موعد لمدة ساعة.",
-          "appointBlocked": "هذا الموعد محجوز، يرجى اختيار موعد آخر",
+          "appointBlocked": "هذا الموعد محجوب، يرجى اختيار موعد آخر",
           "appointBooked": "هذا الموعد محجوز، يرجى اختيار موعد آخر",
           "AppointConfermied": "تم تأكيد الموعد",
           "notifRimening1": "عزيزي",

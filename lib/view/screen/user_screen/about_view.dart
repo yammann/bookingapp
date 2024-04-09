@@ -17,7 +17,7 @@ class AboutView extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: Column(
         children: [
-          CachedImag(isloadin: false, imgProfile: userProfileControllerImp.owner.imgProfile,),
+          CachedImag(isloadin: false, imgProfile: userProfileControllerImp.owner.imgProfile,height: 150,width: 150,),
            SizedBox(height: 5),
           Container(
             padding: const EdgeInsets.all(20),

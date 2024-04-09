@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/model/todo_item.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -85,6 +86,7 @@ class NormalTodoListControllerImp extends NormalTodoListController {
 
       fetchItem();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
@@ -108,6 +110,7 @@ class NormalTodoListControllerImp extends NormalTodoListController {
 
       update();
     } catch (_) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
@@ -122,6 +125,7 @@ class NormalTodoListControllerImp extends NormalTodoListController {
   @override
   navToCalender() {
     if (selectedTodoList.isEmpty) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "chooseAtLeastOne".tr,
           backgroundColor: kWorrningSnackbar);
     } else {

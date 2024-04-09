@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,6 +45,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
 
       if (documentSnapshot.exists) {
         if (isDayHaveAppointment(documentReference)) {
+          isActiveSnackbar();
           Get.snackbar("Alert".tr, "blockinError".tr, backgroundColor: kWorrningSnackbar);
         } else {
           updateAppointState(documentReference);
@@ -52,7 +54,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
         addAppointToDB( documentReference, date);
 
         updateAppointState(documentReference);
-
+        isActiveSnackbar();
         Get.snackbar("Alert".tr, "blockingSuccess".tr,backgroundColor: kSuccessSnackbar);
       }
 
@@ -60,6 +62,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
       update();
       
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
     }
   }
@@ -75,6 +78,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
         appointmentDocument.reference.update({"isBlocked": true});
       }
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
     }
   }
@@ -101,6 +105,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
         return false;
       }
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
     }
   }
@@ -114,6 +119,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
         await documentReference.collection("time").doc(data["time"]).set(data);
       }
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
     }
   }

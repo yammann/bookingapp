@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/function/appointment_exceed.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/todo_item.dart';
@@ -47,8 +48,7 @@ class CalenderControllerImp extends CalenderController {
       await appointmentExists();
     } else {
       holiday = false;
-      appointmentIfExceed(
-          isSelectedDay.toString().substring(0, 10), currentUser.uid);
+      appointmentIfExceed(isSelectedDay.toString().substring(0, 10), barber?.userId??userModel.userId);
       await getApointment(isSelectedDay.toString().substring(0, 10));
       await appointmentExists();
       timeCalculation();
@@ -88,6 +88,7 @@ class CalenderControllerImp extends CalenderController {
     if (documentSnapshot.exists) {
       await getDataList(documentId);
     } else {
+      isActiveSnackbar();
       Get.snackbar("Alert".tr, "waiting".tr, backgroundColor: kOnBoardingP);
       await addAppointToDB(documentReference, documentId);
       await addDateToAppointment(documentId);
@@ -104,6 +105,7 @@ class CalenderControllerImp extends CalenderController {
         await documentReference.collection("time").doc(data["time"]).set(data);
       }
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
     }
   }
@@ -144,8 +146,11 @@ class CalenderControllerImp extends CalenderController {
   onSelectTime(int index) {
     changeSelectedTime(index);
     //check if appointment is available
-    if (upAppointmentlist[index].state && !upAppointmentlist[index].isBlocked) {
+    if (upAppointmentlist[index].state 
+    && !upAppointmentlist[index].isBlocked 
+    && !upAppointmentlist[index].appointmentExceed) {
       if (hasAppoint) {
+        isActiveSnackbar();
         Get.snackbar("Warning".tr, "haveAppoint".tr,
             backgroundColor: kWorrningSnackbar);
       } else {
@@ -158,6 +163,7 @@ class CalenderControllerImp extends CalenderController {
             "customer":customer,
           });
         } else {
+          isActiveSnackbar();
           Get.snackbar(
             "Warning".tr,
             "requiredTime1".tr + time.toString() + "requiredTime2".tr,
@@ -168,12 +174,14 @@ class CalenderControllerImp extends CalenderController {
     } else {
       if (!upAppointmentlist[index].state) {
         if (upAppointmentlist[index].isBlocked) {
+          isActiveSnackbar();
           Get.snackbar(
             "Alert".tr,
             "appointBlocked".tr,
             backgroundColor: kWorrningSnackbar,
           );
         } else {
+          isActiveSnackbar();
           Get.snackbar("Alert".tr, "appointBooked".tr,
               backgroundColor: Colors.grey);
         }

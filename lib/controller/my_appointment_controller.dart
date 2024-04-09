@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -92,6 +93,7 @@ class MyAppointmentControllerImp extends MyAppointmentController {
       });
     }
     Get.back();
+    isActiveSnackbar();
     Get.snackbar("Alert".tr, "canceled".tr, backgroundColor: kSuccessSnackbar);
     Get.offAllNamed(AppRoute.onBoarding);
   }

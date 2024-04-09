@@ -1,4 +1,5 @@
 import 'package:e_store/core/constants/colors.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ class ForgetPasswordControllerImp extends ForgetPasswordController {
     if (formState!.validate()) {
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        isActiveSnackbar();
         Get.snackbar("SBtitle".tr,
            "SBtext".tr,
             duration: const Duration(seconds: 10),
@@ -34,9 +36,11 @@ class ForgetPasswordControllerImp extends ForgetPasswordController {
       } catch (e) {
         if (e is FirebaseAuthException) {
           if (e.code == 'user-not-found') {
+            isActiveSnackbar();
             Get.snackbar("Warning".tr, "NoUserFound".tr,
                 snackPosition: SnackPosition.BOTTOM);
           } else {
+            isActiveSnackbar();
              Get.snackbar( "Warning".tr, "error".tr,
                 snackPosition: SnackPosition.BOTTOM);
           }

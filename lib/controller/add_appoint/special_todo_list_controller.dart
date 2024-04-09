@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
+import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/model/todo_item.dart';
 import 'package:e_store/data/model/usermodel.dart';
@@ -63,6 +64,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
 
       fetchItem();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
@@ -94,6 +96,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
 
       update();
     } catch (_) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
@@ -122,6 +125,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
         arguments: {'selectedTodoList': todoItem, 'userModel': userModel,'customer':customer},
       );
     } else {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "emptyValue".tr,
           backgroundColor: kWorrningSnackbar);
     }
@@ -139,6 +143,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
       }
       update();
     } catch (e) {
+      isActiveSnackbar();
       Get.snackbar("Warning".tr, "error".tr);
     }
   }
