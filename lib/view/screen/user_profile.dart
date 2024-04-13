@@ -14,6 +14,8 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../data/model/usermodel.dart';
+
 class UserProfileView extends StatelessWidget {
   UserProfileView({super.key});
   final MyServices myServices = Get.find();
@@ -195,6 +197,18 @@ class UserProfileView extends StatelessWidget {
                             controller.changePassword();
                           },
                         ),
+                         const SizedBox(
+                          height: 10,
+                        ),
+                        controller.userModel.role!=Role.customer?
+                        AppButton(
+                          title: "Change Holiday",
+                          onTap: () {
+                            controller.changePassword();
+                          },
+                        )
+                        :
+                        const SizedBox(height: 1),
                       ],
                     ),
                   ),

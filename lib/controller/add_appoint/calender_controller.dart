@@ -22,10 +22,11 @@ abstract class CalenderController extends GetxController {
   nextAppointmentIsAvailable(int index);
   addDateToAppointment(String date);
   addAppointToDB(DocumentReference documentReference, String date);
+  isHoliday(DateTime isDay);
 }
 
 class CalenderControllerImp extends CalenderController {
-  bool holiday = true;
+  bool holiday = false;
   DateTime isSelectedDay = DateTime.now();
   List<AppointmentModel> upAppointmentlist = [];
   bool hasAppoint = false;
@@ -41,9 +42,8 @@ class CalenderControllerImp extends CalenderController {
   @override
   void onInit() async {
     super.onInit();
-
-    if (DateTime.now().weekday == DateTime.wednesday ||
-        DateTime.now().weekday == DateTime.sunday) {
+    isHoliday(isSelectedDay);
+    if (holiday) {
       timeCalculation();
       await appointmentExists();
     } else {
@@ -120,8 +120,8 @@ class CalenderControllerImp extends CalenderController {
   onSelectedDay(DateTime selectedDay) {
     upAppointmentlist.clear();
     update();
-    if (selectedDay.weekday == DateTime.wednesday ||
-        selectedDay.weekday == DateTime.sunday) {
+    isHoliday(selectedDay);
+    if (holiday) {
       holiday = true;
       isSelectedDay = selectedDay;
       update();
@@ -274,6 +274,20 @@ class CalenderControllerImp extends CalenderController {
     QuerySnapshot timeQuerySnapshot = await timeCollection.get();
     for (var timeDocumentSnapshot in timeQuerySnapshot.docs) {
       timeDocumentSnapshot.reference.update({"date": date});
+    }
+  }
+  
+  @override
+  isHoliday(DateTime isDay) {
+     for(int day in userModel.holidays!){
+      if(isDay.weekday==day){
+        holiday=true;
+        update();
+        break;
+      }else{
+        holiday=false;
+        update();
+      }
     }
   }
 }

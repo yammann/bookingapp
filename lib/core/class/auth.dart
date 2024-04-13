@@ -26,7 +26,9 @@ class Auth {
           email: email,
           password: password,
           phone: phone,
-          userName: userName);
+          userName: userName,
+          holidays: null,
+          role: Role.customer);
 
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       firestore

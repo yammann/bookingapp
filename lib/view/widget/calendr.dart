@@ -11,23 +11,30 @@ class MyCalender extends StatelessWidget {
       required this.focusedDay,
       required this.endDay, 
       required this.availableCalendarFormats, 
-      required this.calendarFormat});
+      required this.calendarFormat, 
+      required this.holidays});
 
   final Function(DateTime, DateTime)? onDaySelected;
   final DateTime focusedDay;
   final DateTime endDay;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final CalendarFormat calendarFormat;
+  final List<dynamic> holidays;
   @override
   Widget build(BuildContext context) {
     final DateTime today = DateTime.now();
     return TableCalendar( 
       locale:"calenderLocal".tr ,
       holidayPredicate: (day) {
-       
-       return day.weekday == DateTime.sunday || day.weekday == DateTime.wednesday;
+        bool isHoliday=false;
+       for(int holiday in holidays){
+        if(day.weekday==holiday){
+          isHoliday= true;
+          break;
+        }
+       }
+       return isHoliday;
       },
-      weekendDays: const [DateTime.friday],
         startingDayOfWeek: StartingDayOfWeek.monday,
         calendarFormat: calendarFormat,
         focusedDay: focusedDay,

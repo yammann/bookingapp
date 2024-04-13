@@ -16,10 +16,11 @@ abstract class BookedAppointmentController extends GetxController {
   cancelAndBlockedAppointment(String appointmentId, String date);
   getSnapshots(String documentId);
   sendEmail(AppointmentModel appointmentModel, bool isBlocking);
+  isHoliday(DateTime isDay);
 }
 
 class BookedAppointmentControllerImp extends BookedAppointmentController {
-  bool holiday = true;
+  bool holiday = false;
   DateTime isSelectedDay = DateTime.now();
   bool isBlocked = false;
   late Stream<QuerySnapshot<Object?>> appointQuerySnapshot;
@@ -31,10 +32,9 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   void onInit() async {
     super.onInit();
     userModel = await getUserData(currentUser.uid);
-    appointmentIfExceed(
-        isSelectedDay.toString().substring(0, 10), currentUser.uid);
-    if (DateTime.now().weekday == DateTime.wednesday ||
-        DateTime.now().weekday == DateTime.sunday) {
+    appointmentIfExceed(isSelectedDay.toString().substring(0, 10), currentUser.uid);
+    isHoliday(isSelectedDay);
+    if (holiday) {
     } else {
       holiday = false;
       getSnapshots(isSelectedDay.toString().substring(0, 10));
@@ -45,9 +45,8 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   onSelectedDay(DateTime selectedDay, DateTime focusedDay) {
     bookedAppointList.clear();
     update();
-    if (selectedDay.weekday == DateTime.wednesday ||
-        selectedDay.weekday == DateTime.sunday) {
-      holiday = true;
+    isHoliday(selectedDay);
+    if (holiday) {
     } else {
       holiday = false;
       isSelectedDay = selectedDay;
@@ -196,6 +195,20 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
     } else {
       await cancelAndBlockedAppointment(
           appointmentModel.appointmentId!, appointmentModel.date!);
+    }
+  }
+
+  @override
+  isHoliday(DateTime isDay) {
+     for(int day in userModel.holidays!){
+      if(isDay.weekday==day){
+        holiday=true;
+        update();
+        break;
+      }else{
+        holiday=false;
+        update();
+      }
     }
   }
 }
