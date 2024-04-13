@@ -6,6 +6,7 @@ import 'package:e_store/view/screen/Auth/signup.dart';
 import 'package:e_store/view/screen/Auth/success_signup.dart';
 import 'package:e_store/view/screen/Auth/verify_code_signup.dart';
 import 'package:e_store/view/screen/barber_screen/barber_home.dart';
+import 'package:e_store/view/screen/holiday.dart';
 import 'package:e_store/view/screen/language/language.dart';
 import 'package:e_store/view/screen/owner_screen/add_barber.dart';
 import 'package:e_store/view/screen/owner_screen/costumer_view.dart';
@@ -61,6 +62,7 @@ List<GetPage<dynamic>>?routes=[
   GetPage(name:  AppRoute.addBarber, page: ()=>   AddBarber()),
   //barber pages
     GetPage(name:  AppRoute.barberView, page: ()=>   BarberHome()),
+    GetPage(name:  AppRoute.holiday, page: ()=>   HolidayView()),
 
  
   

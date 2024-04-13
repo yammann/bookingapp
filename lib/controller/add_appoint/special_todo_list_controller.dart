@@ -31,6 +31,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
 
   late UserModel userModel;
   late UserModel customer;
+  late UserModel? barber = Get.arguments;
 
   late TextEditingController labelController = TextEditingController();
   late TextEditingController durationController = TextEditingController();
@@ -83,7 +84,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
     try {
       QuerySnapshot itemQuerySnapshot = await FirebaseFirestore.instance
           .collection("barber")
-          .doc(userModel.userId)
+          .doc(barber?.userId ?? userModel.userId)
           .collection("Special_todo")
           .get();
 
@@ -103,7 +104,7 @@ class SpecialTodoListControllerImp extends SpecialTodoListController {
 
   @override
   void call(String phoneNumber) async {
-    final Uri url = Uri.parse('tel:$phoneNumber');
+    final Uri url = Uri.parse('tel:${barber!.phone}');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {

@@ -2,7 +2,6 @@ import 'package:e_store/core/constants/image_assets.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 import 'package:e_store/data/model/onboarding_model.dart';
 import 'package:e_store/view/screen/user_screen/about_view.dart';
-import 'package:e_store/view/screen/user_screen/add_appoint/add_appoint.dart';
 import 'package:e_store/view/screen/user_screen/add_appoint/chooes_barber.dart';
 import 'package:e_store/view/screen/user_screen/add_appoint/special_service_view.dart';
 import 'package:e_store/view/screen/user_screen/home_imp_view.dart';
@@ -58,7 +57,7 @@ List<Widget> userHomePages = [
 ];
 List<Widget> ownerHomePages = [
   HomeImpView(),
-  BookedAppointmentsView(),
+  const BookedAppointmentsView(),
   OwnerAddServiceView(),
   OwnerProfileView(),
   OwnerAddAppointView()
@@ -66,7 +65,7 @@ List<Widget> ownerHomePages = [
 
 List<Widget> barberHomePages = [
   HomeImpView(),
-  BookedAppointmentsView(),
+  const BookedAppointmentsView(),
   OwnerAddServiceView(),
   UserProfileView(),
   OwnerAddAppointView()
@@ -101,7 +100,7 @@ List<Widget> userServicePages = [
 ];
 List<Widget> ownerServicePages = [
   NormalServiceView(),
-  OwnerSpecialServiceView(),
+  const OwnerSpecialServiceView(),
 ];
 
 List<Widget> ownerAddServicePages = [

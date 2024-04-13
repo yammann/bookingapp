@@ -33,7 +33,7 @@ class HolidayView extends StatelessWidget {
                 init: HolidayControllerImp(),
                 builder: (controller) {
                   return ListView.builder(
-                    itemCount: controller.todoItems.length,
+                    itemCount: controller.holidays.length,
                     itemBuilder: (context, index) {
                       return TodoItemCard(
                         onTap: () {
@@ -41,13 +41,13 @@ class HolidayView extends StatelessWidget {
                           controller
                               .selectedTodo(index);
                         },
-                        todoItem: controller.todoItems[index],
+                        todoItem: controller.holidays[index],
                         padding:  const EdgeInsets.all(10),
                         icon: Icon(
-                          controller.todoItems[index].isSelected
+                          controller.holidays[index].isSelected
                               ? Icons.check_circle
                               : Icons.circle_outlined,
-                          color: controller.todoItems[index].isSelected
+                          color: controller.holidays[index].isSelected
                               ? Colors.green[400]
                               : Colors.red[400],
                         ),

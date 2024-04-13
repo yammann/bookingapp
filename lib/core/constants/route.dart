@@ -33,5 +33,6 @@ abstract class AppRoute {
   static const String addBarber="/addBarber";
   //barber pages
     static const String barberView="/barberView";
+    static const String holiday="/changeHoliday";
 
 }

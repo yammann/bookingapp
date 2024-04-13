@@ -17,7 +17,7 @@ abstract class HolidayController extends GetxController {
 class HolidayControllerImp extends HolidayController {
   List<dynamic> selectedTodoList = [];
 
-  List<TodoItem> todoItems = [
+  List<TodoItem> holidays = [
     TodoItem(label: "Monday"),
     TodoItem(label: "Tuesday"),
     TodoItem(label: "Wednesday"),
@@ -33,7 +33,7 @@ class HolidayControllerImp extends HolidayController {
 
   @override
   void toggleCheckbox(int index) {
-    todoItems[index].isSelected = !todoItems[index].isSelected;
+    holidays[index].isSelected = !holidays[index].isSelected;
     update();
   }
 
@@ -69,7 +69,7 @@ class HolidayControllerImp extends HolidayController {
           isActiveSnackbar();
           Get.snackbar("Alert".tr, "Success".tr,backgroundColor: kSuccessSnackbar);
           Get.offAllNamed("/");
-    } on Exception catch (e) {
+    } catch (e) {
       isActiveSnackbar();
       Get.snackbar("Alert".tr, "blockinError".tr,backgroundColor: kWorrningSnackbar);
     }
@@ -78,7 +78,7 @@ class HolidayControllerImp extends HolidayController {
   @override
   fetchHoliday() {
      for(int holiday in userModel.holidays!){
-      todoItems[holiday-1].isSelected=true;
+      holidays[holiday-1].isSelected=true;
       selectedTodoList.add(holiday);
       update();
      }

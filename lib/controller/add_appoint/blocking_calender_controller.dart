@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/function/check_if_snackbar_is_active.dart';
-import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/apointment-model.dart';
-import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 

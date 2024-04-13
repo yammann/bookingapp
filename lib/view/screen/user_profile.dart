@@ -204,7 +204,7 @@ class UserProfileView extends StatelessWidget {
                         AppButton(
                           title: "Change Holiday",
                           onTap: () {
-                            controller.changePassword();
+                            Get.toNamed(AppRoute.holiday);
                           },
                         )
                         :

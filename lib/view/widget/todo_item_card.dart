@@ -37,11 +37,13 @@ class TodoItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                todoItem.time!=null?
                 Text(
                   "(${todoItem.time} ${"minute".tr})",
                   style: const TextStyle(fontSize: 16),
-                ),
-                SizedBox(
+                )
+                :const Text(""),
+                const SizedBox(
                   width: 10,
                 ),
                 IconButton(onPressed: onTapIcon, icon: icon)

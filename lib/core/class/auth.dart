@@ -3,7 +3,6 @@ import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/function/get_user_data.dart';
 import 'package:e_store/core/services/services.dart';
-import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';

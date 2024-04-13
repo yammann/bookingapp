@@ -1,5 +1,4 @@
 import 'package:e_store/controller/booked_appointment_controller.dart';
-import 'package:e_store/controller/user_profile_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/view/screen/owner_screen/widget/booked_card.dart';
 import 'package:e_store/view/widget/calendr.dart';
@@ -8,8 +7,7 @@ import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BookedAppointmentsView extends StatelessWidget {
-  BookedAppointmentsView({super.key});
-  UserProfileControllerImp userProfileControllerImp=Get.find();
+  const BookedAppointmentsView({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +20,7 @@ class BookedAppointmentsView extends StatelessWidget {
           return Column(
             children: [
               MyCalender(
-                holidays:userProfileControllerImp.userModel.holidays!,
+                holidays:controller.userModel.holidays!,
                 calendarFormat: CalendarFormat.week,
                 availableCalendarFormats: const {CalendarFormat.week: "week"},
                 focusedDay: controller.isSelectedDay,
