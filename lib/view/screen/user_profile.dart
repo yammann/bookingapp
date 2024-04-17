@@ -192,7 +192,7 @@ class UserProfileView extends StatelessWidget {
                           height: 10,
                         ),
                         AppButton(
-                          title: "Change Password",
+                          title: "Change Password".tr,
                           onTap: () {
                             controller.changePassword();
                           },
@@ -202,7 +202,7 @@ class UserProfileView extends StatelessWidget {
                         ),
                         controller.userModel.role!=Role.customer?
                         AppButton(
-                          title: "Change Holiday",
+                          title: "Change Holiday".tr,
                           onTap: () {
                             Get.toNamed(AppRoute.holiday);
                           },

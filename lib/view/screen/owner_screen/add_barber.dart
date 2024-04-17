@@ -16,7 +16,7 @@ class AddBarber extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kOnBoardingBG,
         centerTitle: true,
-        title:  Text("Add Barber"),
+        title:  Text("Add Barber".tr),
       ),
       body: Container(
         width: double.infinity,

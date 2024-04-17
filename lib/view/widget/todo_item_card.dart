@@ -31,7 +31,7 @@ class TodoItemCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              todoItem.label,
+              todoItem.label.tr,
               style: const TextStyle(fontSize: 16),
             ),
             Row(

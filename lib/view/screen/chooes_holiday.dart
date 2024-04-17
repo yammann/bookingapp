@@ -16,7 +16,7 @@ class HolidayView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kOnBoardingBG,
         centerTitle: true,
-        title: const Text("Chooes Holiday"),
+        title: Text("Change Holiday".tr),
       ),
       body: Container(
         margin: const EdgeInsets.only(bottom: 30),
@@ -26,7 +26,7 @@ class HolidayView extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 10),
-            const Text("Chooes yor holiday dayis"),
+            Text("Chooes yor holiday dayis".tr),
             const SizedBox(height: 10),
             Expanded(
               child: GetBuilder<HolidayControllerImp>(

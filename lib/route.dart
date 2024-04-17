@@ -6,7 +6,7 @@ import 'package:e_store/view/screen/Auth/signup.dart';
 import 'package:e_store/view/screen/Auth/success_signup.dart';
 import 'package:e_store/view/screen/Auth/verify_code_signup.dart';
 import 'package:e_store/view/screen/barber_screen/barber_home.dart';
-import 'package:e_store/view/screen/holiday.dart';
+import 'package:e_store/view/screen/chooes_holiday.dart';
 import 'package:e_store/view/screen/language/language.dart';
 import 'package:e_store/view/screen/owner_screen/add_barber.dart';
 import 'package:e_store/view/screen/owner_screen/costumer_view.dart';

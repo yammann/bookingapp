@@ -11,7 +11,7 @@ class MyTranslation extends Translations {
           "gr": "ألمانية",
           "tr": "التركية",
           //"calenderLocal"
-          "calenderLocal":'ar',
+          "calenderLocal": 'ar',
           //on boarding
           "1pt": "جواد للحلاقة",
           "1pc":
@@ -194,6 +194,18 @@ class MyTranslation extends Translations {
           "Profile": "الملف الشخصي",
           "My Appointment": "موعدي",
           "Yaman Jawad": "يمان جواد",
+          "Change Password": "تغيير كلمة المرور",
+          "Change Holiday": "تغيير العطلة",
+          "Sunday": "الأحد",
+          "Saturday": "السبت",
+          "Friday": "الجمعة",
+          "Thursday": "الخميس",
+          "Wednesday": "الأربعاء",
+          "Tuesday": "الثلاثاء",
+          "Monday": "الاثنين",
+          "Add Barber": "إضافة حلاق",
+          "Barbers": "حلاقون",
+          "Chooes yor holiday dayis": "اختر أيام عطلتك",
         },
         "en": {
           //chooes lang page
@@ -203,7 +215,7 @@ class MyTranslation extends Translations {
           "gr": "German",
           "tr": "Turkish",
           //"calenderLocal"
-          "calenderLocal":"en_US",
+          "calenderLocal": "en_US",
           //on boarding
           "1pt": "Jawad barber",
           "1pc":
@@ -424,6 +436,19 @@ class MyTranslation extends Translations {
           "Profile": "Profile",
           "My Appointment": "My Appointment",
           "Yaman Jawad": "Yaman Jawad",
+          //
+          "Change Password": "Change Password",
+          "Change Holiday": "Change Holiday",
+          "Sunday": "Sunday",
+          "Saturday": "Saturday",
+          "Friday": "Friday",
+          "Thursday": "Thursday",
+          "Wednesday": "Wednesday",
+          "Tuesday": "Tuesday",
+          "Monday": "Monday",
+          "Add Barber": "Add Barber",
+          "Barbers": "Barbers",
+          "Chooes yor holiday dayis": "Chooes yor holiday dayis",
         },
         "gr": {
           //chooes lang page
@@ -433,7 +458,7 @@ class MyTranslation extends Translations {
           "gr": "Deutsch",
           "tr": "Türkisch",
           //"calenderLocal"
-          "calenderLocal":'de_DE',
+          "calenderLocal": 'de_DE',
           //on boarding
           "1pt": "Jawad-Friseur",
           "1pc":
@@ -618,6 +643,18 @@ Mit der BarberBook-App können Sie ganz einfach Ihren nächsten Haarschnitt bei 
           "Profile": "Profil",
           "My Appointment": "Mein Termin",
           "Yaman Jawad": "Yaman Jawad",
+          "Change Password": "Passwort ändern",
+          "Change Holiday": "Urlaub ändern",
+          "Sunday": "Sonntag",
+          "Saturday": "Samstag",
+          "Friday": "Freitag",
+          "Thursday": "Donnerstag",
+          "Wednesday": "Mittwoch",
+          "Tuesday": "Dienstag",
+          "Monday": "Montag",
+          "Add Barber": "Friseur hinzufügen",
+          "Barbers": "Friseure",
+          "Chooes yor holiday dayis": "Wähle deine Urlaubstage",
         },
         "tr": {
           //chooes lang page
@@ -627,7 +664,7 @@ Mit der BarberBook-App können Sie ganz einfach Ihren nächsten Haarschnitt bei 
           "gr": "Almanca",
           "tr": "Türkiş",
           //"calenderLocal"
-          "calenderLocal":'tr',
+          "calenderLocal": 'tr',
 //on boarding
           "1pt": "Jawad berber",
           "1pc":
@@ -844,6 +881,18 @@ Tarihte planlanmış randevunuzu iptal ettiğimiz için özür dileriz""",
           "Profile": "Profil",
           "My Appointment": "Randevularım",
           "Yaman Jawad": "Yaman Jawad",
+          "Change Password": "Şifre Değiştir",
+          "Change Holiday": "Tatil Değiştir",
+          "Sunday": "Pazar",
+          "Saturday": "Cumartesi",
+          "Friday": "Cuma",
+          "Thursday": "Perşembe",
+          "Wednesday": "Çarşamba",
+          "Tuesday": "Salı",
+          "Monday": "Pazartesi",
+          "Add Barber": "Berber Ekle",
+          "Barbers": "Berberler",
+          "Chooes yor holiday dayis": "Tatil günlerinizi seçin",
         }
       };
 }

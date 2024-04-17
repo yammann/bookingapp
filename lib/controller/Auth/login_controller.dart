@@ -1,6 +1,5 @@
 import 'package:e_store/core/class/auth.dart';
 import 'package:e_store/core/constants/route.dart';
-import 'package:e_store/core/function/check_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,9 +22,7 @@ class LoginControllerImp extends LoginController {
   login() async {
     var formState = formKey.currentState;
     if (formState!.validate()) {
-      if (await checkInternet()) {
         auth.login(emailController.text, passwordController.text);
-      }
     }
   }
 

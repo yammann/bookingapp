@@ -71,7 +71,7 @@ class OwnerProfileView extends StatelessWidget {
                             const SizedBox(
                               height: 5
                             ),
-                             Text("Barbers"),
+                             Text("Barbers".tr),
                           ],
                         ),
                       ),

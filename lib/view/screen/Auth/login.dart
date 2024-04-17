@@ -1,4 +1,5 @@
 import 'package:e_store/controller/Auth/login_controller.dart';
+import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/function/exit_alert.dart';
 import 'package:e_store/core/function/validat.dart';
 import 'package:e_store/view/screen/Auth/widget/auth_appbar.dart';
@@ -10,29 +11,38 @@ import 'package:get/get.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
-  final LoginControllerImp loginControllerImp= Get.put(LoginControllerImp());
+  final LoginControllerImp loginControllerImp = Get.put(LoginControllerImp());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PopScope(
-        canPop: false,
-        onPopInvoked: (v) {
-          if (v) {
-            return;
-          }
-          exitAlert();
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(15),
+        body: PopScope(
+      canPop: false,
+      onPopInvoked: (v) {
+        if (v) {
+          return;
+        }
+        exitAlert();
+      },
+      child: Scaffold(
+        backgroundColor: kOnBoardingBG,
+        appBar: AppBar(
+          backgroundColor: kOnBoardingBG,
+          centerTitle: true,
+          title: Text("LoginTitle".tr),
+        ),
+        body: Container(
+          width: double.infinity,
+          margin:
+              const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30), color: Colors.white),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           child: GetBuilder<LoginControllerImp>(
             builder: (LoginControllerImp controller) {
               return Form(
                 key: controller.formKey,
                 child: Column(
                   children: [
-                    AuthAppBar(
-                      title: "LoginTitle".tr,
-                    ),
                     const Spacer(flex: 1),
                     Text(
                       "Login1Text".tr,
@@ -97,11 +107,11 @@ class LoginView extends StatelessWidget {
                     AppButton(
                       onTap: () {
                         controller.login();
+                        print(1);
                       },
                       title: "btnText".tr,
                     ),
                     const Spacer(flex: 1),
-                   
                     Center(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -128,6 +138,6 @@ class LoginView extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
