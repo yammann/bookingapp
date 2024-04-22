@@ -1,3 +1,4 @@
+import 'package:e_store/core/services/services.dart';
 import 'package:e_store/data/data-source/static/static.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class OnBoardingControllerImp extends OnBoardingController {
   bool isLastePage = false;
 
   int currentPage = 0;
+
+  MyServices myServices=Get.find();
 
   late PageController pageController;
   @override
@@ -28,6 +31,7 @@ class OnBoardingControllerImp extends OnBoardingController {
   next() {
     if (currentPage == onBoardingList.length - 1) {
       isLastePage = true;
+      myServices.sharedPreferences.setBool("onBoarding", true);
     } else {
       currentPage++;
       isLastePage = false;

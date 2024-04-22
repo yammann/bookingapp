@@ -1,3 +1,4 @@
+import 'package:e_store/core/constants/them_data.dart';
 import 'package:e_store/core/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,23 +8,38 @@ class LocalController extends GetxController {
 
   MyServices myServices = Get.find();
 
+  ThemeData themeData = englishThemeData;
+
   changeLang(String langCode) {
     Locale locale = Locale(langCode);
     myServices.sharedPreferences.setString("lang", langCode);
+    themeData = langCode == "ar"
+        ? arabicThemeData
+        : langCode == "en"
+            ? englishThemeData
+            : germanThemeData;
+    Get.changeTheme(themeData);
     Get.updateLocale(locale);
   }
 
   @override
   void onInit() {
     String? sharPrefLang = myServices.sharedPreferences.getString("lang");
-    if(sharPrefLang=="ar"){
-       language=const Locale("ar");
-    }
-    else if(sharPrefLang=="en"){
-      language=const Locale("en");
-    }
-    else{
-      language=Locale(Get.deviceLocale!.languageCode);
+    if (sharPrefLang == "ar") {
+      language = const Locale("ar");
+      themeData = arabicThemeData;
+    } else if (sharPrefLang == "en") {
+      language = const Locale("en");
+      themeData = englishThemeData;
+    } else if (sharPrefLang == "gr") {
+      language = const Locale("gr");
+      themeData = englishThemeData;
+    }else if (sharPrefLang == "tr") {
+      language = const Locale("tr");
+      themeData = englishThemeData;
+    } else {
+      language = Locale(Get.deviceLocale!.languageCode);
+      themeData = englishThemeData;
     }
     super.onInit();
   }
