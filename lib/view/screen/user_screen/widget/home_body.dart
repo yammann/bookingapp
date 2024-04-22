@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeBody extends StatelessWidget {
-HomeBody({super.key});
+  HomeBody({super.key});
 
-final HomeControllerImp homeControllerImp=Get.find();
+  final HomeControllerImp homeControllerImp = Get.find();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeControllerImp>(
@@ -46,11 +46,11 @@ final HomeControllerImp homeControllerImp=Get.find();
                     controller1.currentPage(1);
                   },
                 ),
-                const SizedBox(width: 40), 
+                const SizedBox(width: 40),
                 IconButton(
                   icon: const Icon(
                     Icons.person_3,
-                    size:40,
+                    size: 40,
                   ),
                   color: controller1.currentIndex == 2
                       ? kOnBoardingP
@@ -88,13 +88,13 @@ final HomeControllerImp homeControllerImp=Get.find();
               }
               exitAlert();
             },
-            child: Container(
-              width: double.infinity,
-             
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30), color: Colors.white),
-             
-              child: userHomePages[controller1.currentIndex],
+            child: Center(
+              child: Container(
+                width: Get.width > 600 ? 600 : double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30), color: Colors.white),
+                child: userHomePages[controller1.currentIndex],
+              ),
             ),
           ),
           floatingActionButton: FloatingActionButton(

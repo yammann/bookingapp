@@ -48,7 +48,7 @@ class CalenderControllerImp extends CalenderController {
       await appointmentExists();
     } else {
       holiday = false;
-      appointmentIfExceed(isSelectedDay.toString().substring(0, 10), barber?.userId??userModel.userId);
+      appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
       await getApointment(isSelectedDay.toString().substring(0, 10));
       await appointmentExists();
       timeCalculation();
@@ -279,7 +279,7 @@ class CalenderControllerImp extends CalenderController {
   
   @override
   isHoliday(DateTime isDay) {
-     for(int day in userModel.holidays!){
+     for(int day in barber?.holidays??userModel.holidays!){
       if(isDay.weekday==day){
         holiday=true;
         update();

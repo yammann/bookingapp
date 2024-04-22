@@ -6,7 +6,6 @@ import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/services/services.dart';
 import 'package:e_store/view/screen/owner_screen/widget/profile_button.dart';
 import 'package:e_store/view/widget/cached_network_img.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

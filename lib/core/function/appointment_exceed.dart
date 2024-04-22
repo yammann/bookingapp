@@ -2,32 +2,42 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_store/data/model/apointment-model.dart';
 
 @override
-Future<void> appointmentIfExceed(String documentId,String userId) async {
+Future<void> appointmentIfExceed(String documentId) async {
   DateTime currentTime = DateTime.now();
 
-  QuerySnapshot subDocumentSnapshot = await FirebaseFirestore.instance
-  .collection("barber")
-  .doc(userId)
-  .collection("apointment")
-  .doc(documentId).collection("time").get();
+  QuerySnapshot barberDocumentSnapshot =
+      await FirebaseFirestore.instance.collection("barber").get();
 
+  for (QueryDocumentSnapshot barberdocument in barberDocumentSnapshot.docs) {
+    QuerySnapshot appointDocumentSnapshot =
+        await barberdocument.reference.collection("apointment").get();
+        
+    for (QueryDocumentSnapshot appointDocument
+        in appointDocumentSnapshot.docs) {
+      QuerySnapshot timeDocumentSnapshot = await appointDocument.reference
+          .collection("time")
+          .where("appointmentExceed", isEqualTo: false)
+          .get();
+      for (QueryDocumentSnapshot timeDocument in timeDocumentSnapshot.docs) {
+        AppointmentModel appointmentModel =
+            AppointmentModel.fromJson(timeDocument.data() as Map<String, dynamic>);
 
-  for (QueryDocumentSnapshot document in subDocumentSnapshot.docs) {
-    AppointmentModel appointmentModel = AppointmentModel.fromJson(document.data() as Map<String, dynamic>);
+        String dateString =
+            '${appointmentModel.date} ${appointmentModel.time.substring(0, 5)}:00';
+        print(dateString);
+        DateTime dateTime = DateTime.parse(dateString);
+        print(dateTime);
 
-    String dateString = '${appointmentModel.date} ${appointmentModel.time.substring(0, 5)}:00';
-    print(dateString);
-    DateTime dateTime = DateTime.parse(dateString);
-    print(dateTime);
-
-    if (currentTime.isAfter(dateTime)) {
-      await document.reference.update({
-        "appointmentExceed": true,
-      });
-    } else {
-      await document.reference.update({
-        "appointmentExceed": false,
-      });
+        if (currentTime.isAfter(dateTime)) {
+          await timeDocument.reference.update({
+            "appointmentExceed": true,
+          });
+        } else {
+          await timeDocument.reference.update({
+            "appointmentExceed": false,
+          });
+        }
+      }
     }
   }
 }

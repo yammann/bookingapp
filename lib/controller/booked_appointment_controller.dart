@@ -32,7 +32,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   void onInit() async {
     super.onInit();
     userModel = await getUserData(currentUser.uid);
-    appointmentIfExceed(isSelectedDay.toString().substring(0, 10), currentUser.uid);
+    appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
     isHoliday(isSelectedDay);
     if (holiday) {
     } else {

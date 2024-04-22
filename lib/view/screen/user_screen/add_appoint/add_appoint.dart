@@ -25,31 +25,33 @@ class AddAppointView extends StatelessWidget {
         centerTitle: true,
         title: Text("Add Appointment".tr),
       ),
-      body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30), color: Colors.white),
-          child: GetBuilder<AddAppointControllerImp>(
-            init: AddAppointControllerImp(),
-            builder: (controller) {
-              return Column(
-                children: [
-                  DoubleButton(
-                    onTapNormal: () {
-                      controller.currentPage(0);
-                    },
-                    onTapSpecial: () {
-                      controller.currentPage(1);
-                    },
-                  ),
-                  userServicePages[controller.currentIndex],
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
-              );
-            },
-          )),
+      body: Center(
+        child: Container(
+            width: Get.width > 600 ? 600 : double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30), color: Colors.white),
+            child: GetBuilder<AddAppointControllerImp>(
+              init: AddAppointControllerImp(),
+              builder: (controller) {
+                return Column(
+                  children: [
+                    DoubleButton(
+                      onTapNormal: () {
+                        controller.currentPage(0);
+                      },
+                      onTapSpecial: () {
+                        controller.currentPage(1);
+                      },
+                    ),
+                    userServicePages[controller.currentIndex],
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                );
+              },
+            )),
+      ),
     );
   }
 }

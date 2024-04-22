@@ -18,62 +18,64 @@ class HolidayView extends StatelessWidget {
         centerTitle: true,
         title: Text("Change Holiday".tr),
       ),
-      body: Container(
-        margin: const EdgeInsets.only(bottom: 30),
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Colors.white),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Text("Chooes yor holiday dayis".tr),
-            const SizedBox(height: 10),
-            Expanded(
-              child: GetBuilder<HolidayControllerImp>(
+      body: Center(
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 30),
+          width: Get.width > 600 ? 600 : double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30), color: Colors.white),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Text("Chooes yor holiday dayis".tr),
+              const SizedBox(height: 10),
+              Expanded(
+                child: GetBuilder<HolidayControllerImp>(
+                  init: HolidayControllerImp(),
+                  builder: (controller) {
+                    return ListView.builder(
+                      itemCount: controller.holidays.length,
+                      itemBuilder: (context, index) {
+                        return TodoItemCard(
+                          onTap: () {
+                            controller.toggleCheckbox(index);
+                            controller
+                                .selectedTodo(index);
+                          },
+                          todoItem: controller.holidays[index],
+                          padding:  const EdgeInsets.all(10),
+                          icon: Icon(
+                            controller.holidays[index].isSelected
+                                ? Icons.check_circle
+                                : Icons.circle_outlined,
+                            color: controller.holidays[index].isSelected
+                                ? Colors.green[400]
+                                : Colors.red[400],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GetBuilder<HolidayControllerImp>(
                 init: HolidayControllerImp(),
                 builder: (controller) {
-                  return ListView.builder(
-                    itemCount: controller.holidays.length,
-                    itemBuilder: (context, index) {
-                      return TodoItemCard(
-                        onTap: () {
-                          controller.toggleCheckbox(index);
-                          controller
-                              .selectedTodo(index);
-                        },
-                        todoItem: controller.holidays[index],
-                        padding:  const EdgeInsets.all(10),
-                        icon: Icon(
-                          controller.holidays[index].isSelected
-                              ? Icons.check_circle
-                              : Icons.circle_outlined,
-                          color: controller.holidays[index].isSelected
-                              ? Colors.green[400]
-                              : Colors.red[400],
-                        ),
-                      );
-                    },
-                  );
+                  return AppButton(
+                      title: "Confirme".tr,
+                      onTap: () {
+                        controller.confirme();
+                      });
                 },
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GetBuilder<HolidayControllerImp>(
-              init: HolidayControllerImp(),
-              builder: (controller) {
-                return AppButton(
-                    title: "Confirme".tr,
-                    onTap: () {
-                      controller.confirme();
-                    });
-              },
-            ),
-             const SizedBox(
-              height: 10,
-            ),
-          ],
+               const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );

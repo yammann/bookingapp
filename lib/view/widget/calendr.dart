@@ -23,7 +23,7 @@ class MyCalender extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime today = DateTime.now();
-    return TableCalendar( 
+    return  TableCalendar( 
       locale:"calenderLocal".tr ,
       holidayPredicate: (day) {
         bool isHoliday=false;

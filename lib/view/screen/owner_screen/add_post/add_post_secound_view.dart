@@ -12,46 +12,75 @@ class AddPostSecoundView extends StatelessWidget {
       init: PostControllerImp(),
       builder: (controller) {
         return Scaffold(
-             backgroundColor: kOnBoardingBG,
-              appBar: AppBar(
-                 backgroundColor: kOnBoardingBG,
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                       controller.addPost();
-                      },
-                      child:  Text(
-                        "Post".tr,
-                        style: TextStyle(fontSize: 18),
-                      ))
-                ],
-                
-              ),
-              body: Column(
-                children: [
-                  controller.isloadin?const LinearProgressIndicator(color: kOnBoardingP,): const Divider(thickness: 1,),
-                  const SizedBox(height: 10,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                       CachedImag(imgProfile: controller.userModel.imgProfile, isloadin: controller.isloadin,height: 50,width: 50,),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width/3,
-                        height: 60,
-                        child: TextField(
-                          controller: controller.describtioncontroller,
-                          decoration:
-                               InputDecoration(hintText: "write a captions".tr),
+          backgroundColor: kOnBoardingBG,
+          appBar: AppBar(
+            backgroundColor: kOnBoardingBG,
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    controller.addPost();
+                  },
+                  child: Text(
+                    "Post".tr,
+                    style: TextStyle(fontSize: 18),
+                  ))
+            ],
+          ),
+          body: Center(
+            child: Container(
+                width: Get.width > 600 ? 600 : double.infinity,
+                margin: const EdgeInsets.only(
+                    left: 10, right: 10, bottom: 10, top: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                child: Column(
+                  children: [
+                    controller.isloadin
+                        ? const LinearProgressIndicator(
+                            color: kOnBoardingP,
+                          )
+                        : const Divider(
+                            thickness: 1,
+                          ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CachedImag(
+                          imgProfile: controller.userModel.imgProfile,
+                          isloadin: controller.isloadin,
+                          height: 50,
+                          width: 50,
                         ),
-                      ),
-                      SizedBox(height: 60,
-                      width: 100,child: Image.memory(controller.imgPaht!,fit: BoxFit.cover,),)
-                    ],
-                  ),
-                ],
-              )
-              );
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 3,
+                          height: 60,
+                          child: TextField(
+                            controller: controller.describtioncontroller,
+                            decoration: InputDecoration(
+                                hintText: "write a captions".tr),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 60,
+                          width: 100,
+                          child: Image.memory(
+                            controller.imgPaht!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                )),
+          ),
+        );
       },
     );
   }

@@ -10,7 +10,6 @@ class BarberHomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
     return GetBuilder<HomeControllerImp>(
       init: HomeControllerImp(),
       builder: (controller1) {
@@ -89,13 +88,13 @@ class BarberHomeBody extends StatelessWidget {
               }
               exitAlert();
             },
-            child: Container(
-              width: double.infinity,
-            
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30), color: Colors.white),
-              
-              child: barberHomePages[controller1.currentIndex],
+            child: Center(
+              child: Container(
+                width: Get.width > 600 ? 600 : double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30), color: Colors.white),
+                child: barberHomePages[controller1.currentIndex],
+              ),
             ),
           ),
           floatingActionButton: FloatingActionButton(
