@@ -279,7 +279,7 @@ class CalenderControllerImp extends CalenderController {
   
   @override
   isHoliday(DateTime isDay) {
-     for(int day in barber?.holidays??userModel.holidays!){
+     for(int day in barber?.holidays??userModel.holidays){
       if(isDay.weekday==day){
         holiday=true;
         update();

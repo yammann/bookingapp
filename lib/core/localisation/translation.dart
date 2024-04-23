@@ -206,6 +206,7 @@ class MyTranslation extends Translations {
           "Add Barber": "إضافة حلاق",
           "Barbers": "حلاقون",
           "Chooes yor holiday dayis": "اختر أيام عطلتك",
+          "Chooes Barber":"أختر الحلاق"
         },
         "en": {
           //chooes lang page
@@ -449,6 +450,7 @@ class MyTranslation extends Translations {
           "Add Barber": "Add Barber",
           "Barbers": "Barbers",
           "Chooes yor holiday dayis": "Chooes yor holiday dayis",
+          "Chooes Barber":"Choose the barber",
         },
         "gr": {
           //chooes lang page
@@ -655,6 +657,7 @@ Mit der BarberBook-App können Sie ganz einfach Ihren nächsten Haarschnitt bei 
           "Add Barber": "Friseur hinzufügen",
           "Barbers": "Friseure",
           "Chooes yor holiday dayis": "Wähle deine Urlaubstage",
+          "Chooes Barber":"Wählen Sie den Friseur"
         },
         "tr": {
           //chooes lang page
@@ -893,6 +896,7 @@ Tarihte planlanmış randevunuzu iptal ettiğimiz için özür dileriz""",
           "Add Barber": "Berber Ekle",
           "Barbers": "Berberler",
           "Chooes yor holiday dayis": "Tatil günlerinizi seçin",
+          "Chooes Barber":"Berberi seç"
         }
       };
 }

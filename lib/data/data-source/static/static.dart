@@ -109,7 +109,7 @@ List<Widget> ownerAddServicePages = [
 ];
 
 String personPlaceholderImg = "";
-String ownerUserId = "Bn37pPu1x2OLzv9aKrI9ZP7ov3H3";
+String ownerUserId = "OfQ0ERZyHEUpnLUO17xv24AzFcu2";
 String ownerPhoneNumber="+49 178 2696138";
 String ownerTiktok="//www.tiktok.com/@amjad.jaw?_t=8krFHrMrCfF&_r=1";
 String ownerInstagram= "//www.instagram.com/amjad.jwd?igsh=ZHpsMm1sejJ3ZzEz";

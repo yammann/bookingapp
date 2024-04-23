@@ -35,6 +35,7 @@ class MyCalender extends StatelessWidget {
        }
        return isHoliday;
       },
+      daysOfWeekHeight: 40,
         startingDayOfWeek: StartingDayOfWeek.monday,
         calendarFormat: calendarFormat,
         focusedDay: focusedDay,

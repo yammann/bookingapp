@@ -15,8 +15,8 @@ class ChooesBarberView extends StatelessWidget {
         return Column(
           children: [
             const SizedBox(height: 10),
-            const Text(
-              "Chooes Barber",
+             Text(
+              "Chooes Barber".tr,
               style: TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 10),

@@ -26,7 +26,7 @@ validation(String? val, int min, int max, Type typy) {
     }
 
     if (typy == Type.userName) {
-      if (!GetUtils.isUsername(val)) {
+      if (val.length<4) {
         return "Not Valid User Name".tr;
       }
     }

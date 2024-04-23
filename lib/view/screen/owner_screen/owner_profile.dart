@@ -112,7 +112,7 @@ class OwnerProfileView extends StatelessWidget {
             ),
             ProfileButton(
               icon: const Icon(
-                Icons.logout_outlined,
+                Icons.person_add_alt,
                 color: Colors.black,
               ),
               title: "Add Barber".tr,

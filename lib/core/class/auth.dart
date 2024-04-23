@@ -26,7 +26,7 @@ class Auth {
           password: password,
           phone: phone,
           userName: userName,
-          holidays: null,
+          holidays: [1],
           role: Role.customer);
 
       FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -54,38 +54,34 @@ class Auth {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      User user = userCredential.user!;
-      UserModel userModel = await getUserData(user.uid);
+      User? user = userCredential.user;
+      if (user != null) {
+        UserModel userModel = await getUserData(user!.uid);
 
-      // Set login status and user type in SharedPreferences
-      myServices.sharedPreferences.setBool("login", true);
+        // Set login status and user type in SharedPreferences
+        myServices.sharedPreferences.setBool("login", true);
 
-      // Redirect user based on their type
-      if (userModel.role == Role.customer) {
-        Get.offNamed(AppRoute.home);
-        myServices.sharedPreferences.setString("role", "customer");
-        print("User is an customer");
-      } else if (userModel.role == Role.barber) {
-        Get.offNamed(AppRoute.barberView);
-        myServices.sharedPreferences.setString("role", "barber");
-        print("User is not an owner");
-      }else if (userModel.role == Role.owner) {
-        Get.offNamed(AppRoute.ownerHome);
-        myServices.sharedPreferences.setString("role", "owner");
-        print("User is not an owner");
+        // Redirect user based on their type
+        if (userModel.role == Role.customer) {
+          Get.offNamed(AppRoute.home);
+          myServices.sharedPreferences.setString("role", "customer");
+          print("User is an customer");
+        } else if (userModel.role == Role.barber) {
+          Get.offNamed(AppRoute.barberView);
+          myServices.sharedPreferences.setString("role", "barber");
+          print("User is not an owner");
+        } else if (userModel.role == Role.owner) {
+          Get.offNamed(AppRoute.ownerHome);
+          myServices.sharedPreferences.setString("role", "owner");
+          print("User is not an owner");
+        }
+
+        print("User logged in: ${user.uid}");
       }
-
-      print("User logged in: ${user.uid}");
     } catch (e) {
       // Handle authentication errors
       if (e is FirebaseAuthException) {
-        if (e.code == 'user-not-found') {
-          Get.snackbar("Warning".tr, "error3".tr);
-        } else if (e.code == 'wrong-password') {
-          Get.snackbar("Warning".tr, "error2".tr);
-        } else {
-          Get.snackbar("Warning".tr, "error1".tr);
-        }
+      Get.snackbar("Warning".tr, "passwordOremail".tr);
       } else {
         // Handle other unexpected errors
         Get.snackbar("Warning".tr, "error1".tr);

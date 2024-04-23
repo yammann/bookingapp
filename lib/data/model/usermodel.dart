@@ -13,7 +13,7 @@ class UserModel {
     required this.password,
     this.imgProfile = "https://t4.ftcdn.net/jpg/01/07/43/45/240_F_107434511_iarF2z88c6Ds6AlgtwotHSAktWCdYOn7.jpg",
     this.role = Role.customer, 
-    this.holidays,
+    required this.holidays,
   });
 
   final String userId;
@@ -23,7 +23,7 @@ class UserModel {
   final String password;
   final String imgProfile;
   final Role role;
-  final List<dynamic>? holidays;
+  final List<dynamic> holidays;
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -34,7 +34,7 @@ class UserModel {
       password: json['password'],
       imgProfile: json['imgProfile'],
       role: Role.values.firstWhere((e) => e.toString().split('.').last == json['role']),
-      holidays: json['holidays'] != null ? List<dynamic>.from(json['holidays']) : null,
+      holidays:  List<dynamic>.from(json['holidays']),
     );
   }
 
