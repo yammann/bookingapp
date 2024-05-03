@@ -36,7 +36,7 @@ class PostMethod {
       required uID,
       }) async {
     if (commentTextController.isNotEmpty) {
-      dynamic commentId = Uuid().v1();
+      dynamic commentId = const Uuid().v1();
       await FirebaseFirestore.instance
           .collection("posts")
           .doc(postId)

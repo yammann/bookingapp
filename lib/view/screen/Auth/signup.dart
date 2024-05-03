@@ -2,7 +2,6 @@ import 'package:e_store/controller/Auth/signup_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/core/function/exit_alert.dart';
 import 'package:e_store/core/function/validat.dart';
-import 'package:e_store/view/screen/Auth/widget/auth_appbar.dart';
 import 'package:e_store/view/screen/Auth/widget/auth_text_filed.dart';
 import 'package:e_store/view/widget/app_button.dart';
 import 'package:flutter/material.dart';

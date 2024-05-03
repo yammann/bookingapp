@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 class MyMiddelware extends GetMiddleware {
   MyServices myServices = Get.find();
 
-  @override
   int? priority = 1;
 
   @override

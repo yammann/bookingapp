@@ -11,7 +11,7 @@ abstract class BlockingCalenderController extends GetxController {
   blockingDay();
   updateAppointState(DocumentReference documentReference);
   isDayHaveAppointment(DocumentReference documentReference);
-  addAppointToDB(DocumentReference documentReference,String date);
+  addAppointToDB(DocumentReference documentReference, String date);
 }
 
 class BlockingCalenderControllerImp extends BlockingCalenderController {
@@ -44,26 +44,31 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
       DocumentSnapshot documentSnapshot = await documentReference.get();
 
       if (documentSnapshot.exists) {
-        if (isDayHaveAppointment(documentReference)) {
+        if (await isDayHaveAppointment(documentReference)) {
           isActiveSnackbar();
-          Get.snackbar("Alert".tr, "blockinError".tr, backgroundColor: kWorrningSnackbar);
+          Get.snackbar("Alert".tr, "blockinError".tr,
+              backgroundColor: kWorrningSnackbar);
         } else {
-          updateAppointState(documentReference);
+          await updateAppointState(documentReference);
+          isActiveSnackbar();
+          Get.snackbar("Alert".tr, "blockingSuccess".tr,
+              backgroundColor: kSuccessSnackbar);
         }
       } else {
-        addAppointToDB( documentReference, date);
+        await addAppointToDB(documentReference, date);
 
-        updateAppointState(documentReference);
+        await updateAppointState(documentReference);
         isActiveSnackbar();
-        Get.snackbar("Alert".tr, "blockingSuccess".tr,backgroundColor: kSuccessSnackbar);
+        Get.snackbar("Alert".tr, "blockingSuccess".tr,
+            backgroundColor: kSuccessSnackbar);
       }
 
       isLoading = false;
       update();
-      
     } catch (e) {
       isActiveSnackbar();
-      Get.snackbar("Warning".tr, "error".tr, backgroundColor: kSuccessSnackbar);
+      Get.snackbar("Warning".tr, "error".tr,
+          backgroundColor: kWorrningSnackbar);
     }
   }
 
@@ -111,7 +116,7 @@ class BlockingCalenderControllerImp extends BlockingCalenderController {
   }
 
   @override
-  addAppointToDB(DocumentReference documentReference,String date) async {
+  addAppointToDB(DocumentReference documentReference, String date) async {
     try {
       for (AppointmentModel appointment in appointmentList) {
         var data = appointment.toMap();

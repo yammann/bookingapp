@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_store/controller/user_profile_controller.dart';
 import 'package:e_store/core/constants/route.dart';
 import 'package:e_store/core/function/validat.dart';
@@ -36,7 +35,7 @@ class UserProfileView extends StatelessWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     Stack(children: [
                       Container(
                           padding: const EdgeInsets.all(1),
@@ -214,7 +213,7 @@ class UserProfileView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 90),
+                    const SizedBox(height: 90),
                   ],
                 ),
               );

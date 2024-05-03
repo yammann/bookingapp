@@ -77,7 +77,7 @@ class HolidayControllerImp extends HolidayController {
   
   @override
   fetchHoliday() {
-     for(int holiday in userModel.holidays!){
+     for(int holiday in userModel.holidays){
       holidays[holiday-1].isSelected=true;
       selectedTodoList.add(holiday);
       update();

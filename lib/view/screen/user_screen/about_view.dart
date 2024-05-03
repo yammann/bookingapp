@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_store/controller/user_profile_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
 import 'package:e_store/data/data-source/static/static.dart';
@@ -18,7 +17,7 @@ class AboutView extends StatelessWidget {
       child: Column(
         children: [
           CachedImag(isloadin: false, imgProfile: userProfileControllerImp.owner.imgProfile,height: 150,width: 150,),
-           SizedBox(height: 5),
+           const SizedBox(height: 5),
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -27,7 +26,7 @@ class AboutView extends StatelessWidget {
               children: [
                  Text(
                   "$salonName ${"Hair Salon".tr}",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
                  Text(

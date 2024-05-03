@@ -8,7 +8,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 class BlockingCalender extends StatelessWidget {
    BlockingCalender({super.key});
-    UserProfileControllerImp userProfileControllerImp=Get.find();
+   final UserProfileControllerImp userProfileControllerImp=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +33,7 @@ class BlockingCalender extends StatelessWidget {
                   Column(
                     children: [
                       MyCalender(
-                        holidays:userProfileControllerImp.userModel.holidays!,
+                        holidays:userProfileControllerImp.userModel.holidays,
                         calendarFormat: CalendarFormat.month,
                         availableCalendarFormats: const {
                           CalendarFormat.month: "Month"

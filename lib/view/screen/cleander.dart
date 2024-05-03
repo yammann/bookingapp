@@ -1,6 +1,5 @@
 import 'package:e_store/controller/add_appoint/calender_controller.dart';
 import 'package:e_store/core/constants/colors.dart';
-import 'package:e_store/data/data-source/static/static.dart';
 import 'package:e_store/data/model/usermodel.dart';
 import 'package:e_store/view/widget/apoint_time.dart';
 import 'package:e_store/view/widget/calendr.dart';
@@ -36,7 +35,7 @@ class CalendarPage extends StatelessWidget {
               return Column(
                 children: [
                   MyCalender(
-                    holidays: controller.barber?.holidays??controller.userModel.holidays!,
+                    holidays: controller.barber?.holidays??controller.userModel.holidays,
                     calendarFormat:CalendarFormat.week ,
                     availableCalendarFormats: const { CalendarFormat.week:"week"},
                     focusedDay: controller.isSelectedDay,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_store/controller/user_profile_controller.dart';
 import 'package:e_store/core/class/local_noification.dart';
 import 'package:e_store/core/function/appointment_exceed.dart';
 import 'package:e_store/core/function/get_user_data.dart';
@@ -26,12 +27,13 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   late Stream<QuerySnapshot<Object?>> appointQuerySnapshot;
   User currentUser = FirebaseAuth.instance.currentUser!;
   final List<AppointmentModel> bookedAppointList = [];
-  late UserModel userModel;
+  final UserProfileControllerImp userProfileControllerImp=Get.find();
+  
 
   @override
   void onInit() async {
     super.onInit();
-    userModel = await getUserData(currentUser.uid);
+    
     appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
     isHoliday(isSelectedDay);
     if (holiday) {
@@ -59,7 +61,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   cancelAndAvailableAppointment(String appointmentId, String documentId) async {
     CollectionReference appointCollection = FirebaseFirestore.instance
         .collection("barber")
-        .doc(userModel.userId)
+        .doc(userProfileControllerImp.userModel.userId)
         .collection("apointment")
         .doc(documentId)
         .collection("time");
@@ -93,7 +95,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   cancelAndBlockedAppointment(String appointmentId, String date) async {
     CollectionReference appointCollection = FirebaseFirestore.instance
         .collection("barber")
-        .doc(userModel.userId)
+        .doc(userProfileControllerImp.userModel.userId)
         .collection("apointment")
         .doc(date)
         .collection("time");
@@ -121,8 +123,8 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
         .doc(appointmentModel.userId)
         .get();
 
-    UserModel userModel = UserModel.fromJson(snap.data()!);
-    final Uri url = Uri.parse('tel:${userModel.phone}');
+    UserModel userModelForCancel = UserModel.fromJson(snap.data()!);
+    final Uri url = Uri.parse('tel:${userModelForCancel.phone}');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
@@ -141,7 +143,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
   getSnapshots(String documentId) async {
     CollectionReference appointCollection = FirebaseFirestore.instance
         .collection("barber")
-        .doc(userModel.userId)
+        .doc(userProfileControllerImp.userModel.userId)
         .collection("apointment")
         .doc(documentId)
         .collection("time");
@@ -200,7 +202,7 @@ class BookedAppointmentControllerImp extends BookedAppointmentController {
 
   @override
   isHoliday(DateTime isDay) {
-     for(int day in userModel.holidays!){
+     for(int day in userProfileControllerImp.userModel.holidays){
       if(isDay.weekday==day){
         holiday=true;
         update();

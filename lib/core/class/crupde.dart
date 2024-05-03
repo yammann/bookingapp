@@ -19,10 +19,8 @@ class CrUpDe {
             in querySnapshot.docs) {
           dataList.add(doc.data());
         }
-        print(dataList);
         return right(dataList);
       } catch (e) {
-        print('Error fetching data: $e');
         return left(Status.serverFailure);
       }
     
@@ -42,11 +40,9 @@ class CrUpDe {
         // Return user data
         return right(snapshot.data()!);
       } else {
-        print('User document does not exist.');
         return left(Status.failure);
       }
     } catch (e) {
-      print('Error retrieving user data: $e');
       return left(Status.serverFailure);
     }
     //   try {

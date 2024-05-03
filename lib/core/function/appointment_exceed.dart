@@ -24,9 +24,7 @@ Future<void> appointmentIfExceed(String documentId) async {
 
         String dateString =
             '${appointmentModel.date} ${appointmentModel.time.substring(0, 5)}:00';
-        print(dateString);
         DateTime dateTime = DateTime.parse(dateString);
-        print(dateTime);
 
         if (currentTime.isAfter(dateTime)) {
           await timeDocument.reference.update({

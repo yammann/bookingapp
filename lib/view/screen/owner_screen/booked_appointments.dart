@@ -20,7 +20,7 @@ class BookedAppointmentsView extends StatelessWidget {
           return Column(
             children: [
               MyCalender(
-                holidays:controller.userModel.holidays!,
+                holidays:controller.userProfileControllerImp.userModel.holidays,
                 calendarFormat: CalendarFormat.week,
                 availableCalendarFormats: const {CalendarFormat.week: "week"},
                 focusedDay: controller.isSelectedDay,

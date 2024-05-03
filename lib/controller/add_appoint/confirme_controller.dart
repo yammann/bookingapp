@@ -76,15 +76,9 @@ class ConfirmeControllerImp extends ConfirmeController {
       
         Get.offAllNamed(AppRoute.onBoarding);
       
-      print(appointment[0].date!);
       int year=int.parse(appointment[0].date!.substring(0,4));
-      print(year.toString());
-
       int month=int.parse(appointment[0].date!.substring(5,7));
-      print(month.toString());
-
       int day=int.parse(appointment[0].date!.substring(8,10))-1;
-      print(day.toString());
       String now=DateTime.now().toString().substring(0,10);
 
       if(appointment[0].date!=now){

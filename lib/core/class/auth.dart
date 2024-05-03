@@ -56,7 +56,7 @@ class Auth {
 
       User? user = userCredential.user;
       if (user != null) {
-        UserModel userModel = await getUserData(user!.uid);
+        UserModel userModel = await getUserData(user.uid);
 
         // Set login status and user type in SharedPreferences
         myServices.sharedPreferences.setBool("login", true);
@@ -65,18 +65,14 @@ class Auth {
         if (userModel.role == Role.customer) {
           Get.offNamed(AppRoute.home);
           myServices.sharedPreferences.setString("role", "customer");
-          print("User is an customer");
         } else if (userModel.role == Role.barber) {
           Get.offNamed(AppRoute.barberView);
           myServices.sharedPreferences.setString("role", "barber");
-          print("User is not an owner");
         } else if (userModel.role == Role.owner) {
           Get.offNamed(AppRoute.ownerHome);
           myServices.sharedPreferences.setString("role", "owner");
-          print("User is not an owner");
         }
 
-        print("User logged in: ${user.uid}");
       }
     } catch (e) {
       // Handle authentication errors
