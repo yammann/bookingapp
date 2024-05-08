@@ -11,7 +11,7 @@ Future<void> appointmentIfExceed(String documentId) async {
   for (QueryDocumentSnapshot barberdocument in barberDocumentSnapshot.docs) {
     QuerySnapshot appointDocumentSnapshot =
         await barberdocument.reference.collection("apointment").get();
-        
+
     for (QueryDocumentSnapshot appointDocument
         in appointDocumentSnapshot.docs) {
       QuerySnapshot timeDocumentSnapshot = await appointDocument.reference
@@ -19,8 +19,8 @@ Future<void> appointmentIfExceed(String documentId) async {
           .where("appointmentExceed", isEqualTo: false)
           .get();
       for (QueryDocumentSnapshot timeDocument in timeDocumentSnapshot.docs) {
-        AppointmentModel appointmentModel =
-            AppointmentModel.fromJson(timeDocument.data() as Map<String, dynamic>);
+        AppointmentModel appointmentModel = AppointmentModel.fromJson(
+            timeDocument.data() as Map<String, dynamic>);
 
         String dateString =
             '${appointmentModel.date} ${appointmentModel.time.substring(0, 5)}:00';

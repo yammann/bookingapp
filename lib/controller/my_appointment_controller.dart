@@ -23,7 +23,7 @@ class MyAppointmentControllerImp extends MyAppointmentController {
 
   @override
   void onInit() async {
-    appointmentIfExceed(DateTime.now.toString().substring(0, 10));
+    await appointmentIfExceed(DateTime.now.toString().substring(0, 10));
     userModel = await getUserData(currentUser.uid);
     await fetchMyAppointment();
     super.onInit();

@@ -48,9 +48,10 @@ class CalenderControllerImp extends CalenderController {
       await appointmentExists();
     } else {
       holiday = false;
-      appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
       await getApointment(isSelectedDay.toString().substring(0, 10));
       await appointmentExists();
+      await appointmentIfExceed(isSelectedDay.toString().substring(0, 10));
+
       timeCalculation();
     }
     
@@ -91,7 +92,7 @@ class CalenderControllerImp extends CalenderController {
       isActiveSnackbar();
       Get.snackbar("Alert".tr, "waiting".tr, backgroundColor: kOnBoardingP);
       await addAppointToDB(documentReference, documentId);
-      await addDateToAppointment(documentId);
+      addDateToAppointment(documentId);
       await getDataList(documentId);
     }
   }
